@@ -1,0 +1,5 @@
+venv/
+/SurfCaster/admin/__pycache__
+/SurfCaster/authorisedUser/__pycache__
+/SurfCaster/reviewer/__pycache__
+/SurfCaster/unauthorisedUser/__pycache__
