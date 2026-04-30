@@ -36,3 +36,5 @@ def settings():
 @user_routes.route('/support')
 def support():
     return "Authorised User Support"
+
+
