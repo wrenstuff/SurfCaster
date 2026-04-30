@@ -47,7 +47,3 @@ def queue():
 def reviews():
     return "Reviewer Review History"
 
-#logout
-@reviewer_routes.route('/logout')
-def logout():
-    return "Reviewer Logout"

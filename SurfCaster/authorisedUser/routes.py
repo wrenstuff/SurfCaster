@@ -37,8 +37,4 @@ def settings():
 def support():
     return "Authorised User Support"
 
-#logout
-@user_routes.route('/logout')
-def logout():
-    return "Authorised User Logout"
 

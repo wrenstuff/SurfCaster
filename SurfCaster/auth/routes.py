@@ -37,3 +37,11 @@ def register():
     else:   
         print("Registration failed") # Debug statement
         return "Registration Page"   
+
+# Logout Route
+@auth_routes.route('/logout')
+def logout():
+    print("Logout attempt") # Debug statement
+    if True: # Placeholder for actual logout logic
+        print("Logout successful") # Debug statement
+    return "splash" # Redirect to splash page
