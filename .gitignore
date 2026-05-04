@@ -5,3 +5,4 @@ venv/
 /SurfCaster/unauthorisedUser/__pycache__
 /SurfCaster/auth/__pycache__
 /SurfCaster/node_modules
+/.vscode
