@@ -4,3 +4,4 @@ venv/
 /SurfCaster/reviewer/__pycache__
 /SurfCaster/unauthorisedUser/__pycache__
 /SurfCaster/auth/__pycache__
+/SurfCaster/node_modules
