@@ -3,3 +3,4 @@ venv/
 /SurfCaster/authorisedUser/__pycache__
 /SurfCaster/reviewer/__pycache__
 /SurfCaster/unauthorisedUser/__pycache__
+/SurfCaster/auth/__pycache__
