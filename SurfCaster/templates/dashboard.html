@@ -3,11 +3,14 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='styles/main.css') }}">
         <title>Document</title>
     </head>
     <body>
-  
+
+
+        {% include 'header.html' %}
+
         <!-- temp user type logic for testing -->
         <!-- delete when actual logic implemented-->
         {% set access = "admin" %}
@@ -87,6 +90,21 @@
                 <div class="btn">Support</div>
             </a>
         {% endif %}
+
+
+        <div class="news">
+            <h1>Latest News</h1>
+            <!-- We'll want this attached to some kind of db I'd assume -->
+            <p>Hi. Here's some news :p</p>
+        </div>
+
+        <div class="scan">
+            <h1>URL Scanner</h1>
+        </div>
+
+        <div class="hist">
+            <h1>Scan History</h1>
+        </div>
         
     </body>
 </html>
