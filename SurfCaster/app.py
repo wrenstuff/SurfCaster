@@ -1,7 +1,10 @@
 # app.py
 
 # library imports
+from os import link
+
 from flask import Flask
+from pathlib import Path
 
 # internal imports
 # Uncomment when routes have been added
@@ -12,7 +15,10 @@ from unauthorisedUser.routes import unauthorised_user_routes
 from auth.routes import auth_routes
 
 # app creation and blueprint registration
-app = Flask(__name__)
+
+file_path = Path("static/images/cat.png")
+if file_path.is_file():
+    app = Flask(__name__)
 
 app.register_blueprint(admin_routes, url_prefix='/admin')
 app.register_blueprint(reviewer_routes, url_prefix='/reviewer')
