@@ -74,7 +74,18 @@
         <!-- endif -->
         {% else %}
         <!-- else -->
-            <!-- stuff for unregistered users -->
+            <!-- url scanner -->
+            <a href="{{ url_for('unauthorised_user_routes.scan') }}">
+                <div class="btn">URL Scanner</div>
+            </a>
+            <!-- settings -->
+            <a href="{{ url_for('unauthorised_user_routes.settings') }}">
+                <div class="btn">Settings</div>
+            </a>
+            <!-- support -->
+            <a href="{{ url_for('unauthorised_user_routes.support') }}">
+                <div class="btn">Support</div>
+            </a>
         {% endif %}
         
     </body>
