@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+        <title>Document</title>
+    </head>
+    <body>
+  
+        <!-- temp user type logic for testing -->
+        <!-- delete when actual logic implemented-->
+        {% set access = "admin" %}
+
+        <!-- if user is user || user is reviewer || user is admin -->
+        {% if access in ['user', 'reviewer', 'admin'] %}
+            <!-- url scanner -->
+            <a href="{{ url_for(access + '_routes.scan') }}">
+                <div class="btn">URL Scanner</div>
+            </a>
+            <!-- settings -->
+            <a href="{{ url_for(access + '_routes.settings') }}">
+                <div class="btn">Settings</div>
+            </a>
+            <!-- account -->
+            <a href="{{ url_for(access + '_routes.account') }}">
+                <div class="btn">Account</div>
+            </a>
+            <!-- history-->
+            <a href="{{ url_for(access + '_routes.history') }}">
+                <div class="btn">Scan History</div>
+            </a>
+            <!-- Support -->
+            <a href="{{ url_for(access + '_routes.support') }}">
+                <div class="btn">Support</div>
+            </a>
+
+            <!-- if user is reviewer || user is admin -->
+            {% if access in ['reviewer', 'admin'] %}
+
+                <!-- Queue -->
+                <a href="{{ url_for(access + '_routes.queue') }}">
+                    <div class="btn">Review Queue</div>
+                </a>
+                <!-- reviews -->
+                <a href="{{ url_for(access + '_routes.reviews') }}">
+                    <div class="btn">Review History</div>
+                </a>
+
+                <!-- if user is admin -->
+                {% if access == 'admin' %}
+
+                    <!-- users -->
+                    <a href="{{ url_for(access + '_routes.users') }}">
+                        <div class="btn">User Management</div>
+                    </a>
+                    <!-- models -->
+                    <a href="{{ url_for(access + '_routes.models') }}">
+                        <div class="btn">Model Management</div>
+                    </a>
+                    <!-- database -->
+                    <a href="{{ url_for(access + '_routes.database') }}">
+                        <div class="btn">Database Management</div>
+                    </a>
+                    <!-- logs -->
+                    <a href="{{ url_for(access + '_routes.logs') }}">
+                        <div class="btn">System Logs</div>
+                    </a>
+
+                <!-- endif -->
+                {% endif %}
+            <!-- endif -->
+            {% endif %}
+        <!-- endif -->
+        {% else %}
+        <!-- else -->
+            <!-- stuff for unregistered users -->
+        {% endif %}
+        
+    </body>
+</html>

@@ -1,7 +1,7 @@
 # admin/routes.py
 
 # library imports
-from flask import Blueprint
+from flask import Blueprint, render_template
 
 # blueprint creation
 admin_routes = Blueprint('admin_routes', __name__)
@@ -10,7 +10,7 @@ admin_routes = Blueprint('admin_routes', __name__)
 # Dashboard
 @admin_routes.route('/')
 def home():
-    return "Admin Dashboard"
+    return render_template('dashboard.html')
 
 # URL Scanner
 @admin_routes.route('/scan')

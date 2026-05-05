@@ -1,7 +1,7 @@
 # unauthorisedUser/routes.py
 
 # library imports
-from flask import Blueprint
+from flask import Blueprint, render_template
 
 # blueprint creation
 unauthorised_user_routes = Blueprint('unauthorised_user_routes', __name__)
@@ -10,7 +10,7 @@ unauthorised_user_routes = Blueprint('unauthorised_user_routes', __name__)
 # Dashboard
 @unauthorised_user_routes.route('/')
 def home():
-    return "Unauthorised User Dashboard"
+    return render_template('dashboard.html')
 
 # URL Scanner
 @unauthorised_user_routes.route('/scan')

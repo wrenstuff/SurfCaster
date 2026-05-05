@@ -1,7 +1,7 @@
 # reviewer/routes.py
 
 # library imports
-from flask import Blueprint
+from flask import Blueprint, render_template
 
 # blueprint creation
 reviewer_routes = Blueprint('reviewer_routes', __name__)
@@ -10,7 +10,7 @@ reviewer_routes = Blueprint('reviewer_routes', __name__)
 # Dashboard
 @reviewer_routes.route('/')
 def home():
-    return "Reviewer Dashboard"
+    return render_template('dashboard.html')
 
 # URL Scanner
 @reviewer_routes.route('/scan')

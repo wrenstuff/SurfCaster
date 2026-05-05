@@ -1,7 +1,7 @@
 # authorisedUser/routes.py
 
 # library imports
-from flask import Blueprint
+from flask import Blueprint, render_template
 
 # blueprint creation
 user_routes = Blueprint('user_routes', __name__)
@@ -10,7 +10,7 @@ user_routes = Blueprint('user_routes', __name__)
 # Dashboard
 @user_routes.route('/')
 def home():
-    return "Authorised User Dashboard"
+    return render_template('dashboard.html')
 
 # URL Scanner
 @user_routes.route('/scan')
