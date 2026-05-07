@@ -15,14 +15,14 @@ def home():
 # URL Scanner
 @unauthorised_user_routes.route('/scan')
 def scan():
-    return "Unauthorised User URL Scan"
+    return render_template('scan.html')
 
 # Settings
 @unauthorised_user_routes.route('/settings')
 def settings():
-    return "Unauthorised User Settings"
+    return render_template('settings.html')
 
 # Support
 @unauthorised_user_routes.route('/support')
 def support():
-    return "Unauthorised User Support"
+    return render_template('support.html')

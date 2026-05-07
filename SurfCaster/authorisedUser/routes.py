@@ -15,26 +15,26 @@ def home():
 # URL Scanner
 @user_routes.route('/scan')
 def scan():
-    return "Authorised User URL Scan"
+    return render_template('scan.html')
 
 # Scan History
 @user_routes.route('/history')
 def history():
-    return "Authorised User Scan History"
+    return render_template('scan_history.html')
 
 # Account
 @user_routes.route('/account') # possibly change to username?
 def account():
-    return "Authorised User Account"
+    return render_template('account.html')
 
 # Settings
 @user_routes.route('/settings')
 def settings():
-    return "Authorised User Settings"
+    return render_template('settings.html')
 
 # Support
 @user_routes.route('/support')
 def support():
-    return "Authorised User Support"
+    return render_template('support.html')
 
 
