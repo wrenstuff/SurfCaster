@@ -40,7 +40,7 @@ def support():
 # Review Queue
 @admin_routes.route('/queue')
 def queue():
-    return "Admin Review Queue"
+    return render_template('review_queue.html')
 
 # Review History
 @admin_routes.route('/reviews')
