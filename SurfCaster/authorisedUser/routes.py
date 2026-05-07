@@ -25,7 +25,7 @@ def history():
 # Account
 @user_routes.route('/account') # possibly change to username?
 def account():
-    return "Authorised User Account"
+    return render_template('account.html')
 
 # Settings
 @user_routes.route('/settings')

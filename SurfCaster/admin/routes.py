@@ -25,7 +25,7 @@ def history():
 # Account
 @admin_routes.route('/account') # possibly change to username?
 def account():
-    return "Admin Account"
+    return render_template('account.html')
 
 # Settings
 @admin_routes.route('/settings')

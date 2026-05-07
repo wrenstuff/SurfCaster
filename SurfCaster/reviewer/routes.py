@@ -25,7 +25,7 @@ def history():
 # Account
 @reviewer_routes.route('/account') # possibly change to username?
 def account():
-    return "Reviewer Account"
+    return render_template('account.html')
 
 # Settings
 @reviewer_routes.route('/settings')
