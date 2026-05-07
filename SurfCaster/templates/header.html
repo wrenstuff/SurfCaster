@@ -1,3 +1,7 @@
+<!-- temp user type logic for testing -->
+<!-- delete when actual logic implemented-->
+{% set access = "admin" %}
+
 <div class="header-wrapper">
     <div class="header">
         <img src="{{ url_for('static', filename='images/SurfCaster_Logo_256.png') }}" alt="SurfCaster Logo" class="logo">
@@ -7,5 +11,18 @@
         <h2>Page Title</h2>
         <!-- <h2>{{ request.endpoint }}</h2> -->
         <!-- figure out how to display the current page title -->
+    </div>
+    <div class="header-left">
+        <div class="home">
+            <a href="{{ url_for(access + '_routes.home') }}">Home</a>
+        </div>
+    </div>
+    <div class="header-right">
+        <div class="settings">
+            <a href="{{ url_for(access + '_routes.settings') }}">Settings</a>
+        </div>
+        <div class="account">
+            <a href="{{ url_for(access + '_routes.account') }}">Account</a>
+        </div>
     </div>
 </div>

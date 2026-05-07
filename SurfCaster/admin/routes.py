@@ -15,7 +15,7 @@ def home():
 # URL Scanner
 @admin_routes.route('/scan')
 def scan():
-    return "Admin URL Scan"
+    return render_template('scan.html')
 
 # Scan History
 @admin_routes.route('/history')

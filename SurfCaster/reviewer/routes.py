@@ -15,7 +15,7 @@ def home():
 # URL Scanner
 @reviewer_routes.route('/scan')
 def scan():
-    return "Reviewer URL Scan"
+    return render_template('scan.html')
 
 # Scan History
 @reviewer_routes.route('/history')

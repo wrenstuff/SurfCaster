@@ -15,7 +15,7 @@ def home():
 # URL Scanner
 @user_routes.route('/scan')
 def scan():
-    return "Authorised User URL Scan"
+    return render_template('scan.html')
 
 # Scan History
 @user_routes.route('/history')
