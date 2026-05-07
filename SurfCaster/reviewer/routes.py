@@ -30,7 +30,7 @@ def account():
 # Settings
 @reviewer_routes.route('/settings')
 def settings():
-    return "Reviewer Settings"
+    return render_template('settings.html')
 
 # Support
 @reviewer_routes.route('/support')

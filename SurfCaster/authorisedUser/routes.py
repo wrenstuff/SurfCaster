@@ -30,7 +30,7 @@ def account():
 # Settings
 @user_routes.route('/settings')
 def settings():
-    return "Authorised User Settings"
+    return render_template('settings.html')
 
 # Support
 @user_routes.route('/support')

@@ -20,7 +20,7 @@ def scan():
 # Settings
 @unauthorised_user_routes.route('/settings')
 def settings():
-    return "Unauthorised User Settings"
+    return render_template('settings.html')
 
 # Support
 @unauthorised_user_routes.route('/support')

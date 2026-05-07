@@ -30,7 +30,7 @@ def account():
 # Settings
 @admin_routes.route('/settings')
 def settings():
-    return "Admin Settings"
+    return render_template('settings.html')
 
 # Support
 @admin_routes.route('/support')
