@@ -35,3 +35,31 @@
 .page-name h2 {
     font-size: 20pt;
 }
+
+.dash-buttons {
+    display: flex;
+    margin-top: 50px;
+
+    max-width: 100px;
+    max-height: 100px;
+}
+
+.btn {
+    width: 200px;
+    height: 50px;
+    margin: 20px;
+
+    background-color: red;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-dash a {
+    text-decoration: none;
+    color: black;
+}
+
+.btn-dash a:hover {
+    color: white;
+}
