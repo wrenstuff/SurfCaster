@@ -15,7 +15,7 @@ def home():
 # URL Scanner
 @unauthorised_user_routes.route('/scan')
 def scan():
-    return "Unauthorised User URL Scan"
+    return render_template('scan.html')
 
 # Settings
 @unauthorised_user_routes.route('/settings')

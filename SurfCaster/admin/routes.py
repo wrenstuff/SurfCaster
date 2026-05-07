@@ -20,7 +20,7 @@ def scan():
 # Scan History
 @admin_routes.route('/history')
 def history():
-    return "Admin Scan History"
+    return render_template('scan_history.html')
 
 # Account
 @admin_routes.route('/account') # possibly change to username?
