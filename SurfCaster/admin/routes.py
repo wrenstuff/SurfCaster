@@ -35,7 +35,7 @@ def settings():
 # Support
 @admin_routes.route('/support')
 def support():
-    return "Admin Support"
+    return render_template('support.html')
 
 # Review Queue
 @admin_routes.route('/queue')

@@ -35,7 +35,7 @@ def settings():
 # Support
 @reviewer_routes.route('/support')
 def support():
-    return "Reviewer Support"
+    return render_template('support.html')
 
 # Review Queue
 @reviewer_routes.route('/queue')

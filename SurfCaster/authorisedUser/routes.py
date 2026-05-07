@@ -35,6 +35,6 @@ def settings():
 # Support
 @user_routes.route('/support')
 def support():
-    return "Authorised User Support"
+    return render_template('support.html')
 
 

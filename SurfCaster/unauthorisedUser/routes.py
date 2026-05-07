@@ -25,4 +25,4 @@ def settings():
 # Support
 @unauthorised_user_routes.route('/support')
 def support():
-    return "Unauthorised User Support"
+    return render_template('support.html')
