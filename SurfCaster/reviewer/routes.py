@@ -45,5 +45,5 @@ def queue():
 # Review History
 @reviewer_routes.route('/reviews')
 def reviews():
-    return "Reviewer Review History"
+    return render_template('review_history.html')
 

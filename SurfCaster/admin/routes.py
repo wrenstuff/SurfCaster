@@ -45,7 +45,7 @@ def queue():
 # Review History
 @admin_routes.route('/reviews')
 def reviews():
-    return "Admin Review History"
+    return render_template('review_history.html')
 
 # User Management
 @admin_routes.route('/users')
