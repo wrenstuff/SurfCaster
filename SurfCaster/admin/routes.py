@@ -40,29 +40,29 @@ def support():
 # Review Queue
 @admin_routes.route('/queue')
 def queue():
-    return render_template('review_queue.html')
+    return render_template('review-queue.html')
 
 # Review History
 @admin_routes.route('/reviews')
 def reviews():
-    return render_template('review_history.html')
+    return render_template('review-history.html')
 
 # User Management
 @admin_routes.route('/users')
 def users():
-    return "Admin User Management"
+    return render_template('user-management.html')
 
 # Model Management
 @admin_routes.route('/models')
 def models():
-    return "Admin Model Management"
+    return render_template('model-management.html')
 
 # Database Management
 @admin_routes.route('/database')
 def database():
-    return "Admin Database Management"
+    return render_template('database-management.html')
 
 # Audit Logs
 @admin_routes.route('/logs')
 def logs():
-    return "Admin Audit Logs"
+    return render_template('audit-logs.html')

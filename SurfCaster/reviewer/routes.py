@@ -40,10 +40,10 @@ def support():
 # Review Queue
 @reviewer_routes.route('/queue')
 def queue():
-    return render_template('review_queue.html')
+    return render_template('review-queue.html')
 
 # Review History
 @reviewer_routes.route('/reviews')
 def reviews():
-    return render_template('review_history.html')
+    return render_template('review-history.html')
 
