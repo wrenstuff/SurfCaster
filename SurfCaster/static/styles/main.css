@@ -11,15 +11,39 @@ html {
   background-color: #222227;
 }
 
-.header-wrapper {
+.header-grid {
+  display: grid;
+  height: 150px;
+  grid-template-columns: 1fr 2fr 1fr;
+  grid-template-rows: auto;
+}
+.header-grid a {
+  color: white;
+}
+.header-grid .header-left {
+  display: flex;
+  grid-column: 1;
+  grid-row: 1;
+  justify-content: center;
+  align-items: center;
+}
+.header-grid .header-center {
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 150px;
+  justify-content: center;
+  grid-column: 2;
+  grid-row: 1;
 }
-.header-wrapper a {
-  color: #ffffff;
-  text-decoration: none;
+.header-grid .header-right {
+  display: flex;
+  grid-column: 3;
+  grid-row: 1;
+  justify-content: center;
+  align-items: center;
+}
+.header-grid .header-right .setttings, .header-grid .header-right .account {
+  padding: 10px;
 }
 
 .header {
