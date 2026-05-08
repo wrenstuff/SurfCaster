@@ -2,15 +2,17 @@
 <!-- delete when actual logic implemented-->
 {% set access = "admin" %}
 
-<div class="header-wrapper">
-    <div class="header">
-        <img src="{{ url_for('static', filename='images/SurfCaster_Logo_256.png') }}" alt="SurfCaster Logo" class="logo">
-        <h1>SurfCaster</h1>
-    </div>
-    <div class="page-name">
-        <h2>Page Title</h2>
-        <!-- <h2>{{ request.endpoint }}</h2> -->
-        <!-- figure out how to display the current page title -->
+<div class="header-grid">
+    <div class="header-center">
+        <div class="header">
+            <img src="{{ url_for('static', filename='images/SurfCaster_Logo_256.png') }}" alt="SurfCaster Logo" class="logo">
+            <h1>SurfCaster</h1>
+        </div>
+        <div class="page-name">
+            <h2>Page Title</h2>
+            <!-- <h2>{{ request.endpoint }}</h2> -->
+            <!-- figure out how to display the current page title -->
+        </div>
     </div>
     <div class="header-left">
         <div class="home">
