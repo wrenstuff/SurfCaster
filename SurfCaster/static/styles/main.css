@@ -15,6 +15,7 @@ html {
   display: flex;
   flex-direction: column;
   align-items: center;
+  height: 150px;
 }
 .header-wrapper a {
   color: #ffffff;
@@ -48,12 +49,19 @@ html {
   width: 100%;
 }
 
+.dash-left-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: calc(100vh - 150px);
+}
+
 .dash-left {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 20px;
   margin-top: 50px;
-  max-width: 25%;
+  width: 25vw;
   margin-left: 10%;
 }
 
@@ -62,7 +70,7 @@ html {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 75%;
+  width: 75vw;
 }
 
 .btn {
@@ -76,7 +84,7 @@ html {
   text-align: center;
 }
 
-.btn-dash {
+.btn-dash a {
   color: #fec358;
 }
 .btn-dash a:hover {

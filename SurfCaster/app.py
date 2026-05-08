@@ -16,7 +16,7 @@ from auth.routes import auth_routes
 
 # app creation and blueprint registration
 
-file_path = Path("static/images/cat.png")
+file_path = Path(__file__).parent / "static" / "images" / "cat.png"
 if file_path.is_file():
     app = Flask(__name__)
 
