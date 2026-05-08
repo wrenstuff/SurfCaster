@@ -3,23 +3,23 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='styles/main.css') }}">
         <title>Document</title>
     </head>
-
-<body style="background-image: url('{{ url_for('static', filename='images/cat.png') }}');">
-    
-    
     <h2>Welcome to Surfcaster!</h2>
     <h3>Login</h3>
+    <div class ="login-container">
     <!--<form> action="/login" method="POST"-->
+        <div class ="input fields">
         <input type ="text" name="username" placeholder="Username" required>
         <input type ="text" name="password" placeholder="Password" required>
         <button>submit</button>
+        </div>
         <!--/form-->
         <div class="links">
             <a href="#">Forgot password?</a>
             <a href="#">Signup</a>
         </div>
+    </div>
 </body>
 </html>

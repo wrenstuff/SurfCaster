@@ -1,4 +1,4 @@
-from flask import Blueprint
+from flask import Blueprint, render_template
 
 auth_routes = Blueprint('auth_routes', __name__)
 
@@ -9,39 +9,34 @@ def splash ():
 # Login Page
 @auth_routes.route('/login')
 def login():
-    print("Login attempt") # Debug statement
-    if True: # Placeholder for actual login logic
-        print("Login successful") # Debug statement
-        return "dashboard//usertype" # Redirect to dashboard
-    print("Login failed") # Debug statement
-    return "Login Page"
+    return render_template('login.html')
+    #print("Login attempt") # Debug statement
+    #if True: # Placeholder for actual login logic
+        #print("Login successful") # Debug statement
+        #return "dashboard//usertype" # Redirect to dashboard
+    #print("Login failed") # Debug statement
+    #return "Login Page" */
 
 # Recovery Page
-@auth_routes.route('/recovery')
+@auth_routes.route('/forgotpassword')
 def recovery():
-    print("Recovery attempt") # Debug statement
-    if True: # Placeholder for actual recovery logic
-        print("Recovery successful") # Debug statement
-        return "Recovery Page"
-    else:
-        return "Recovery Failed"                
+    return render_template('forgotpassword.html')
+    #print("Recovery attempt") # Debug statement
+    #if True: # Placeholder for actual recovery logic
+        #print("Recovery successful") # Debug statement
+        #return "Recovery Page"
+    #else:
+        #return "Recovery Failed"                
     
 
 # Registration Page
-@auth_routes.route('/register')
-def register():
-    print("Registration attempt") # Debug statement
-    if True: # Placeholder for actual registration logic
-        print("Registration successful") # Debug statement
-        return "Login Page"
-    else:   
-        print("Registration failed") # Debug statement
-        return "Registration Page"   
-
-# Logout Route
-@auth_routes.route('/logout')
-def logout():
-    print("Logout attempt") # Debug statement
-    if True: # Placeholder for actual logout logic
-        print("Logout successful") # Debug statement
-    return "splash" # Redirect to splash page
+@auth_routes.route('/recover')
+def recover():
+    return render_template('recover.html')
+    #print("Registration attempt") # Debug statement
+    #if True: # Placeholder for actual registration logic
+        #print("Registration successful") # Debug statement
+        #return "Login Page"
+    #else:   
+        #print("Registration failed") # Debug statement
+        #return "Registration Page"   

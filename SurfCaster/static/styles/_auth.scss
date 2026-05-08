@@ -1,0 +1,12 @@
+@use 'color';
+
+.login-container {
+    display: flex;
+    
+    background-color: color.$backgroundbox;
+    
+}
+.links{
+    font-weight: 5000;
+    text-align: center;
+    }

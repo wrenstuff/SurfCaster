@@ -81,4 +81,14 @@ html {
 }
 .btn-dash a:hover {
   color: white;
+}
+
+.login-container {
+  display: flex;
+  background-color: #f0e9e9;
+}
+
+.links {
+  font-weight: 5000;
+  text-align: center;
 }/*# sourceMappingURL=main.css.map */
