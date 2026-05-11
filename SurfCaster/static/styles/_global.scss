@@ -13,3 +13,8 @@
 html {
     background-color: color.$background-color;
 }
+
+.content {
+    height: calc(100vh - 150px);
+    width: 100vw;
+}
