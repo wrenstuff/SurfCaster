@@ -39,3 +39,36 @@
     max-width: 100px;
     position: static;
 }
+
+.signup-wrapper{
+    width: 100vw;
+    height: calc(100vh - 150px);
+    display: grid;
+    align-items: center;
+    justify-content: center;
+    color:color.$tertiary-text;
+    text-decoration: none;
+    .auth-logo-wrapper{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+    }
+    .login-container {
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+    }
+    .strength-icon{
+        margin-left: 20px;
+    }
+    }
+.input-fields{
+    input{
+        margin: 10px;
+        height: 20pt;
+        width: 200px;
+    }
+    display: grid;
+} 
