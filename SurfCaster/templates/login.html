@@ -7,7 +7,6 @@
         <title>Document</title>
         {% set access = "unauth" %}
     </head>
-    <h1>hi</h1>
     <div class = "auth-header">
     </div>
     <div class="login-wrapper">
@@ -29,7 +28,7 @@
         </div>
         <!--/form-->
         <div class="links">
-            <a href="{{ url_for('auth_routes.recover') }}">Forgot password?</a>
+            <a href="{{ url_for('auth_routes.recover') }}">Reset password</a>
             <a href="{{ url_for('auth_routes.signup') }}">Signup</a>
         </div>
     </div>
