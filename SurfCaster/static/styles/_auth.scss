@@ -1,0 +1,41 @@
+@use 'color';
+.login-wrapper{
+    width: 100vw;
+    height: calc(100vh - 150px);
+    display: grid;
+    align-items: center;
+    justify-content: center;
+    color:color.$tertiary-text;
+    text-decoration: none;
+    .auth-logo-wrapper{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+    }
+    .login-container {
+        display: flex;
+    
+        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+    }
+    }
+.input-fields{
+    input{
+        margin: 10px;
+        height: 20pt;
+        width: 200px;
+    }
+    display: grid;
+} 
+.links{
+    font-weight: 50px;
+    text-align: center;
+    a{color:color.$primary-text;}
+    
+    }
+.auth-logo{
+    max-width: 100px;
+    position: static;
+}

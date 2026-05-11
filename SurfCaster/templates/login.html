@@ -3,23 +3,36 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='styles/main.css') }}">
         <title>Document</title>
+        {% set access = "unauth" %}
     </head>
-
-<body style="background-image: url('{{ url_for('static', filename='images/cat.png') }}');">
-    
-    
-    <h2>Welcome to Surfcaster!</h2>
-    <h3>Login</h3>
+    <h1>hi</h1>
+    <div class = "auth-header">
+    </div>
+    <div class="login-wrapper">
+    <div class ="auth-logo-wrapper">
+    <img class ="auth-logo" src="{{ url_for('static', filename='images/SurfCaster_Logo_256.png') }}">
+    <h1>SurfCaster</h1>
+    <h2>Phishing Detector</h2>
+    </div>
+    <div class= "login-container">
+        <h3>Login</h3>
     <!--<form> action="/login" method="POST"-->
-        <input type ="text" name="username" placeholder="Username" required>
-        <input type ="text" name="password" placeholder="Password" required>
-        <button>submit</button>
+        <div class ="input-fields">
+        <input type ="text" id="username" name="username" placeholder="Username" required>
+        <input type ="text" id="password" name="password" placeholder="Password" required>
+        
+        </div>
+        <div>
+            <button>submit</button>
+        </div>
         <!--/form-->
         <div class="links">
-            <a href="#">Forgot password?</a>
-            <a href="#">Signup</a>
+            <a href="{{ url_for('auth_routes.recover') }}">Forgot password?</a>
+            <a href="{{ url_for('auth_routes.signup') }}">Signup</a>
         </div>
+    </div>
+    </div>
 </body>
 </html>
