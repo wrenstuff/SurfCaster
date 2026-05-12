@@ -6,24 +6,37 @@
         <link rel="stylesheet" href="{{ url_for('static', filename='styles/main.css') }}">
         <title>Document</title>
     </head>
-    <body>
-
-<body>
-    
-    
-    <h2>Welcome to Surfcaster!</h2>
-    <h3>Login</h3>
+    </head>
+    <div class = "auth-header">
+    </div>
+    <div class="signup-wrapper">
+    <div class ="auth-logo-wrapper">
+    <img class ="auth-logo" src="{{ url_for('static', filename='images/SurfCaster_Logo_256.png') }}">
+    <h1>SurfCaster</h1>
+    <h2>Phishing Detector</h2>
+    </div>
+    <div class= "login-container">
+        <h3>Sign up</h3>
     <!--<form> action="/login" method="POST"-->
-        <input type ="text" name="email" placeholder="Email Address" required>
-        <input type ="text" name="username" placeholder="Username" required>
-        <input type ="text" name="password" placeholder="Password" required>
-        <input type ="text" name="password" placeholder="Enter password again" required>
-
-        <button>Sign up</button>
+        <div class ="input-fields">
+        <input type ="text" id="email" name="email" placeholder="Email" required>
+        <input type ="text" id="username" name="username" placeholder="Username" required>
+        <input type ="text" id="password" name="password" placeholder="Password" required>
+        <h4>Password strength</h4> <h4 class="strength-icon">&#128994;</h4>
+        <input type ="text" id="password" name="password" placeholder="Password" required>
+        </div>
+        <div>
+            <input type="checkbox">
+            <a href="{{ url_for('auth_routes.login') }}">
+                <button>Submit</button>
+                </a>
+        </div>
         <!--/form-->
         <div class="links">
-            <a href="#">&larr; back</a>
-            <a href="#">Forgot password?</a>
+            <a href="{{ url_for('auth_routes.login') }}">&#8592; Go back</a>
             
         </div>
+    </div>
+    </div>
+</body>
 </body>

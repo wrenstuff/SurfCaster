@@ -40,7 +40,8 @@
     max-width: 100px;
     position: static;
 }
-.recover-wrapper{
+
+.signup-wrapper{
     width: 100vw;
     height: calc(100vh - 150px);
     display: grid;
@@ -54,27 +55,21 @@
         justify-content: center;
         flex-direction: column;
     }
-    .recover-container {
+    .signup-container {
         display: flex;
         justify-content: center;
         flex-direction: column;
         align-items: center;
     }
+    .strength-icon{
+        margin-left: 20px;
+    }
     }
 .input-fields{
-    #email{
-        align-self: center;
-        justify-self: center;
-    }
     input{
-        display: flex;
-    flex-direction: column;
-    align-items: center;
-    align-self: center;
-    justify-content: center;
         margin: 10px;
         height: 20pt;
-        width: 300px;
+        width: 200px;
     }
     display: grid;
 } 
