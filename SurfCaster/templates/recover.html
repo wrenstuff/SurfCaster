@@ -7,18 +7,33 @@
         <title>Document</title>
     </head>
     <body>
-
-        <div class="content">
-            <!-- temp content for the database management page -->
-            <h2>Recover password</h2>
-            <p>Please enter the email associated with your account</p>
-            <input type ="text" name="Email" placeholder="Email" required>
-            <p>Please complete the captcha</p>
-            <p> &#9744;</p>
-            <button>Recover password</button>
-            <!-- Add second screen for enter code from email-->
-         <!-- add third screen for password reovery successful with return to sign in link-->
+<div class="recover-wrapper">
+    <div class ="auth-logo-wrapper">
+    <img class ="auth-logo" src="{{ url_for('static', filename='images/SurfCaster_Logo_256.png') }}">
+    <h1>SurfCaster</h1>
+    <h2>Phishing Detector</h2>
+    </div>
+    <div class= "recover-container">
+        <h3>Account recovery</h3>
+    <!--<form> action="/login" method="POST"-->
+        <div class ="input-fields">
+        <h4>Please enter your email address to recover your account</h4>
+        <input class ="recover-input" type ="text" id="email" name="email" placeholder="email" required>
+        
         </div>
+        <div>
+            <label>
+                <input type ="checkbox">
+            </label>
+            <button>submit</button>
+        </div>
+        <!--/form-->
+        <div class="links">
+            <a href="{{ url_for('auth_routes.recover') }}">Reset password</a>
+            <a href="{{ url_for('auth_routes.signup') }}">Signup</a>
+        </div>
+    </div>
+    </div>
 
     </body>
 </html>
