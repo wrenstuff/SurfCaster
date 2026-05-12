@@ -6,3 +6,5 @@ venv/
 /SurfCaster/auth/__pycache__
 /SurfCaster/node_modules
 /.vscode
+*.css
+*.map

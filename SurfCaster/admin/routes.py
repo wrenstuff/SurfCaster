@@ -1,7 +1,7 @@
 # admin/routes.py
 
 # library imports
-from flask import Blueprint
+from flask import Blueprint, render_template
 
 # blueprint creation
 admin_routes = Blueprint('admin_routes', __name__)
@@ -10,59 +10,59 @@ admin_routes = Blueprint('admin_routes', __name__)
 # Dashboard
 @admin_routes.route('/')
 def home():
-    return "Admin Dashboard"
+    return render_template('dashboard.html')
 
 # URL Scanner
 @admin_routes.route('/scan')
 def scan():
-    return "Admin URL Scan"
+    return render_template('scan.html')
 
 # Scan History
 @admin_routes.route('/history')
 def history():
-    return "Admin Scan History"
+    return render_template('scan_history.html')
 
 # Account
 @admin_routes.route('/account') # possibly change to username?
 def account():
-    return "Admin Account"
+    return render_template('account.html')
 
 # Settings
 @admin_routes.route('/settings')
 def settings():
-    return "Admin Settings"
+    return render_template('settings.html')
 
 # Support
 @admin_routes.route('/support')
 def support():
-    return "Admin Support"
+    return render_template('support.html')
 
 # Review Queue
 @admin_routes.route('/queue')
 def queue():
-    return "Admin Review Queue"
+    return render_template('review-queue.html')
 
 # Review History
 @admin_routes.route('/reviews')
 def reviews():
-    return "Admin Review History"
+    return render_template('review-history.html')
 
 # User Management
 @admin_routes.route('/users')
 def users():
-    return "Admin User Management"
+    return render_template('user-management.html')
 
 # Model Management
 @admin_routes.route('/models')
 def models():
-    return "Admin Model Management"
+    return render_template('model-management.html')
 
 # Database Management
 @admin_routes.route('/database')
 def database():
-    return "Admin Database Management"
+    return render_template('database-management.html')
 
 # Audit Logs
 @admin_routes.route('/logs')
 def logs():
-    return "Admin Audit Logs"
+    return render_template('audit-logs.html')
