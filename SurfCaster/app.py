@@ -3,7 +3,7 @@
 # library imports
 from os import link
 
-from flask import Flask
+from flask import Flask, session
 from pathlib import Path
 
 # internal imports
@@ -19,6 +19,7 @@ from auth.routes import auth_routes
 file_path = Path(__file__).parent / "static" / "images" / "cat.png"
 if file_path.is_file():
     app = Flask(__name__)
+    app.secret_key = "supersecretkey"
 
 app.register_blueprint(admin_routes, url_prefix='/admin')
 app.register_blueprint(reviewer_routes, url_prefix='/reviewer')
