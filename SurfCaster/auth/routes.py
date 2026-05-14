@@ -73,3 +73,8 @@ def signup():
     #else:   
         #print("Registration failed") # Debug statement
         #return "Registration Page"  
+
+@auth_routes.route('/logout')
+def logout():
+    session.clear()
+    return redirect(url_for('auth_routes.login'))
