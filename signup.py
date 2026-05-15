@@ -5,19 +5,18 @@ from CreateDB import DB_NAME
 # blueprint creation
 register_bp = Blueprint('register_bp', __name__)
 
+#logic if we want to have it as a seperate file / calling / language
 def register():
-    if request.method == 'POST':
+    if request.method == "GET":
+        return render_template("signup.html")
+    if request.method == "POST":
         username = request.form.get("username")
         email = request.form.get("email")
-        password = request.form.get("password")  
-        role = 'user'  
-        conn = sqlite3.connect(DB_NAME)
-        cursor = conn.cursor()
-        query = f"INSERT INTO users (username, email, password, role) VALUES ('{username}', '{email}', '{password}', '{role}')"
-        print("Executing:", query)
-        cursor.execute(query)
-        conn.commit()
-        conn.close()
-        flash("Registration successful", "success")
-        return redirect(url_for('login')) 
-    return render_template("Register.html")
+        password = request.form.get("password")
+        connection = sqlite3.connect(DB_NAME)
+        cursor = connection.cursor()
+
+        cursor.execute("INSERT INTO users (username, email, password) VALUES (?, ?, ?)", (username, email, password))
+        connection.commit() 
+        connection.close()
+    return redirect(url_for('auth_routes.login'))

@@ -11,19 +11,11 @@ def splash ():
     return "Welcome to SurfCaster! Please log in or register to continue."
 
 # Login Page
-@auth_routes.route('/login')
+@auth_routes.route('/login', methods=["GET","POST"])
 def login():
-    return render_template('login.html')
-    #print("Login attempt") # Debug statement
-    #if True: # Placeholder for actual login logic
-        #print("Login successful") # Debug statement
-        #return "dashboard//usertype" # Redirect to dashboard
-    #print("Login failed") # Debug statement
-    #return "Login Page" */
-
-@auth_routes.route('/login-form', methods=['GET','POST'])
-def login_form():
-    if request.method == 'POST' and 'username' in request.form and 'password' in request.form:
+    if request.method == "GET":
+        return render_template('login.html')
+    if request.method =="POST":
 
         # get username and password from form
         username = request.form.get("username")
