@@ -17,7 +17,6 @@ def create_tables():
     """)
     conn.commit()   
 
-    # Insert a default admin user if not exists
     cursor.executescript("""
         INSERT OR IGNORE INTO users (username, password, email, role)
         VALUES ('admin', 'admin123','admin@admin', 'admin');

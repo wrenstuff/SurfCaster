@@ -1,6 +1,5 @@
 import sqlite3
 import email
-
 from flask import Blueprint, flash, redirect, render_template, request, session, url_for
 
 DB_NAME = "../SurfCaster.db"
@@ -12,19 +11,11 @@ def splash ():
     return "Welcome to SurfCaster! Please log in or register to continue."
 
 # Login Page
-@auth_routes.route('/login')
+@auth_routes.route('/login', methods=["GET","POST"])
 def login():
-    return render_template('login.html')
-    #print("Login attempt") # Debug statement
-    #if True: # Placeholder for actual login logic
-        #print("Login successful") # Debug statement
-        #return "dashboard//usertype" # Redirect to dashboard
-    #print("Login failed") # Debug statement
-    #return "Login Page" */
-
-@auth_routes.route('/login-form', methods=['GET','POST'])
-def login_form():
-    if request.method == 'POST' and 'username' in request.form and 'password' in request.form:
+    if request.method == "GET":
+        return render_template('login.html')
+    if request.method =="POST":
 
         # get username and password from form
         username = request.form.get("username")
@@ -63,16 +54,24 @@ def recover():
         #print("Registration failed") # Debug statement
         #return "Registration Page"   
 
-@auth_routes.route('/signup')
+@auth_routes.route('/signup', methods=["GET","POST"])
 def signup():
-    return render_template('signup.html')
-    #print("Registration attempt") # Debug statement
-    #if True: # Placeholder for actual registration logic
-        #print("Registration successful") # Debug statement
-        #return "Login Page"
-    #else:   
-        #print("Registration failed") # Debug statement
-        #return "Registration Page"  
+
+    if request.method == "GET":
+        return render_template("signup.html")
+    if request.method == "POST":
+        username = request.form.get("username")
+        email = request.form.get("email")
+        password = request.form.get("password")
+        connection = sqlite3.connect(DB_NAME)
+        cursor = connection.cursor()
+
+        cursor.execute("INSERT INTO users (username, email, password) VALUES (?, ?, ?)", (username, email, password))
+        connection.commit() 
+        connection.close()
+    return redirect(url_for('auth_routes.login'))
+
+    
 
 @auth_routes.route('/logout')
 def logout():

@@ -8,3 +8,5 @@ python -m venv venv
 
 This well bring you inside of the file structure
 source venv/bin/activate
+
+pip install -r requirements.txt
