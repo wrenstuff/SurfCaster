@@ -1,8 +1,9 @@
 # admin/routes.py
 
 # library imports
-from flask import Blueprint, render_template, session
+from flask import Blueprint, redirect, render_template, request, session, url_for
 from user_model import Users
+from extensions import db
 
 # blueprint creation
 admin_routes = Blueprint('admin_routes', __name__)
@@ -71,9 +72,21 @@ def users():
         return "Unauthorized", 403
     
     all_users = Users.query.all()
-    for user in all_users:
-        print(f"User: {user.username}, Email: {user.email}, Role: {user.role}")  # Debug statement
     return render_template('user-management.html', users=all_users)
+
+@admin_routes.route('/update_role', methods=['POST'])
+def update_role():
+    if session.get('role') != 'admin':
+        return "Unauthorized", 403
+    
+    username = request.form.get('username')
+    new_role = request.form.get('role')
+    user = Users.query.filter_by(username=username).first()
+    if user:
+        user.role = new_role
+        db.session.commit()
+
+    return redirect(url_for('admin_routes.users'))
 
 # Model Management
 @admin_routes.route('/models')
