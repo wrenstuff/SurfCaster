@@ -1,51 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="{{ url_for('static', filename='styles/main.css') }}">
-        <title>Document</title>
-    </head>
-    <body>
 
-        {% set page_name = "Settings" %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/main.css') }}">
+    <title>Document</title>
+</head>
 
-        {% include 'header.html' %}
+<body>
 
-        <div class="content">
-            <div class="settings-wrapper">
-                <div class="user-settings settings-section">
-                    <h1>User Settings</h1>
-                    <hr>
-                    <div class="change-password">
-                        <h2>Change Password &#11166;</h2>
-                        <!-- &#11167; ⮟ js to change them? -->
-                    </div>
-                    <div class="profile-settings">
-                        <h2>Profile Settings &#11166;</h2>
-                    </div>
-                    <div class="privacy-settings">
-                        <h2>Privacy Settings &#11166;</h2>
-                    </div>
-                    <div class="delete-account">
-                        <h2>Delete Account &#11166;</h2>
-                    </div>
+    {% set page_name = "Settings" %}
+
+    {% include 'header.html' %}
+
+    <div class="content">
+        <div class="settings-wrapper">
+            <div class="user-settings settings-section">
+                <h1>User Settings</h1>
+                <hr>
+                <div class="change-password">
+                    <h2>Change Password &#11166;</h2>
+                    <!-- &#11167; ⮟ js to change them? -->
                 </div>
-                <div class="application-settings settings-section">
-                    <h1>Application Settings</h1>
-                    <hr>
-                    <div class="connections">
-                        <h2>Connections &#11166;</h2>
-                    </div>
-                    <div class="preferences">
-                        <h2>Preferences &#11166;</h2>
-                    </div>
-                    <div class="permissions">
-                        <h2>Permissions &#11166;</h2>
-                    </div>
+                <div class="profile-settings">
+                    <h2>Profile Settings &#11166;</h2>
+                </div>
+                <div class="privacy-settings">
+                    <h2>Privacy Settings &#11166;</h2>
+                </div>
+                <div class="delete-account">
+                    <h2>Delete Account &#11166;</h2>
+                </div>
+            </div>
+            <div class="application-settings settings-section">
+                <h1>Application Settings</h1>
+                <hr>
+                <div class="connections">
+                    <h2>Connections &#11166;</h2>
+                </div>
+                <div class="preferences">
+                    <h2>Preferences &#11166;</h2>
+                </div>
+                <div class="permissions">
+                    <h2>Permissions &#11166;</h2>
                 </div>
             </div>
         </div>
-        
-    </body>
+    </div>
+
+</body>
+
 </html>

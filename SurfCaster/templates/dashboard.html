@@ -1,131 +1,133 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="{{ url_for('static', filename='styles/main.css') }}">
-        <title>Document</title>
-    </head>
-    <body>
 
-        {% set page_name = "Dashboard" %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/main.css') }}">
+    <title>Document</title>
+</head>
 
-        {% include 'header.html' %}
+<body>
 
-        <div class="dashboard-wrapper">
+    {% set page_name = "Dashboard" %}
 
-            <div class="dash-left-wrapper">
+    {% include 'header.html' %}
+
+    <div class="dashboard-wrapper">
+
+        <div class="dash-left-wrapper">
 
             <div class="dash-left">
 
                 <!-- if user is user || user is reviewer || user is admin -->
                 {% if session.get('role') in ['user', 'reviewer', 'admin'] %}
-                    <!-- url scanner -->
-                    <div class="btn-dash btn-scan">
-                        <a href="{{ url_for(session.get('role') + '_routes.scan') }}">
-                            <div class="btn">URL Scanner</div>
-                        </a>
-                    </div>
-                    <!-- settings -->
-                    <div class="btn-dash btn-settings">
-                        <a href="{{ url_for(session.get('role') + '_routes.settings') }}">
-                            <div class="btn">Settings</div>
-                        </a>
-                    </div>
-                    <!-- account -->
-                    <div class="btn-dash btn-account">
-                        <a href="{{ url_for(session.get('role') + '_routes.account') }}">
-                            <div class="btn">Account</div>
-                        </a>
-                    </div>
-                    <!-- history-->
-                    <div class="btn-dash btn-history">
-                        <a href="{{ url_for(session.get('role') + '_routes.history') }}">
-                            <div class="btn">Scan History</div>
-                        </a>
-                    </div>
-                    <!-- Support -->
-                    <div class="btn-dash btn-support">
-                        <a href="{{ url_for(session.get('role') + '_routes.support') }}">
-                            <div class="btn">Support</div>
-                        </a>
-                    </div>
+                <!-- url scanner -->
+                <div class="btn-dash btn-scan">
+                    <a href="{{ url_for(session.get('role') + '_routes.scan') }}">
+                        <div class="btn">URL Scanner</div>
+                    </a>
+                </div>
+                <!-- settings -->
+                <div class="btn-dash btn-settings">
+                    <a href="{{ url_for(session.get('role') + '_routes.settings') }}">
+                        <div class="btn">Settings</div>
+                    </a>
+                </div>
+                <!-- account -->
+                <div class="btn-dash btn-account">
+                    <a href="{{ url_for(session.get('role') + '_routes.account') }}">
+                        <div class="btn">Account</div>
+                    </a>
+                </div>
+                <!-- history-->
+                <div class="btn-dash btn-history">
+                    <a href="{{ url_for(session.get('role') + '_routes.history') }}">
+                        <div class="btn">Scan History</div>
+                    </a>
+                </div>
+                <!-- Support -->
+                <div class="btn-dash btn-support">
+                    <a href="{{ url_for(session.get('role') + '_routes.support') }}">
+                        <div class="btn">Support</div>
+                    </a>
+                </div>
 
-                    <!-- if user is reviewer || user is admin -->
-                    {% if session.get('role') in ['reviewer', 'admin'] %}
+                <!-- if user is reviewer || user is admin -->
+                {% if session.get('role') in ['reviewer', 'admin'] %}
 
-                        <!-- Queue -->
-                        <div class="btn-dash btn-queue">
-                            <a href="{{ url_for(session.get('role') + '_routes.queue') }}">
-                                <div class="btn">Review Queue</div>
-                            </a>
-                        </div>
-                        <!-- reviews -->
-                        <div class="btn-dash btn-reviews">
-                            <a href="{{ url_for(session.get('role') + '_routes.reviews') }}">
-                                <div class="btn">Review History</div>
-                            </a>
-                        </div>
+                <!-- Queue -->
+                <div class="btn-dash btn-queue">
+                    <a href="{{ url_for(session.get('role') + '_routes.queue') }}">
+                        <div class="btn">Review Queue</div>
+                    </a>
+                </div>
+                <!-- reviews -->
+                <div class="btn-dash btn-reviews">
+                    <a href="{{ url_for(session.get('role') + '_routes.reviews') }}">
+                        <div class="btn">Review History</div>
+                    </a>
+                </div>
 
-                        <!-- if user is admin -->
-                        {% if session.get('role') == 'admin' %}
+                <!-- if user is admin -->
+                {% if session.get('role') == 'admin' %}
 
-                            <!-- users -->
-                            <div class="btn-dash btn-users">
-                                <a href="{{ url_for(session.get('role') + '_routes.users') }}">
-                                    <div class="btn">User Management</div>
-                                </a>
-                            </div>
-                            <!-- models -->
-                            <div class="btn-dash btn-models">
-                                <a href="{{ url_for(session.get('role') + '_routes.models') }}">
-                                    <div class="btn">Model Management</div>
-                                </a>
-                            </div>
-                            <!-- database -->
-                            <div class="btn-dash btn-database">
-                                <a href="{{ url_for(session.get('role') + '_routes.database') }}">
-                                    <div class="btn">Database Management</div>
-                                </a>
-                            </div>
-                            <!-- logs -->
-                            <div class="btn-dash btn-logs">
-                                <a href="{{ url_for(session.get('role') + '_routes.logs') }}">
-                                    <div class="btn">System Logs</div>
-                                </a>
-                            </div>
-                        <!-- endif -->
-                        {% endif %}
-                    <!-- endif -->
-                    {% endif %}
+                <!-- users -->
+                <div class="btn-dash btn-users">
+                    <a href="{{ url_for(session.get('role') + '_routes.users') }}">
+                        <div class="btn">User Management</div>
+                    </a>
+                </div>
+                <!-- models -->
+                <div class="btn-dash btn-models">
+                    <a href="{{ url_for(session.get('role') + '_routes.models') }}">
+                        <div class="btn">Model Management</div>
+                    </a>
+                </div>
+                <!-- database -->
+                <div class="btn-dash btn-database">
+                    <a href="{{ url_for(session.get('role') + '_routes.database') }}">
+                        <div class="btn">Database Management</div>
+                    </a>
+                </div>
+                <!-- logs -->
+                <div class="btn-dash btn-logs">
+                    <a href="{{ url_for(session.get('role') + '_routes.logs') }}">
+                        <div class="btn">System Logs</div>
+                    </a>
+                </div>
+                <!-- endif -->
+                {% endif %}
+                <!-- endif -->
+                {% endif %}
                 <!-- endif -->
                 {% else %}
                 <!-- else -->
-                    <!-- url scanner -->
-                    <div class="btn-dash btn-scan">
-                        <a href="{{ url_for('unauthorised_user_routes.scan') }}">
-                            <div class="btn">URL Scanner</div>
-                        </a>
-                    </div>
-                    <!-- settings -->
-                    <div class="btn-dash btn-settings">
-                        <a href="{{ url_for('unauthorised_user_routes.settings') }}">
-                            <div class="btn">Settings</div>
-                        </a>
-                    </div>
-                    <!-- support -->
-                    <div class="btn-dash btn-support">
-                        <a href="{{ url_for('unauthorised_user_routes.support') }}">
-                            <div class="btn">Support</div>
-                        </a>
-                    </div>
+                <!-- url scanner -->
+                <div class="btn-dash btn-scan">
+                    <a href="{{ url_for('unauthorised_user_routes.scan') }}">
+                        <div class="btn">URL Scanner</div>
+                    </a>
+                </div>
+                <!-- settings -->
+                <div class="btn-dash btn-settings">
+                    <a href="{{ url_for('unauthorised_user_routes.settings') }}">
+                        <div class="btn">Settings</div>
+                    </a>
+                </div>
+                <!-- support -->
+                <div class="btn-dash btn-support">
+                    <a href="{{ url_for('unauthorised_user_routes.support') }}">
+                        <div class="btn">Support</div>
+                    </a>
+                </div>
                 {% endif %}
 
             </div>
-            </div>
+        </div>
 
 
-            <div class="dash-right-wrapper">
+        <div class="dash-right-wrapper">
             <div class="dash-right">
 
                 <div class="news">
@@ -143,9 +145,10 @@
                 </div>
 
             </div>
-            </div>
-
         </div>
-        
-    </body>
+
+    </div>
+
+</body>
+
 </html>
