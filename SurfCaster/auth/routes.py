@@ -1,7 +1,9 @@
 import sqlite3
 import email
 from flask import Blueprint, flash, redirect, render_template, request, session, url_for
+from argon2 import PasswordHasher
 
+hasher = PasswordHasher()
 DB_NAME = "instance/SurfCaster.db"
 
 auth_routes = Blueprint('auth_routes', __name__)
@@ -65,8 +67,8 @@ def signup():
         password = request.form.get("password")
         connection = sqlite3.connect(DB_NAME)
         cursor = connection.cursor()
-
-        cursor.execute("INSERT INTO users (username, email, password) VALUES (?, ?, ?)", (username, email, password))
+        hashedpw = hasher.hash(password)
+        cursor.execute("INSERT INTO users (username, email, password) VALUES (?, ?, ?)", (username, email, hashedpw))
         connection.commit() 
         connection.close()
     return redirect(url_for('auth_routes.login'))
