@@ -2,6 +2,7 @@
 
 # library imports
 from flask import Blueprint, render_template, session
+from user_model import Users
 
 # blueprint creation
 admin_routes = Blueprint('admin_routes', __name__)
@@ -68,7 +69,11 @@ def reviews():
 def users():
     if session.get('role') != 'admin':
         return "Unauthorized", 403
-    return render_template('user-management.html')
+    
+    all_users = Users.query.all()
+    for user in all_users:
+        print(f"User: {user.username}, Email: {user.email}, Role: {user.role}")  # Debug statement
+    return render_template('user-management.html', users=all_users)
 
 # Model Management
 @admin_routes.route('/models')

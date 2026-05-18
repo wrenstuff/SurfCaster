@@ -4,6 +4,7 @@
 from os import link
 
 from flask import Flask, session
+from flask_sqlalchemy import SQLAlchemy
 from pathlib import Path
 
 # internal imports
@@ -13,6 +14,7 @@ from reviewer.routes import reviewer_routes
 from authorisedUser.routes import user_routes
 from unauthorisedUser.routes import unauthorised_user_routes
 from auth.routes import auth_routes
+from extensions import db
 
 # app creation and blueprint registration
 
@@ -20,6 +22,13 @@ file_path = Path(__file__).parent / "static" / "images" / "cat.png"
 if file_path.is_file():
     app = Flask(__name__)
     app.secret_key = "supersecretkey"
+
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///SurfCaster.db'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+db.init_app(app)
+with app.app_context():
+    db.create_all()
 
 app.register_blueprint(admin_routes, url_prefix='/admin')
 app.register_blueprint(reviewer_routes, url_prefix='/reviewer')

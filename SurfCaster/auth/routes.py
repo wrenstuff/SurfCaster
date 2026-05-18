@@ -2,7 +2,7 @@ import sqlite3
 import email
 from flask import Blueprint, flash, redirect, render_template, request, session, url_for
 
-DB_NAME = "../SurfCaster.db"
+DB_NAME = "instance/SurfCaster.db"
 
 auth_routes = Blueprint('auth_routes', __name__)
 
