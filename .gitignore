@@ -8,3 +8,4 @@ venv/
 /.vscode
 *.css
 *.map
+/SurfCaster/__pycache__

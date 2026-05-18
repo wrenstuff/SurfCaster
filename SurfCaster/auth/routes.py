@@ -2,6 +2,7 @@ import sqlite3
 import email
 from flask import Blueprint, flash, redirect, render_template, request, session, url_for
 from argon2 import PasswordHasher
+from user_model import Users
 
 hasher = PasswordHasher()
 DB_NAME = "instance/SurfCaster.db"
@@ -18,31 +19,24 @@ def login():
     if request.method == "GET":
         return render_template('login.html')
     if request.method =="POST":
-
+        conn = sqlite3.connect(DB_NAME)
         # get username and password from form
         username = request.form.get("username")
         password = request.form.get("password")
 
-        # connect to database and check credentials
-        conn = sqlite3.connect(DB_NAME)
-        cursor = conn.cursor()
-        query = "SELECT * FROM users WHERE username = ? AND password = ?"
-        params = (username, password)
-        print("Executing:", query)
-        cursor.execute(query, params)
-        user = cursor.fetchone()
-        conn.close()
-
+        #hashedpw = hasher.hash(password)
+        user = Users.query.filter_by(username=username).first()
+        stored_pass = user.password
+        if hasher.verify(stored_pass,password):
         # populating session with user info
-        if user:
-            session['username'] = user[1] 
-            session['email'] = user[2]
-            session['role'] = user[4]              
+            session['username'] = user.username 
+            session['email'] = user.email
+            session['role'] = user.role            
             flash("Login successful", "success")
 
             # redirect to users' dashboard based on role
             return redirect(url_for(session['role'] + '_routes.home'))
-    return render_template("Login.html")
+    return render_template("login.html")
 
 # Registration Page
 @auth_routes.route('/recover')
