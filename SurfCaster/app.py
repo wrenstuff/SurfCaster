@@ -18,6 +18,7 @@ from extensions import db
 
 # app creation and blueprint registration
 
+# delete this later :'(
 file_path = Path(__file__).parent / "static" / "images" / "cat.png"
 if file_path.is_file():
     app = Flask(__name__)

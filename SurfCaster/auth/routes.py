@@ -62,7 +62,7 @@ def signup():
         connection = sqlite3.connect(DB_NAME)
         cursor = connection.cursor()
         hashedpw = hasher.hash(password)
-        cursor.execute("INSERT INTO users (username, email, password) VALUES (?, ?, ?)", (username, email, hashedpw))
+        cursor.execute("INSERT INTO users (username, email, password, role) VALUES (?, ?, ?, ?)", (username, email, hashedpw, "user"))
         connection.commit() 
         connection.close()
     return redirect(url_for('auth_routes.login'))
