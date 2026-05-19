@@ -1,37 +1,39 @@
 <!DOCTYPE html>
-<html lang="eng"> 
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="{{ url_for('static', filename='styles/main.css') }}">
-        <title>Document</title>
-        {% set access = "unauth" %}
-    </head>
-    <div class = "auth-header">
+<html lang="eng">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/main.css') }}">
+    <title>Document</title>
+    {% set access = "unauth" %}
+</head>
+<div class="auth-header">
+</div>
+<div class="login-wrapper">
+    <div class="auth-logo-wrapper">
+        <img class="auth-logo" src="{{ url_for('static', filename='images/SurfCaster_Logo_256.png') }}">
+        <h1>SurfCaster</h1>
+        <h2>Phishing Detector</h2>
     </div>
-    <div class="login-wrapper">
-    <div class ="auth-logo-wrapper">
-    <img class ="auth-logo" src="{{ url_for('static', filename='images/SurfCaster_Logo_256.png') }}">
-    <h1>SurfCaster</h1>
-    <h2>Phishing Detector</h2>
-    </div>
-    <div class= "login-container">
+    <div class="login-container">
         <h3>Login</h3>
-    <!--<form> action="/login" method="POST"-->
-        <div class ="input-fields">
-        <input type ="text" id="username" name="username" placeholder="Username" required>
-        <input type ="text" id="password" name="password" placeholder="Password" required>
-        
-        </div>
-        <div>
-            <button>submit</button>
-        </div>
-        <!--/form-->
+        <form action="{{ url_for('auth_routes.login') }}" method="POST">
+            <div class="input-fields">
+                <input type="text" id="username" name="username" placeholder="Username" required>
+                <input type="text" id="password" name="password" placeholder="Password" required>
+
+            </div>
+            <div class="login-btn">
+                <button>Log In</button>
+            </div>
+        </form>
         <div class="links">
             <a href="{{ url_for('auth_routes.recover') }}">Reset password</a>
             <a href="{{ url_for('auth_routes.signup') }}">Signup</a>
         </div>
     </div>
-    </div>
+</div>
 </body>
+
 </html>

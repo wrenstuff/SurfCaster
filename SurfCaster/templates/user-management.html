@@ -1,22 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="{{ url_for('static', filename='styles/main.css') }}">
-        <title>Document</title>
-    </head>
-    <body>
 
-        {% set page_name = "User Management" %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/main.css') }}">
+    <title>Document</title>
+</head>
 
-        {% include 'header.html' %}
+<body>
 
-        <div class="content">
-            <!-- temp content for the user management page -->
-            <h2>User Management</h2>
-            <p>This is the user management page.</p>
+    {% set page_name = "User Management" %}
+
+    {% include 'header.html' %}
+
+    <div class="content">
+
+        <div class="mod-user">
+            <form action="{{ url_for('admin_routes.update_role') }}" method="POST">
+                <h3>Modify User</h3>
+                <input type="text" name="username" placeholder="Username">
+                <select name="role">
+                    <option value="admin">Admin</option>
+                    <option value="reviewer">Reviewer</option>
+                    <option value="unauth">Unauthenticated</option>
+                </select>
+                <button type="submit">Update Role</button>
+            </form>
         </div>
 
-    </body>
+        <div class="user-table"></div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Username</th>
+                        <th>Email</th>
+                        <th>Role</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for user in users %}
+                    <tr>
+                        <td>{{ user.id }}</td>
+                        <td>{{ user.username }}</td>
+                        <td>{{ user.email }}</td>
+                        <td>{{ user.role }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</body>
+
 </html>

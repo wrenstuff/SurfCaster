@@ -1,22 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="{{ url_for('static', filename='styles/main.css') }}">
-        <title>Document</title>
-    </head>
-    <body>
 
-        {% set page_name = "Scan History" %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/main.css') }}">
+    <title>Document</title>
+</head>
 
-        {% include 'header.html' %}
+<body>
 
-        <div class="content">
-            <!-- temp content for the Scan History page -->
-            <h2>Scan History</h2>
-            <p>This is the scan history page.</p>
-        </div>
+    {% set page_name = "Scan History" %}
 
-    </body>
+    {% include 'header.html' %}
+
+    <div class="content">
+        <!-- temp content for the Scan History page -->
+        <h2>Scan History</h2>
+        <p>This is the scan history page.</p>
+    </div>
+
+</body>
+
 </html>

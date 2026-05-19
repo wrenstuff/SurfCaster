@@ -41,7 +41,8 @@
     position: static;
 }
 
-.signup-wrapper{
+.signup-wrapper
+{
     width: 100vw;
     height: calc(100vh - 150px);
     display: grid;
@@ -49,6 +50,16 @@
     justify-content: center;
     color:color.$tertiary-text;
     text-decoration: none;
+    .PWstrength{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        padding-bottom: 7px;
+    }
+    .signup-text{
+        text-align: center; 
+    }
     .auth-logo-wrapper{
         display: flex;
         align-items: center;
@@ -64,17 +75,41 @@
     .strength-icon{
         margin-left: 20px;
     }
+ 
+    .input-fields{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        input{
+            margin: 10px;
+            height: 20pt;
+            max-width: 300px;
+        }
     }
-.input-fields{
-    input{
-        margin: 10px;
-        height: 20pt;
-        width: 200px;
+    .toc{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        font-size: 10pt;
+        .checkbox{
+            margin: 0 10px 0 0;
+        }
     }
-    display: grid;
+    .sub-btn{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        button{
+            width:60px;
+        margin-top: 20px;
+        }
+    }
 } 
 
-.recover-wrapper{
+.recover-container{
     width: 100vw;
     height: calc(100vh - 150px);
     display: grid;
@@ -110,4 +145,9 @@
         width: 300px;
     }
     display: grid;
-} 
+}
+.login-btn{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

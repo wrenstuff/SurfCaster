@@ -1,22 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="{{ url_for('static', filename='styles/main.css') }}">
-        <title>Document</title>
-    </head>
-    <body>
 
-        {% set page_name = "Model Management" %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/main.css') }}">
+    <title>Document</title>
+</head>
 
-        {% include 'header.html' %}
+<body>
 
-        <div class="content">
-            <!-- temp content for the model management page -->
-            <h2>Model Management</h2>
-            <p>This is the model management page.</p>
-        </div>
+    {% set page_name = "Model Management" %}
 
-    </body>
+    {% include 'header.html' %}
+
+    <div class="content">
+        <!-- temp content for the model management page -->
+        <h2>Model Management</h2>
+        <p>This is the model management page.</p>
+    </div>
+
+</body>
+
 </html>
