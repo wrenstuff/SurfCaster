@@ -2,6 +2,7 @@ import sqlite3
 import email
 from flask import Blueprint, flash, redirect, render_template, request, session, url_for
 from argon2 import PasswordHasher
+from argon2.exceptions import VerifyMismatchError
 from user_model import Users
 
 hasher = PasswordHasher()
@@ -26,17 +27,22 @@ def login():
 
         #hashedpw = hasher.hash(password)
         user = Users.query.filter_by(username=username).first()
-        stored_pass = user.password
-        if hasher.verify(stored_pass,password):
-        # populating session with user info
-            session['username'] = user.username 
-            session['email'] = user.email
-            session['role'] = user.role            
-            flash("Login successful", "success")
-
-            # redirect to users' dashboard based on role
-            return redirect(url_for(session['role'] + '_routes.home'))
-    return render_template("login.html")
+        if user:
+            try:
+                stored_pass = user.password
+                if hasher.verify(stored_pass,password):
+                    # populating session with user info
+                    session['username'] = user.username 
+                    session['email'] = user.email
+                    session['role'] = user.role            
+                    flash("Login successful", "success")
+                    # redirect to users' dashboard based on role
+                    return redirect(url_for(session['role'] + '_routes.home'))
+                
+            except VerifyMismatchError:
+                flash("Invalid username or password", "error")
+                return render_template("login.html")
+    
 
 # Registration Page
 @auth_routes.route('/recover')

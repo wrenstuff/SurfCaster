@@ -8,6 +8,7 @@
     <title>Document</title>
     {% set access = "unauth" %}
 </head>
+
 <div class="auth-header">
 </div>
 <div class="login-wrapper">
@@ -21,17 +22,27 @@
         <form action="{{ url_for('auth_routes.login') }}" method="POST">
             <div class="input-fields">
                 <input type="text" id="username" name="username" placeholder="Username" required>
-                <input type="text" id="password" name="password" placeholder="Password" required>
+                <input type="password" id="password" name="password" placeholder="Password" required>
 
             </div>
             <div class="login-btn">
                 <button>Log In</button>
             </div>
+
         </form>
         <div class="links">
             <a href="{{ url_for('auth_routes.recover') }}">Reset password</a>
             <a href="{{ url_for('auth_routes.signup') }}">Signup</a>
         </div>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        {%for category, message in messages %}
+        <div class="login-flash {{ category }}">
+            {{ message}}
+        </div>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
     </div>
 </div>
 </body>
