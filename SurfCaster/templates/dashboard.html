@@ -124,17 +124,6 @@
 
             </div>
         </div>
-{% with messages = get_flashed_messages(with_categories=true) %}
-        {% if messages %}
-        {%for category, message in messages %}
-        <div class="login-flash {{ category }}">
-            {{ message}}
-        </div>
-        {% endfor %}
-        {% endif %}
-        {% endwith %}
-    {% set page_name = "Dashboard" %}
-
         <div class="dash-right-wrapper">
             <div class="dash-right">
 

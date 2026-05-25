@@ -6,7 +6,10 @@ from os import link
 from flask import Flask, session
 from flask_sqlalchemy import SQLAlchemy
 from pathlib import Path
-
+from sqlalchemy import text
+#delete later 
+from argon2 import PasswordHasher
+ph = PasswordHasher()
 # internal imports
 # Uncomment when routes have been added
 from admin.routes import admin_routes
@@ -30,6 +33,25 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db.init_app(app)
 with app.app_context():
     db.create_all()
+    
+    with db.engine.begin() as conn:
+        result = conn.execute(text("""
+            SELECT 1 FROM users
+            WHERE username = :username
+            LIMIT 1
+        """), {"username": "admin"}).fetchone()
+
+        if not result:
+            hashed_pw = ph.hash("admin123")
+            conn.execute(text("""
+                INSERT INTO users (username, email, password, role)
+                VALUES (:username, :email, :password, :role)
+            """), {
+                "username": "admin",
+                "email": "admin@admin",
+                "password": hashed_pw,
+                "role": "admin"
+            })
 
 app.register_blueprint(admin_routes, url_prefix='/admin')
 app.register_blueprint(reviewer_routes, url_prefix='/reviewer')

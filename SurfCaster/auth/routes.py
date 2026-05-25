@@ -42,6 +42,10 @@ def login():
             except VerifyMismatchError:
                 flash("Invalid username or password", "error")
                 return render_template("login.html")
+        
+        else:   
+            flash("Invalid username or password", "error")
+            return render_template("login.html")
     
 
 # Registration Page
