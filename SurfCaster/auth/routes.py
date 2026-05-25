@@ -12,7 +12,7 @@ auth_routes = Blueprint('auth_routes', __name__)
 
 @auth_routes.route('/')
 def splash ():
-    return "Welcome to SurfCaster! Please log in or register to continue."
+    return render_template("splash.html")
 
 # Login Page
 @auth_routes.route('/login', methods=["GET","POST"])

@@ -109,7 +109,7 @@
     }
 } 
 
-.recover-container{
+.recover-wrapper{
     width: 100vw;
     height: calc(100vh - 150px);
     display: grid;
@@ -150,4 +150,10 @@
     display: flex;
     justify-content: center;
     align-items: center;
+}
+/* remove this later! */
+.temp-button{
+    width: 500px;
+    height: 500px;
+    font-size: 60px;
 }
