@@ -24,7 +24,12 @@ print(df.info())
 #define target column
 target_column = 'status'
 
+drop_columns = ['nb_hyperlinks', 'ratio_intHyperlinks', 'ratio_extHyperlinks', 'ratio_nullHyperlinks', 'nb_extCSS', 'ratio_intRedirection', 'ratio_extRedirection', 'ratio_intErrors', 'ratio_extErrors', 'login_form', 'external_favicon', 'links_in_tags', 'submit_email', 'ratio_intMedia', 'ratio_extMedia', 'sfh', 'iframe', 'popup_window', 'safe_anchor', 'onmouseover', 'right_clic', 'empty_title', 'domain_in_title', 'domain_with_copyright', 'whois_registered_domain', 'domain_registration_length', 'domain_age', 'web_traffic', 'dns_record', 'google_index', 'page_rank']
+
 df_train = df.copy() #df.drop(columns=['url'])
+
+# drops specified columns
+df_train = df_train.drop(columns=drop_columns)
 
 # converts legitemate and phishing to 0 and 1
 df_train[target_column] = df_train[target_column].map({
@@ -45,7 +50,7 @@ X = pd.get_dummies(x, drop_first=True)
 X_train, X_test, y_train, y_test = train_test_split(
     X, 
     y, 
-    test_size=0.25, 
+    test_size=0.30, 
     random_state=42
 )
 
@@ -80,7 +85,7 @@ optimizer = torch.optim.Adam(model.parameters(), lr=0.01)
 # more epochs = better training but possible overfitting
 # less epochs = faster training but possible underfitting
 # gotta figure out the sweet spot
-epochs = 500
+epochs = 1000
 
 for epoch in range(epochs):
     model.train()
@@ -92,7 +97,7 @@ for epoch in range(epochs):
     loss.backward()
     optimizer.step()
 
-    if (epoch+1) % 50 == 0:
+    if (epoch+1) % 100 == 0:
         print(f'Epoch {epoch+1}/{epochs}, Loss: {loss.item():.4f}')
 
 # model evaluation
@@ -123,5 +128,5 @@ print()
 print(f"Confusion Matrix:\n{matrix}")
 
 #save model
-torch.save(model.state_dict(), 'phishing_detector_model.pth')
-print("Model saved as 'phishing_detector_model.pth'")
+torch.save(model.state_dict(), 'Baelin.pth')
+print("Model saved as 'Baelin.pth'")
