@@ -2,6 +2,7 @@ from urllib.parse import urlparse
 import re
 import math
 from tlds import tld_set
+import torch
 
 url_shortners = 'url-shortners.txt'
 
@@ -13,6 +14,60 @@ SUSPICIOUS_TLDS = [
     "zip", "review", "country", "kim", "cricket", "science", "work", "party", "gq", "tk", "ml", "ga", "cf"
 ]
 
+FEATURE_ORDER = [
+    "length_url",
+    "length_hostname",
+    "ip",
+    "nb_dots",
+    "nb_hyphens",
+    "nb_at",
+    "nb_qm",
+    "nb_and",
+    "nb_or",
+    "nb_eq",
+    "nb_underscore",
+    "nb_tilde",
+    "nb_percent",
+    "nb_slash",
+    "nb_star",
+    "nb_colon",
+    "nb_comma",
+    "nb_semicolumn",
+    "nb_dollar",
+    "nb_space",
+    "nb_www",
+    "nb_com",
+    "nb_dslash",
+    "http_in_path",
+    "https_token",
+    "ratio_digits_url",
+    "ratio_digits_host",
+    "punycode",
+    "port",
+    "tld_in_path",
+    "tld_in_subdomain",
+    "abnormal_subdomain",
+    "nb_subdomains",
+    "prefix_suffix",
+    "random_domain",
+    "shortening_service",
+    "path_extension",
+    "length_words_raw",
+    "char_repeat",
+    "shortest_words_raw",
+    "shortest_word_host",
+    "shortest_word_path",
+    "longest_words_raw",
+    "longest_word_host",
+    "longest_word_path",
+    "avg_words_raw",
+    "avg_word_host",
+    "avg_word_path",
+    "phish_hints",
+    "suspicious_tld"
+
+]
+
 def has_ip_address(hostname):
     if not hostname:
         return 0
@@ -21,7 +76,7 @@ def has_ip_address(hostname):
     return int(bool(re.match(ipv4_pattern, hostname)))
 
 def count_char_repeats(text):
-    return len(re.findall(r"(.)\1{2,}"), text)
+    return len(re.findall(r"(.)\1{2,}", text))
 
 def get_words(text):
     return [word for word in re.split(r"[^A-Za-z0-9]+", text) if word]
@@ -118,9 +173,6 @@ def extract_url_features(url):
 
         "path_extension": int(bool(re.search(r"\.[a-zA-Z0-9]{2,5}$", path))),
 
-        "nb_redirection": 0,
-        "nb_external_redirection": 0,
-
         "length_words_raw": len(raw_words),
 
         "char_repeat": count_char_repeats(full_url),
@@ -139,12 +191,10 @@ def extract_url_features(url):
 
         "phish_hints": sum(word in full_url for word in SUSPICIOUS_WORDS),
 
-        "domain_in_brand": 0,
-        "brand_in_subdomain": 0,
-        "brand_in_path": 0,
-
-        "suspecious_tld": int(tld in SUSPICIOUS_TLDS),
-        "statistical_report": 0,
+        "suspicious_tld": int(tld in SUSPICIOUS_TLDS)
     }
 
-    return features
+    feature_values = [features[name] for name in FEATURE_ORDER]
+    input_tensor = torch.tensor([feature_values], dtype = torch.float32)
+
+    return input_tensor

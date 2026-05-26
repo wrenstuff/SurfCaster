@@ -10,18 +10,17 @@ for key, value in state_dict.items():
 class Baelin(nn.Module):
     def __init__(self):
         super(Baelin, self).__init__()
-        self.linear = nn.Linear(11515, 1)
+        self.linear = nn.Linear(50, 1)
 
     def forward(self, x):
-        x = torch.relu(self.linear(x))
-        return x
+        return self.linear(x)
     
 model = Baelin()
 
-model.load_state_dict(torch.load('SurfCaster/models/Baelin.pth'))
+model.load_state_dict(torch.load(state_dict_path))
 model.eval()
 
-input_data = torch.randn(1, 11515)
+input_data = torch.randn(1, 50)
 with torch.no_grad():
-    prediction = model(input_data)
-    print(prediction)
+    logits = model(input_data)
+    probability = torch.sigmoid(logits).item()

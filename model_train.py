@@ -11,7 +11,7 @@ print(f'Using device: {device}')
 
 # Creating a dataframe from the pandas library
 # and importing the test dataset for initial training
-df = pd.read_csv('dataset_phishing.csv')
+df = pd.read_csv('data.csv')
 
 # drops rows with missing values
 df.dropna(inplace=True)
@@ -23,13 +23,9 @@ print(df.info())
 
 #define target column
 target_column = 'status'
+url_column = 'url'
 
-drop_columns = ['nb_hyperlinks', 'ratio_intHyperlinks', 'ratio_extHyperlinks', 'ratio_nullHyperlinks', 'nb_extCSS', 'ratio_intRedirection', 'ratio_extRedirection', 'ratio_intErrors', 'ratio_extErrors', 'login_form', 'external_favicon', 'links_in_tags', 'submit_email', 'ratio_intMedia', 'ratio_extMedia', 'sfh', 'iframe', 'popup_window', 'safe_anchor', 'onmouseover', 'right_clic', 'empty_title', 'domain_in_title', 'domain_with_copyright', 'whois_registered_domain', 'domain_registration_length', 'domain_age', 'web_traffic', 'dns_record', 'google_index', 'page_rank']
-
-df_train = df.copy() #df.drop(columns=['url'])
-
-# drops specified columns
-df_train = df_train.drop(columns=drop_columns)
+df_train = df.copy()
 
 # converts legitemate and phishing to 0 and 1
 df_train[target_column] = df_train[target_column].map({
@@ -38,19 +34,27 @@ df_train[target_column] = df_train[target_column].map({
 })
 
 #drops the target column from df
-x = df_train.drop(columns=[target_column])
+x = df_train.drop(columns=[target_column, url_column])
 # makes a new dataframe for target column
 y = df_train[target_column]
 
 # turns catagorical variables into dummy variabes (True/False) to (1/0)
 # cumputers don't like words
-X = pd.get_dummies(x, drop_first=True)
+# if you have a column which has SO MANY UNIQUE VALUES,
+# please make sure you drop if first.
+# I just spent hours on this because of the stupid "url" column
+# it was making the model extremely big when it wasn't supposed to be...
+# thanks for coming to my ted talk
+x = pd.get_dummies(x, drop_first=True)
+
+input_size = x.shape[1]
+print(f"Input size: {input_size}")
 
 # setting up the train/split for the model
 X_train, X_test, y_train, y_test = train_test_split(
-    X, 
+    x, 
     y, 
-    test_size=0.30, 
+    test_size=0.225, 
     random_state=42
 )
 
@@ -66,16 +70,16 @@ y_train_tensor = torch.tensor(y_train.values, dtype=torch.float32).view(-1, 1).t
 y_test_tensor = torch.tensor(y_test.values, dtype=torch.float32).view(-1, 1).to(device)
 
 # define the model
-class PhishingDetector(nn.Module):
+class Baelin(nn.Module):
     def __init__(self, input_size):
-        super().__init__()
+        super(Baelin, self).__init__()
         self.linear = nn.Linear(input_size, 1)
-    
+
     def forward(self, x):
         return self.linear(x)
 
 input_size = X_train_tensor.shape[1]
-model = PhishingDetector(input_size).to(device)
+model = Baelin(input_size).to(device)
 
 #loss and optimizer
 loss_function = nn.BCEWithLogitsLoss()
@@ -85,7 +89,7 @@ optimizer = torch.optim.Adam(model.parameters(), lr=0.01)
 # more epochs = better training but possible overfitting
 # less epochs = faster training but possible underfitting
 # gotta figure out the sweet spot
-epochs = 1000
+epochs = 150
 
 for epoch in range(epochs):
     model.train()
@@ -97,7 +101,7 @@ for epoch in range(epochs):
     loss.backward()
     optimizer.step()
 
-    if (epoch+1) % 100 == 0:
+    if (epoch+1) % 15 == 0:
         print(f'Epoch {epoch+1}/{epochs}, Loss: {loss.item():.4f}')
 
 # model evaluation
@@ -106,7 +110,8 @@ model.eval()
 with torch.no_grad():
     test_logits = model(X_test_tensor.to(device))
     test_probabilities = torch.sigmoid(test_logits)
-    test_predictions = (test_probabilities >= 0.5).float()
+    # probability that it accepts the url as legitemate or phishing
+    test_predictions = (test_probabilities >= 0.55).float()
 
 y_pred = test_predictions.cpu().numpy()
 y_true = y_test_tensor.cpu().numpy()
@@ -128,5 +133,14 @@ print()
 print(f"Confusion Matrix:\n{matrix}")
 
 #save model
-torch.save(model.state_dict(), 'Baelin.pth')
+save_path = 'SurfCaster/models/Baelin.pth'
+torch.save(model.state_dict(), save_path)
 print("Model saved as 'Baelin.pth'")
+
+
+print("Saving model to:", save_path)
+
+for key, value in model.state_dict().items():
+    print(key, value.shape)
+
+torch.save(model.state_dict(), save_path)

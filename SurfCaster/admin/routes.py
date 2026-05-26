@@ -5,7 +5,7 @@ from flask import Blueprint, flash, redirect, render_template, request, session,
 from user_model import Users
 from extensions import db
 import models.Baelin as Baelin
-import torch
+import url_extractor as ex
 
 # blueprint creation
 admin_routes = Blueprint('admin_routes', __name__)
@@ -29,9 +29,12 @@ def scan():
         url = request.form.get('url')
 
         # turn url into features then convert to tensor
-        # 
+        features = ex.extract_url_features(url)
 
-        print(Baelin.model(url))
+        model = Baelin.Baelin()
+
+        model(features)
+
         print(f"URL '{url}' scanned successfully!", "success")
         return redirect(url_for('admin_routes.scan'))
 
