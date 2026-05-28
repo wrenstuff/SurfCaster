@@ -3,19 +3,35 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background-color: azure;
+    margin-bottom: 70px;
     width: 500px;
-    border-radius: 15px;
+    border-radius: 10px;
     #scan{
-        margin: 20px 0px;
-        width: 300px;
+        border: 0px;
+        margin-top: 15px;
+        width: 400px;
+        height: 50px;
+        text-indent: 15px;
+        border-radius: 5px 0px 0px 5px;
     }
+   
     #scanner-title{
         margin-top: 10px;
     }
     #scan-button{
-        margin-left: 10px;
-        width: 50px;
-        
+        width: 60px;
+        height: 50px;
+        margin-left: -6px;
+        border: 0px;
+        border-radius: 0px 5px 5px 0px;
     }
+    
 }
+.scan-res-wrapper{
+    margin-top: 30px;
+        background-color: rgb(226, 226, 226);
+        width: 430px;
+        height: 300px;
+        text-align: center;
+        border-radius: 5px;
+    }
