@@ -1,9 +1,11 @@
 # admin/routes.py
 
 # library imports
-from flask import Blueprint, redirect, render_template, request, session, url_for
+from flask import Blueprint, flash, redirect, render_template, request, session, url_for
 from user_model import Users
 from extensions import db
+import models.Baelin as Baelin
+import url_extractor as ex
 
 # blueprint creation
 admin_routes = Blueprint('admin_routes', __name__)
@@ -17,11 +19,25 @@ def home():
     return render_template('dashboard.html')
 
 # URL Scanner
-@admin_routes.route('/scan')
+@admin_routes.route('/scan', methods=['GET', 'POST'])
 def scan():
-    if session.get('role') != 'admin':
-        return "Unauthorized", 403
-    return render_template('scan.html')
+    if request.method ==  'GET':
+        if session.get('role') != 'admin':
+            return "Unauthorized", 403
+        return render_template('scan.html')
+    if request.method == 'POST':
+        url = request.form.get('url')
+
+        # turn url into features then convert to tensor
+        features = ex.extract_url_features(url)
+
+        model = Baelin.Baelin()
+
+        print(model.predict(features))
+
+        
+        print(f"URL '{url}' scanned successfully!", "success")
+        return redirect(url_for('admin_routes.scan'))
 
 # Scan History
 @admin_routes.route('/history')

@@ -18,6 +18,10 @@
         <!-- temp content for the URL Scanner page -->
         <h2>URL Scanner</h2>
         <p>This is the URL scanner page.</p>
+        <form method="POST" action="{{ url_for('admin_routes.scan') }}">
+            <input type="text" name="url" placeholder="Enter URL to scan" required>
+            <button type="submit">Scan URL</button>
+        </form>
     </div>
 
 </body>
