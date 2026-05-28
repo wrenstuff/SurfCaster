@@ -6,10 +6,15 @@ OUTPUT_CSV = "data.csv"
 
 URL_COLUMN = "url"
 STATUS_COLUMN = "status"
+RANDOM_COLUMN = "random_domain"
 
 
 def main():
     df = pd.read_csv(INPUT_CSV)
+
+    output_feature_order = [
+        col for col in FEATURE_ORDER if col != RANDOM_COLUMN
+    ]
 
     rows = []
 
@@ -26,6 +31,8 @@ def main():
 
             output_row = dict(zip(FEATURE_ORDER, feature_values))
 
+            output_row.pop(RANDOM_COLUMN, None)
+
             output_row["status"] = row[STATUS_COLUMN]
 
             output_row["url"] = url
@@ -38,7 +45,7 @@ def main():
 
     output_df = pd.DataFrame(rows)
 
-    columns = ["url"] + FEATURE_ORDER + ["status"]
+    columns = ["url"] + output_feature_order + ["status"]
     output_df = output_df[columns]
 
     output_df.to_csv(OUTPUT_CSV, index=False)

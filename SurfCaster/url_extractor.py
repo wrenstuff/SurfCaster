@@ -49,7 +49,6 @@ FEATURE_ORDER = [
     "abnormal_subdomain",
     "nb_subdomains",
     "prefix_suffix",
-    "random_domain",
     "shortening_service",
     "path_extension",
     "length_words_raw",
@@ -89,13 +88,6 @@ def safe_max(values):
 
 def safe_avg(values):
     return sum(values) / len(values) if values else 0
-
-def entropy(text):
-    if not text:
-        return 0
-
-    probabilities = [text.count(char) / len(text) for char in set(text)]
-    return -sum(p * math.log2(p) for p in probabilities)
 
 def extract_url_features(url):
     parsed = urlparse(url)
@@ -166,8 +158,6 @@ def extract_url_features(url):
         "nb_subdomains": max(len(domain_parts) - 2, 0),
 
         "prefix_suffix": int("-" in hostname),
-
-        "random_domain": int(entropy(hostname.split(".")[0]) > 3.5),
 
         "shortening_service": int(any(service in hostname for service in open(url_shortners).read().splitlines())),
 

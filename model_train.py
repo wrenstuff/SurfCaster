@@ -89,7 +89,7 @@ optimizer = torch.optim.Adam(model.parameters(), lr=0.01)
 # more epochs = better training but possible overfitting
 # less epochs = faster training but possible underfitting
 # gotta figure out the sweet spot
-epochs = 150
+epochs = 1000
 
 for epoch in range(epochs):
     model.train()
@@ -101,7 +101,7 @@ for epoch in range(epochs):
     loss.backward()
     optimizer.step()
 
-    if (epoch+1) % 15 == 0:
+    if (epoch+1) % 100 == 0:
         print(f'Epoch {epoch+1}/{epochs}, Loss: {loss.item():.4f}')
 
 # model evaluation
@@ -111,7 +111,7 @@ with torch.no_grad():
     test_logits = model(X_test_tensor.to(device))
     test_probabilities = torch.sigmoid(test_logits)
     # probability that it accepts the url as legitemate or phishing
-    test_predictions = (test_probabilities >= 0.55).float()
+    test_predictions = (test_probabilities >= 0.50).float()
 
 y_pred = test_predictions.cpu().numpy()
 y_true = y_test_tensor.cpu().numpy()
