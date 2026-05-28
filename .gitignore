@@ -11,3 +11,5 @@ venv/
 /SurfCaster/__pycache__
 /__pycache__
 /SurfCaster/models/__pycache__
+*.pyc
+/SurfCaster/models/__pycache__

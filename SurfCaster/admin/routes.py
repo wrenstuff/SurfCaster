@@ -33,8 +33,9 @@ def scan():
 
         model = Baelin.Baelin()
 
-        model(features)
+        print(model.predict(features))
 
+        
         print(f"URL '{url}' scanned successfully!", "success")
         return redirect(url_for('admin_routes.scan'))
 
