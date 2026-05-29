@@ -14,15 +14,22 @@
 
     {% include 'header.html' %}
 
-    <div class="content">
+    <div class="scan-content">
         <!-- temp content for the URL Scanner page -->
-        <h2>URL Scanner</h2>
-        <p>This is the URL scanner page.</p>
-        <form method="POST" action="{{ url_for('admin_routes.scan') }}">
-            <input type="text" name="url" placeholder="Enter URL to scan" required>
-            <button type="submit">Scan URL</button>
-        </form>
+        <div class="scan-wrapper">
+            <form method="POST" action="{{ url_for('admin_routes.scan') }}">
+                <input class="scan" type="text" name="url" placeholder="Enter URL to scan">
+                <button type="submit" id="scan-button">Scan</button>
+            </form>
+            <div class="scan-res-wrapper">
+                <div class="scan-results">
+                    <h2>Scan results for ...</h2>
+                    <p>likely malicious. 92.84%</p>
+                </div>
+            </div>
+        </div>  
     </div>
+
 
 </body>
 

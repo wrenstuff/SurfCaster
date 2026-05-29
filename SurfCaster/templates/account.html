@@ -14,15 +14,23 @@
 
     {% include 'header.html' %}
 
-    <div class="content">
-        <!-- temp content for the account page -->
-        <h2>Account</h2>
-        <p>This is the account page.</p>
+    <div class="account-wrapper">
+        <div class="profile-background">
+            <!-- temp content for the account page -->
+            <img src="{{ url_for('static', filename='images/SurfCaster_Logo_32.png') }}" alt="SurfCaster Logo">
+            <h1>Username</h1>
 
-        <button><a href="{{ url_for('auth_routes.logout') }}">Logout</a></button>
 
+        </div>
+        <div class="content-background">
+            <h2>You have been a member since:date</h2>
+            <h2> you have scanned X URL's</h2>
+
+
+
+        </div>
+        <button class="logout-button"><a href="{{ url_for('auth_routes.logout') }}">Logout</a></button>
     </div>
-
 </body>
 
 </html>
