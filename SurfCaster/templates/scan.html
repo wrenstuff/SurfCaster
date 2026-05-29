@@ -17,9 +17,9 @@
     <div class="scan-content">
         <!-- temp content for the URL Scanner page -->
         <div class="scan-wrapper">
-            <form>
-                <input class="scan" type="text"  placeholder="Enter URL to scan">
-                <button id="scan-button">Scan</button>
+            <form method="POST" action="{{ url_for('admin_routes.scan') }}">
+                <input class="scan" type="text" name="url" placeholder="Enter URL to scan">
+                <button type="submit" id="scan-button">Scan</button>
             </form>
             <div class="scan-res-wrapper">
                 <div class="scan-results">
@@ -27,8 +27,7 @@
                     <p>likely malicious. 92.84%</p>
                 </div>
             </div>
-        </div>
-
+        </div>  
     </div>
 
 
