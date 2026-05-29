@@ -21,7 +21,7 @@
                 <input class="scan" type="text" name="url" placeholder="Enter URL to scan" {% if session.get('last_scanned_url') %} value="{{ session.get('last_scanned_url') }}" {% endif %}>
                 <button type="submit" id="scan-button">Scan</button>
             </form>
-            <div class="scan-res-wrapper">
+            <div class="scan-res-wrapper {% if session.get('last_scan_result') is not none %} {% else %} hidden {% endif %}">
                 <div class="scan-results">
                     <h2>Scan results for {{ session.get('last_scanned_url') }}</h2>
                     
@@ -37,6 +37,13 @@
                         {% else %}
                             <p class="danger">URL is likely unsafe</p>
                         {% endif %}
+
+                        <div class="flags">
+                            <form class="flag-form">
+                                <button type="submit" class="flag-button">Correct</button>
+                                <button type="submit" class="flag-button">Incorrect</button>
+                            </form>
+                        </div>
                     {% endif %}
                 </div>
             </div>
