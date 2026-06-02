@@ -9,12 +9,8 @@
 </head>
 
 <body>
+    {% include 'login-header.html' %}
     <div class="recover-wrapper">
-        <div class="auth-logo-wrapper">
-            <img class="auth-logo" src="{{ url_for('static', filename='images/SurfCaster_Logo_256.png') }}">
-            <h1>SurfCaster</h1>
-            <h2>Phishing Detector</h2>
-        </div>
         <div class="recover-container">
             <h3 class="recover-title">Account recovery</h3>
             <p class="email-p">Enter your email address to recover your account</p>

@@ -10,12 +10,9 @@
 </head>
 <div class="auth-header">
 </div>
+<body>
+    {% include 'login-header.html' %}
 <div class="signup-wrapper">
-    <div class="auth-logo-wrapper">
-        <img class="auth-logo" src="{{ url_for('static', filename='images/SurfCaster_Logo_256.png') }}">
-        <h1>SurfCaster</h1>
-        <h2>Phishing Detector</h2>
-    </div>
     <div class="signup-container">
         <h3 class="signup-text">Sign up</h3>
         <form method="POST" action="/signup">
@@ -46,5 +43,4 @@
     </div>
 </div>
 </div>
-</body>
 </body>

@@ -60,7 +60,10 @@
         color: color.$tertiary-text;
     }
 }
-
+.phishing-detector {
+    color: color.$primary-text;
+    font-size: 14pt;
+}
 .page-name {
     h2 {
         color: color.$tertiary-text;

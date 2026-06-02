@@ -3,7 +3,7 @@
 .login-wrapper {
     width: 100vw;
     height: calc(100vh - 150px);
-    display: grid;
+    display: flex;
     align-items: center;
     justify-content: center;
     color: color.$tertiary-text;
@@ -86,7 +86,7 @@
 .signup-wrapper {
     width: 100vw;
     height: calc(100vh - 150px);
-    display: grid;
+    display: flex;
     align-items: center;
     justify-content: center;
     color: color.$tertiary-text;
@@ -139,10 +139,12 @@
         flex-direction: column;
         align-items: center;
         justify-content: center;
+        width: 100%;
 
         input {
             margin: 10px;
             height: 20pt;
+            width: 100%;
             max-width: 300px;
         }
     }
@@ -192,7 +194,7 @@
 .recover-wrapper {
     width: 100vw;
     height: calc(100vh - 150px);
-    display: grid;
+    display: flex;
     align-items: center;
     justify-content: center;
     color: color.$tertiary-text;
