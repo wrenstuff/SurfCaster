@@ -14,10 +14,30 @@
 
     {% include 'header.html' %}
 
-    <div class="content">
-        <!-- temp content for the Scan History page -->
-        <h2>Scan History</h2>
-        <p>This is the scan history page.</p>
+    <div class="scan-history-wrapper">
+        <div class="scan-history">
+            <div class="scan-history-table">
+                <table class="scan-history-table">
+                    <thead class="table-header">
+                        <tr>
+                            <th>Scan ID</th>
+                            <th>URL</th>
+                            <th>Date</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody class="table-body">
+                        <tr>
+                            <td>scan.id</td>
+                            <td>scan.url</td>
+                            <td>scan.date</td>
+                            <td>scan.status</td>
+                        </tr>
+                    
+                    </tbody>
+                </table>
+        </div>
+
     </div>
 
 </body>
