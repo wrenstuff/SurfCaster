@@ -16,14 +16,14 @@
             <h2>Phishing Detector</h2>
         </div>
         <div class="recover-container">
-            <h3>Account recovery</h3>
-            <!--<form> action="/login" method="POST"-->
+            <h3 class="recover-title">Account recovery</h3>
+            <p class="email-p">Enter your email address to recover your account</p>
             <div class="input-fields">
-                <h4>Please enter your email address to recover your account</h4>
+
                 <input class="recover-input" type="text" id="email" name="email" placeholder="email" required>
 
             </div>
-            <div>
+            <div class="submit-btn">
                 <label>
                     <input type="checkbox">
                 </label>
@@ -31,8 +31,8 @@
             </div>
             <!--/form-->
             <div class="links">
-                <a href="{{ url_for('auth_routes.recover') }}">Reset password</a>
-                <a href="{{ url_for('auth_routes.signup') }}">Signup</a>
+                <a class="login-link" href="{{ url_for('auth_routes.login') }}">Login</a>
+                <a class="signup-link" href="{{ url_for('auth_routes.signup') }}">Signup</a>
             </div>
         </div>
     </div>
