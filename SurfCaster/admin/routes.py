@@ -24,6 +24,7 @@ def scan():
     if request.method ==  'GET':
         if session.get('role') != 'admin':
             return "Unauthorized", 403
+
         return render_template('scan.html')
     if request.method == 'POST':
         url = request.form.get('url')
@@ -33,9 +34,12 @@ def scan():
 
         model = Baelin.Baelin()
 
-        print(model.predict(features))
+        session['last_scanned_url'] = url
 
-        
+        last_scan_result = model.predict(features) * 100
+
+        session['last_scan_result'] = last_scan_result
+
         print(f"URL '{url}' scanned successfully!", "success")
         return redirect(url_for('admin_routes.scan'))
 
