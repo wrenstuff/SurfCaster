@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="eng">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
@@ -9,16 +9,17 @@
     {% set access = "unauth" %}
 </head>
 
+<body>
+    {% include 'login-header.html' %}
 <div class="auth-header">
 </div>
 <div class="login-wrapper">
     <div class="auth-logo-wrapper">
-        <img class="auth-logo" src="{{ url_for('static', filename='images/SurfCaster_Logo_256.png') }}">
-        <h1>SurfCaster</h1>
-        <h2>Phishing Detector</h2>
+        
+        
     </div>
     <div class="login-container">
-        <h3>Login</h3>
+        <h3 class="login-title">Login</h3>
         <form action="{{ url_for('auth_routes.login') }}" method="POST">
             <div class="input-fields">
                 <input type="text" id="username" name="username" placeholder="Username" required>
@@ -30,19 +31,22 @@
             </div>
 
         </form>
-        <div class="links">
-            <a href="{{ url_for('auth_routes.recover') }}">Reset password</a>
-            <a href="{{ url_for('auth_routes.signup') }}">Signup</a>
-        </div>
+       
         {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
         {%for category, message in messages %}
         <div class="login-flash {{ category }}">
             {{ message}}
         </div>
+        
         {% endfor %}
         {% endif %}
         {% endwith %}
+        <div class="links">
+            <a class="resetpw" href="{{ url_for('auth_routes.recover') }}">Reset password</a>
+            <a class="signup" href="{{ url_for('auth_routes.signup') }}">Signup</a>
+        </div>
+       
     </div>
 </div>
 </body>

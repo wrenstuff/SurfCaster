@@ -10,38 +10,37 @@
 </head>
 <div class="auth-header">
 </div>
+<body>
+    {% include 'login-header.html' %}
 <div class="signup-wrapper">
-    <div class="auth-logo-wrapper">
-        <img class="auth-logo" src="{{ url_for('static', filename='images/SurfCaster_Logo_256.png') }}">
-        <h1>SurfCaster</h1>
-        <h2>Phishing Detector</h2>
-    </div>
     <div class="signup-container">
-        <h3 class =signup-text>Sign up</h3>
+        <h3 class="signup-text">Sign up</h3>
         <form method="POST" action="/signup">
             <div class="input-fields">
                 <input type="text" id="username" name="username" placeholder="Username" required>
                 <input type="text" id="email" name="email" placeholder="Email" required>
                 <input type="password" id="password" name="password" minlength="8" placeholder="Password" required>
             </div>
-            <div class= PWstrength>
-            <h4>Password strength</h4>
-            <h4 class="strength-icon">&#128994;</h4>
+            <div class=PWstrength>
+                <h4>Password strength</h4>
+                <h4 class="strength-icon">&#128994;</h4>
             </div>
-            <div class ="toc">
+            <div class="toc">
                 <input class="checkbox" type="checkbox" id="terms" name="terms" required>
                 <label for="terms">I agree to the Terms and Conditions</label>
             </div>
-            <div class =sub-btn>
-                <button type="submit">Sign Up</button>
-            </div>
+
+            <div class="bottom-container">
+                <div class="links">
+                    <a  class ="login-link" href="{{ url_for('auth_routes.login') }}">&#8592; Go back</a>
+                </div>
+                <div class="sub-btn">
+                    <button type="submit">Sign Up</button>
+                </div>
         </form>
         <!--/form-->
-        <div class="links">
-            <a href="{{ url_for('auth_routes.login') }}">&#8592; Go back</a>
 
-        </div>
     </div>
 </div>
-</body>
+</div>
 </body>
