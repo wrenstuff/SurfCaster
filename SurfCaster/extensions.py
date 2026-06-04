@@ -4,9 +4,6 @@ from flask import json, session
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 
-import db_models as dm
-FlaggedScans = dm.FlaggedScans
-
 db = SQLAlchemy()
 
 def load_json_file(path, default):
