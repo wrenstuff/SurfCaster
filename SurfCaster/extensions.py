@@ -50,7 +50,7 @@ def create_scan_id():
     scan_id += user_id.zfill(8)
     return scan_id
 
-def flag_scan(url, flag):
+def flag_scan(url, flag, status):
     scan_id = create_scan_id()
     user_id = session.get('user_id', None)
     if user_id is None:
@@ -60,7 +60,8 @@ def flag_scan(url, flag):
         'scan_id': scan_id,
         'user_id': user_id,
         'url': url,
-        'flag': flag
+        'flag': flag,
+        'status': status
     }
 
     return scan

@@ -39,9 +39,9 @@
                         {% endif %}
 
                         <div class="flags">
-                            <form class="flag-form">
-                                <button type="submit" class="flag-button">Correct</button>
-                                <button type="submit" class="flag-button">Incorrect</button>
+                            <form class="flag-form" method="POST" action="{{ url_for('admin_routes.flag_scan_route') }}">
+                                <button type="submit" name="flag" class="flag-button" value="Safe">Safe</button>
+                                <button type="submit" name="flag" class="flag-button" value="Unsafe">Unsafe</button>
                             </form>
                         </div>
                     {% endif %}
