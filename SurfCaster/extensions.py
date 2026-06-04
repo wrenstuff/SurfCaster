@@ -1,6 +1,6 @@
 import os
 
-from flask import json
+from flask import json, session
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 
@@ -37,3 +37,15 @@ def scan_history(url, last_scan_result):
         history = history[:10]
 
     save_json_file(history_path, history)
+
+def create_scan_id():
+    # get the current date and time
+    scan_id = str(datetime.now().strftime("%Y%m%d%H%M%S"))
+
+    #get the user ID to 8 digits
+    try:
+        user_id = str(session.get('user_id', '0'))
+    except RuntimeError:
+        user_id = '0'
+    scan_id += user_id.zfill(8)
+    return scan_id

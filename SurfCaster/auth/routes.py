@@ -32,6 +32,7 @@ def login():
                 stored_pass = user.password
                 if hasher.verify(stored_pass,password):
                     # populating session with user info
+                    session['user_id'] = user.id
                     session['username'] = user.username 
                     session['email'] = user.email
                     session['role'] = user.role            
