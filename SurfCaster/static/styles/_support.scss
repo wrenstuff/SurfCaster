@@ -1,0 +1,63 @@
+@use 'color';
+
+.support-wrapper {
+    margin-top: 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+
+    .support-container {
+        color: color.$tertiary-text;
+        background-color: color.$backgroundbox2;
+        width: 100%;
+        max-width: 50%;
+        align-items: center;
+        justify-items: center;
+        border-radius: 5px;
+    }
+
+    .ticket-forms {
+        display: flex;
+        flex-direction: column;
+        textarea {
+            resize: none;
+        }
+
+        h2 {
+            text-align: center;
+            color: color.$primary-text;
+        }
+
+        #subject {
+            width: 800px;
+            margin-bottom: 10px;
+            margin-top: 10px;
+            border-radius: 5px;
+        }
+
+        #description {
+            border-radius: 5px;
+            text-align: start;
+            height: 400px;
+            width: 800px;
+            margin-bottom: 30px;
+            margin-top: 10px;
+
+        }
+
+        .submit-ticket {
+            display: flex;
+            width: 100px;
+            height: 20px;
+            border-radius: 5px;
+            align-content: center;
+            justify-content: center;
+            align-self: center;
+            margin-bottom: 50px;
+        }
+
+    }
+
+}
