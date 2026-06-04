@@ -4,7 +4,7 @@
 from flask import Blueprint, flash, redirect, render_template, request, session, url_for
 
 # local imports
-from user_model import Users
+from db_models import Users
 from extensions import db, scan_history
 import models.Baelin as Baelin
 import url_extractor as ex

@@ -4,6 +4,9 @@ from flask import json, session
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 
+import db_models as dm
+FlaggedScans = dm.FlaggedScans
+
 db = SQLAlchemy()
 
 def load_json_file(path, default):
@@ -49,3 +52,18 @@ def create_scan_id():
         user_id = '0'
     scan_id += user_id.zfill(8)
     return scan_id
+
+def flag_scan(url, flag):
+    scan_id = create_scan_id()
+    user_id = session.get('user_id', None)
+    if user_id is None:
+        return "Unauthorized", 403
+    
+    scan = {
+        'scan_id': scan_id,
+        'user_id': user_id,
+        'url': url,
+        'flag': flag
+    }
+
+    return scan
