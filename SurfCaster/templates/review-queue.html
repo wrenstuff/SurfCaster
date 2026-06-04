@@ -10,14 +10,36 @@
 
 <body>
 
-    {% set page_name = "Review Queue" %}
+    {% set page_name = "Review queue " %}
 
     {% include 'header.html' %}
 
-    <div class="content">
-        <!-- temp content for the review queue page -->
-        <h2>Review Queue</h2>
-        <p>This is the review queue page.</p>
+    <div class="scan-history-wrapper">
+        <div class="scan-history">
+            <div class="scan-history-table">
+                <table class="scan-history-table">
+                    <thead class="table-header">
+                        <tr>
+                            <th>SCANID</th>
+                            <th>USERNAME</th>
+                            <th>URL</th>
+                            <th>FLAG</th>
+                            <th>SUBMISSION</th>
+                        </tr>
+                    </thead>
+                    <tbody class="table-body">
+                        <tr>
+                            <td>scan.id</td>
+                            <td>scan.username</td>
+                            <td>scanurl</td>
+                            <td>scan.flag</td>
+                            <td>scan.submit</td>
+                        </tr>
+                    
+                    </tbody>
+                </table>
+        </div>
+
     </div>
 
 </body>
