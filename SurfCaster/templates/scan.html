@@ -18,13 +18,33 @@
         <!-- temp content for the URL Scanner page -->
         <div class="scan-wrapper">
             <form method="POST" action="{{ url_for('admin_routes.scan') }}">
-                <input class="scan" type="text" name="url" placeholder="Enter URL to scan">
+                <input class="scan" type="text" name="url" placeholder="Enter URL to scan" {% if session.get('last_scanned_url') %} value="{{ session.get('last_scanned_url') }}" {% endif %}>
                 <button type="submit" id="scan-button">Scan</button>
             </form>
-            <div class="scan-res-wrapper">
+            <div class="scan-res-wrapper {% if session.get('last_scan_result') is not none %} {% else %} hidden {% endif %}">
                 <div class="scan-results">
-                    <h2>Scan results for ...</h2>
-                    <p>likely malicious. 92.84%</p>
+                    <h2>Scan results for {{ session.get('last_scanned_url') }}</h2>
+                    
+                    {% if session.get('last_scan_result') is not none %}
+                        <p>Scan Result: {{ session.get('last_scan_result')|round(2) }}%</p>
+                    {% endif %}
+
+                    {% if session.get('last_scan_result') is not none %}
+                        {% if session.get('last_scan_result') <= 100/3 %}
+                            <p class="safe">URL is likely safe</p>
+                        {% elif session.get('last_scan_result') <= 100/3 * 2 %}
+                            <p class="warning">URL is potentially unsafe</p>
+                        {% else %}
+                            <p class="danger">URL is likely unsafe</p>
+                        {% endif %}
+
+                        <div class="flags">
+                            <form class="flag-form" method="POST" action="{{ url_for('admin_routes.flag_scan_route') }}">
+                                <button type="submit" name="flag" class="flag-button" value="Safe">Safe</button>
+                                <button type="submit" name="flag" class="flag-button" value="Unsafe">Unsafe</button>
+                            </form>
+                        </div>
+                    {% endif %}
                 </div>
             </div>
         </div>  

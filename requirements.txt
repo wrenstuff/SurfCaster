@@ -26,6 +26,7 @@ pycparser==3.0
 setuptools==81.0.0
 SQLAlchemy==2.0.49
 sympy==1.14.0
+tlds==2026041800
 torch==2.12.0
 torchaudio==2.11.0
 torchvision==0.27.0
