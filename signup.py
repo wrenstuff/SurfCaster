@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template, session, request, redirect, url_for, flash
 import sqlite3
 from CreateDB import DB_NAME
+import datetime
 
 # blueprint creation
 register_bp = Blueprint('register_bp', __name__)
@@ -13,10 +14,11 @@ def register():
         username = request.form.get("username")
         email = request.form.get("email")
         password = request.form.get("password")
+        joindate = datetime.now().isoformat()
         connection = sqlite3.connect(DB_NAME)
         cursor = connection.cursor()
 
-        cursor.execute("INSERT INTO users (username, email, password) VALUES (?, ?, ?)", (username, email, password))
+        cursor.execute("INSERT INTO users (username, email, password, joindate) VALUES (?, ?, ?)", (username, email, password))
         connection.commit() 
         connection.close()
     return redirect(url_for('auth_routes.login'))
