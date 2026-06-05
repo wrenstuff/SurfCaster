@@ -3,7 +3,6 @@
 # library imports
 from flask import Blueprint, flash, redirect, render_template, request, session, url_for
 
-# local imports
 from db_models import Users
 from extensions import db, scan_history
 import models.Baelin as Baelin
