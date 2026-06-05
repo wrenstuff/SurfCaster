@@ -4,8 +4,8 @@
 from flask import Blueprint, flash, redirect, render_template, request, session, url_for
 
 # local imports
-from db_models import Users
-from extensions import db, scan_history
+from db_models import Users, FlaggedScans
+from extensions import db, scan_history, create_scan_id, flag_scan
 import models.Baelin as Baelin
 import url_extractor as ex
 
@@ -45,6 +45,39 @@ def scan():
         scan_history(url, last_scan_result)
 
         return redirect(url_for('admin_routes.scan'))
+
+@admin_routes.route('/flag_scan_route', methods=['POST'])
+def flag_scan_route():
+    if session.get('role') != 'admin':
+        return "Unauthorized", 403
+
+    # hopefully second time is the charm. 
+    # I already did this but it didn't commit (˃̣̣̥ᯅ˂̣̣̥)
+    url = session.get('last_scanned_url')
+    status = request.form.get('flag')
+
+
+    if session.get('last_scan_result') <= 100/3:
+        flag = 'safe'
+    elif session.get('last_scan_result') <= 200/3:
+        flag = 'unsure'
+    else:
+        flag = 'unsafe'
+
+    to_send = flag_scan(url, flag, status)
+
+    flagged_scan = FlaggedScans(
+        scan_id=to_send['scan_id'],
+        user_id=to_send['user_id'],
+        url=to_send['url'],
+        flag=to_send['flag'],
+        status=to_send['status']
+    )
+    db.session.add(flagged_scan)
+    db.session.commit()
+
+    return redirect(url_for('admin_routes.scan'))
+
 
 # Scan History
 @admin_routes.route('/history')
