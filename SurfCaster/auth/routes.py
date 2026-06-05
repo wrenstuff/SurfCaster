@@ -3,7 +3,7 @@ import email
 from flask import Blueprint, flash, redirect, render_template, request, session, url_for
 from argon2 import PasswordHasher
 from argon2.exceptions import VerifyMismatchError
-from user_model import Users
+from db_models import Users
 
 hasher = PasswordHasher()
 DB_NAME = "instance/SurfCaster.db"
@@ -32,6 +32,7 @@ def login():
                 stored_pass = user.password
                 if hasher.verify(stored_pass,password):
                     # populating session with user info
+                    session['user_id'] = user.id
                     session['username'] = user.username 
                     session['email'] = user.email
                     session['role'] = user.role            

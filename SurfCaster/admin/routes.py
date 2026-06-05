@@ -2,8 +2,10 @@
 
 # library imports
 from flask import Blueprint, flash, redirect, render_template, request, session, url_for
-from user_model import Users
-from extensions import db
+
+# local imports
+from db_models import Users
+from extensions import db, scan_history
 import models.Baelin as Baelin
 import url_extractor as ex
 
@@ -40,7 +42,8 @@ def scan():
 
         session['last_scan_result'] = last_scan_result
 
-        print(f"URL '{url}' scanned successfully!", "success")
+        scan_history(url, last_scan_result)
+
         return redirect(url_for('admin_routes.scan'))
 
 # Scan History
