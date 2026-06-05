@@ -3,7 +3,8 @@ import email
 from flask import Blueprint, flash, redirect, render_template, request, session, url_for
 from argon2 import PasswordHasher
 from argon2.exceptions import VerifyMismatchError
-from user_model import Users
+from db_models import Users
+from datetime import datetime
 
 hasher = PasswordHasher()
 DB_NAME = "instance/SurfCaster.db"
@@ -70,9 +71,11 @@ def signup():
         email = request.form.get("email")
         password = request.form.get("password")
         connection = sqlite3.connect(DB_NAME)
+        joindate = datetime.now().strftime("%Y%m%d")
         cursor = connection.cursor()
         hashedpw = hasher.hash(password)
         cursor.execute("INSERT INTO users (username, email, password, role) VALUES (?, ?, ?, ?)", (username, email, hashedpw, "user"))
+        cursor.execute("INSERT INTO users (username, email, password, role, joindate) VALUES (?, ?, ?, ?, ?)", (username, email, hashedpw, "user", joindate))
         connection.commit() 
         connection.close()
     return redirect(url_for('auth_routes.login'))
