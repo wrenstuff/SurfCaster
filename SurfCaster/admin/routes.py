@@ -5,7 +5,7 @@ from flask import Blueprint, flash, redirect, render_template, request, session,
 
 # local imports
 from db_models import Users, FlaggedScans
-from extensions import db, scan_history, create_scan_id, flag_scan
+from extensions import db, scan_history, create_scan_id, flag_scan, get_scan_history
 import models.Baelin as Baelin
 import url_extractor as ex
 
@@ -84,7 +84,10 @@ def flag_scan_route():
 def history():
     if session.get('role') != 'admin':
         return "Unauthorized", 403
-    return render_template('scan_history.html')
+    
+    history = get_scan_history()
+
+    return render_template('scan_history.html', history=history)
 
 # Account
 @admin_routes.route('/account') # possibly change to username?

@@ -65,3 +65,10 @@ def flag_scan(url, flag, status):
     }
 
     return scan
+
+def get_scan_history():
+    if not os.path.exists('scan_history.json'):
+        return []
+    history_path = 'scan_history.json'
+    history = load_json_file(history_path, [])
+    return history
