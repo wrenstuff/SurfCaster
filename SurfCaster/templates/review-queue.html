@@ -23,6 +23,7 @@
                             <th>SCANID</th>
                             <th>USERNAME</th>
                             <th>URL</th>
+                            <th>PREDICTION</th>
                             <th>FLAG</th>
                             <th>SUBMISSION</th>
                         </tr>
@@ -35,6 +36,12 @@
                             <td>{{ review.url }}</td>
                             <td>{{ review.flag }}</td>
                             <td>{{ review.status }}</td>
+                            <td>
+                                <form method="POST" action="#">
+                                    <button class="yay" type="submit" name="action" value="approve">Approve</button>
+                                    <button class="nay" type="submit" name="action" value="reject">Reject</button>
+                                </form>
+                            </td>
                         </tr>
                         {% endfor %}
                     
