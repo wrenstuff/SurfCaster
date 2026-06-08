@@ -13,3 +13,4 @@ venv/
 /SurfCaster/models/__pycache__
 *.pyc
 /SurfCaster/models/__pycache__
+SurfCaster/emailpass.txt
