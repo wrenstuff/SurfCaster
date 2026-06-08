@@ -7,9 +7,8 @@ from flask import Flask, session
 from flask_sqlalchemy import SQLAlchemy
 from pathlib import Path
 from sqlalchemy import text
-#delete later 
 from argon2 import PasswordHasher
-ph = PasswordHasher()
+
 # internal imports
 # Uncomment when routes have been added
 from admin.routes import admin_routes
@@ -18,6 +17,8 @@ from authorisedUser.routes import user_routes
 from unauthorisedUser.routes import unauthorised_user_routes
 from auth.routes import auth_routes
 from extensions import db
+
+ph = PasswordHasher()
 
 # app creation and blueprint registration
 

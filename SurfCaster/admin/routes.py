@@ -5,7 +5,7 @@ from flask import Blueprint, flash, redirect, render_template, request, session,
 
 # local imports
 from db_models import Users, FlaggedScans
-from extensions import db, scan_history, create_scan_id, flag_scan, get_scan_history
+from extensions import db, get_reviews, scan_history, create_scan_id, flag_scan, get_scan_history
 import models.Baelin as Baelin
 import url_extractor as ex
 
@@ -115,7 +115,8 @@ def support():
 def queue():
     if session.get('role') != 'admin':
         return "Unauthorized", 403
-    return render_template('review-queue.html')
+    reviews = get_reviews()
+    return render_template('review-queue.html', reviews=reviews)
 
 # Review History
 @admin_routes.route('/reviews')

@@ -28,13 +28,15 @@
                         </tr>
                     </thead>
                     <tbody class="table-body">
+                        {% for scan_id, review in reviews.items() %}
                         <tr>
-                            <td>scan.id</td>
-                            <td>scan.username</td>
-                            <td>scanurl</td>
-                            <td>scan.flag</td>
-                            <td>scan.submit</td>
+                            <td>{{ review.scan_id }}</td>
+                            <td>{{ review.username }}</td>
+                            <td>{{ review.url }}</td>
+                            <td>{{ review.flag }}</td>
+                            <td>{{ review.status }}</td>
                         </tr>
+                        {% endfor %}
                     
                     </tbody>
                 </table>

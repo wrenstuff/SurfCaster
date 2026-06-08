@@ -2,6 +2,7 @@ import os
 
 from flask import json, session
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import text
 from datetime import datetime
 
 db = SQLAlchemy()
@@ -72,3 +73,21 @@ def get_scan_history():
     history_path = 'scan_history.json'
     history = load_json_file(history_path, [])
     return history
+
+def get_reviews():
+    result = db.session.execute(text("SELECT * FROM flagged_scans"))
+    rows = result.fetchall()
+
+    reviews = {}
+
+    for row in rows:
+        scan_id = row[1]
+        username_result = db.session.execute(text("SELECT username FROM users WHERE id = :user_id"), {"user_id": row[2]}).fetchone()
+        reviews[scan_id] = {
+            'scan_id': row[1],
+            'username': username_result[0] if username_result else None,
+            'url': row[3],
+            'flag': row[4],
+            'status': row[5]
+        }
+    return reviews
