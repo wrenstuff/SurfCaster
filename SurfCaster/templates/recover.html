@@ -12,25 +12,27 @@
     {% include 'login-header.html' %}
     <div class="recover-wrapper">
         <div class="recover-container">
+
             <h3 class="recover-title">Account recovery</h3>
             <p class="email-p">Enter your email address to recover your account</p>
-            <div class="input-fields">
-
-                <input class="recover-input" type="text" id="email" name="email" placeholder="email" required>
-
+            <div action="{{ url_for('auth_routes.recover') }}" class=" input-fields">
+                <form method="POST">
+                    <input class="recover-input" type="text" id="email" name="user-email" placeholder="email" required>
+                    <div class="submit-btn">
+                    <label>
+                        <input type="checkbox">
+                    </label>
+                    <button>submit</button>
             </div>
-            <div class="submit-btn">
-                <label>
-                    <input type="checkbox">
-                </label>
-                <button>submit</button>
-            </div>
-            <!--/form-->
-            <div class="links">
-                <a class="login-link" href="{{ url_for('auth_routes.login') }}">Login</a>
-                <a class="signup-link" href="{{ url_for('auth_routes.signup') }}">Signup</a>
-            </div>
+            </form>
         </div>
+
+        <!--/form-->
+        <div class="links">
+            <a class="login-link" href="{{ url_for('auth_routes.login') }}">Login</a>
+            <a class="signup-link" href="{{ url_for('auth_routes.signup') }}">Signup</a>
+        </div>
+    </div>
     </div>
 
 </body>

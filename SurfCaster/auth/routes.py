@@ -5,6 +5,7 @@ from argon2 import PasswordHasher
 from argon2.exceptions import VerifyMismatchError
 from db_models import Users
 from datetime import datetime
+from recover_acc import accountrecover
 
 hasher = PasswordHasher()
 DB_NAME = "instance/SurfCaster.db"
@@ -51,16 +52,15 @@ def login():
     
 
 # Registration Page
-@auth_routes.route('/recover')
+@auth_routes.route('/recover' , methods=["GET","POST"])
 def recover():
-    return render_template('recover.html')
-    #print("Registration attempt") # Debug statement
-    #if True: # Placeholder for actual registration logic
-        #print("Registration successful") # Debug statement
-        #return "Login Page"
-    #else:   
-        #print("Registration failed") # Debug statement
-        #return "Registration Page"   
+    if request.method == "GET":
+        return render_template("recover.html")
+    if request.method == "POST":
+        useremail = request.form.get("user-email")
+        accountrecover(useremail)
+        return render_template('recover.html')
+    
 
 @auth_routes.route('/signup', methods=["GET","POST"])
 def signup():
