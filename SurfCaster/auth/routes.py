@@ -75,7 +75,6 @@ def signup():
         joindate = datetime.now().strftime("%Y%m%d")
         cursor = connection.cursor()
         hashedpw = hasher.hash(password)
-        cursor.execute("INSERT INTO users (username, email, password, role) VALUES (?, ?, ?, ?)", (username, email, hashedpw, "user"))
         cursor.execute("INSERT INTO users (username, email, password, role, joindate) VALUES (?, ?, ?, ?, ?)", (username, email, hashedpw, "user", joindate))
         connection.commit() 
         connection.close()
