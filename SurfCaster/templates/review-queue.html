@@ -37,19 +37,22 @@
                             <td>{{ review.flag }}</td>
                             <td>{{ review.status }}</td>
                             <td>
-                                <form method="POST" action="#">
+                                <form method="POST" action="{{ url_for(session.get('role') + '_routes.review_scan') }}">
+                                    <input type="hidden" name="scan_id" value="{{ review.scan_id }}">
+                                    <input type="hidden" name="url" value="{{ review.url }}">
+                                    <input type="hidden" name="flag" value="{{ review.status }}">
                                     <button class="yay" type="submit" name="action" value="approve">Approve</button>
                                     <button class="nay" type="submit" name="action" value="reject">Reject</button>
                                 </form>
                             </td>
                         </tr>
                         {% endfor %}
-                    
+
                     </tbody>
                 </table>
-        </div>
+            </div>
 
-    </div>
+        </div>
 
 </body>
 

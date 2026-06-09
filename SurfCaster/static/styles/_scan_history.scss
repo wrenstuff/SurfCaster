@@ -30,28 +30,33 @@
             }
 
         }
-    .table-body {
+
+        .table-body {
             td {
                 padding: 10px;
                 border: 1px solid color.$secondary-color;
                 text-align: center;
                 color: color.$tertiary-text;
                 vertical-align: middle;
+
                 form {
                     display: flex;
                     gap: 10px;
                     justify-content: center;
                 }
+
                 button {
                     all: unset;
                     color: color.$primary-color;
                     background-color: transparent;
                 }
-                button:hover.yay{
+
+                button:hover.yay {
                     color: green;
                     cursor: pointer;
                 }
-                button:hover.nay{
+
+                button:hover.nay {
                     color: red;
                     cursor: pointer;
                 }

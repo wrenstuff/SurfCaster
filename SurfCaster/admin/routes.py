@@ -4,7 +4,7 @@
 from flask import Blueprint, flash, redirect, render_template, request, session, url_for
 
 # local imports
-from db_models import Users, FlaggedScans
+from db_models import Users, FlaggedScans, ApprovedScans
 from extensions import db, get_reviews, scan_history, create_scan_id, flag_scan, get_scan_history
 import models.Baelin as Baelin
 import url_extractor as ex
@@ -117,6 +117,35 @@ def queue():
         return "Unauthorized", 403
     reviews = get_reviews()
     return render_template('review-queue.html', reviews=reviews)
+
+@admin_routes.route('/review_scan', methods=['POST'])
+def review_scan():
+    if session.get('role') != 'admin':
+        return "Unauthorized", 403
+    
+    scan_id = request.form.get('scan_id')
+    action = request.form.get('action')
+    if action not in ['approve', 'reject']:
+        flash("Invalid action", "error")
+        return redirect(url_for('admin_routes.queue'))
+    else:
+        if action == 'approve':
+            status = True if request.form.get('flag') == 'Safe' else False
+
+    to_db = ApprovedScans(
+        scan_id=scan_id,
+        url=request.form.get('url'),
+        status=status
+    )
+    db.session.add(to_db)
+    db.session.commit()
+
+    to_remove = FlaggedScans.query.filter_by(scan_id=scan_id).first()
+    db.session.delete(to_remove)
+    db.session.commit()
+
+    return redirect(url_for('admin_routes.queue'))
+
 
 # Review History
 @admin_routes.route('/reviews')

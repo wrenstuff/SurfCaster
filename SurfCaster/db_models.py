@@ -15,3 +15,9 @@ class FlaggedScans(db.Model):
     url = db.Column(db.String(2083), nullable=False)
     flag = db.Column(db.String(6), nullable=False)
     status = db.Column(db.String(6), nullable=False)
+
+class ApprovedScans(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    scan_id = db.Column(db.String(22), db.ForeignKey('flagged_scans.scan_id'), unique=True, nullable=False)
+    url = db.Column(db.String(2083), nullable=False)
+    status = db.Column(db.Boolean, nullable=False)
