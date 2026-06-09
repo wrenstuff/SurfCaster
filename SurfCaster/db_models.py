@@ -16,3 +16,10 @@ class FlaggedScans(db.Model):
     url = db.Column(db.String(2083), nullable=False)
     flag = db.Column(db.String(6), nullable=False)
     status = db.Column(db.String(6), nullable=False)
+
+class RecoveryCodes(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    code =db.Column(db.String(6), nullable=False)
+    time_created =db.Column(db.Integer, nullable=False)
+    expiration_time =db.Column(db.Integer, nullable=False)

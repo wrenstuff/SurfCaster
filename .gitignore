@@ -14,3 +14,4 @@ venv/
 *.pyc
 /SurfCaster/models/__pycache__
 SurfCaster/emailpass.txt
+SurfCaster/models/__pycache__/Baelin.cpython-314.pyc

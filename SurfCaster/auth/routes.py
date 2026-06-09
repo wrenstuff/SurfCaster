@@ -4,8 +4,8 @@ from flask import Blueprint, flash, redirect, render_template, request, session,
 from argon2 import PasswordHasher
 from argon2.exceptions import VerifyMismatchError
 from db_models import Users
-from datetime import datetime
-from recover_acc import accountrecover
+from datetime import datetime ,timedelta, timezone
+from recover_acc import accountrecover,recovery_code
 
 hasher = PasswordHasher()
 DB_NAME = "instance/SurfCaster.db"
@@ -58,7 +58,8 @@ def recover():
         return render_template("recover.html")
     if request.method == "POST":
         useremail = request.form.get("user-email")
-        accountrecover(useremail)
+        code = recovery_code(6)
+        accountrecover(useremail,code)
         return render_template('recover.html')
     
 
