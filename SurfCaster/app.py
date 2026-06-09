@@ -17,6 +17,7 @@ from authorisedUser.routes import user_routes
 from unauthorisedUser.routes import unauthorised_user_routes
 from auth.routes import auth_routes
 from extensions import db
+from datetime import datetime
 
 ph = PasswordHasher()
 
@@ -41,17 +42,20 @@ with app.app_context():
             WHERE username = :username
             LIMIT 1
         """), {"username": "admin"}).fetchone()
+        joindate = datetime.now().strftime("%Y%m%d%H%M%S")
 
+        #DELETE THIS BEFORE LAUNCHING
         if not result:
             hashed_pw = ph.hash("admin123")
             conn.execute(text("""
-                INSERT INTO users (username, email, password, role)
-                VALUES (:username, :email, :password, :role)
+                INSERT INTO users (username, email, password, role, joindate)
+                VALUES (:username, :email, :password, :role, :joindate)
             """), {
                 "username": "admin",
                 "email": "admin@admin",
                 "password": hashed_pw,
-                "role": "admin"
+                "role": "admin",
+                "joindate": joindate
             })
 
 app.register_blueprint(admin_routes, url_prefix='/admin')
