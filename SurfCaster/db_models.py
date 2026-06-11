@@ -23,3 +23,10 @@ class RecoveryCodes(db.Model):
     code =db.Column(db.String(6), nullable=False)
     time_created =db.Column(db.Integer, nullable=False)
     expiration_time =db.Column(db.Integer, nullable=False)
+    
+class ApprovedScans(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    scan_id = db.Column(db.String(22), db.ForeignKey('flagged_scans.scan_id'), unique=True, nullable=False)
+    reviewer_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    url = db.Column(db.String(2083), nullable=False)
+    status = db.Column(db.Boolean, nullable=False)

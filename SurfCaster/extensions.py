@@ -2,6 +2,7 @@ import os
 
 from flask import json, session
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import text
 from datetime import datetime
 
 db = SQLAlchemy()
@@ -65,3 +66,50 @@ def flag_scan(url, flag, status):
     }
 
     return scan
+
+def get_scan_history():
+    if not os.path.exists('scan_history.json'):
+        return []
+    history_path = 'scan_history.json'
+    history = load_json_file(history_path, [])
+    return history
+
+def get_reviews():
+    result = db.session.execute(text("SELECT * FROM flagged_scans"))
+    rows = result.fetchall()
+
+    reviews = {}
+
+    for row in rows:
+        scan_id = row[1]
+        username_result = db.session.execute(text("SELECT username FROM users WHERE id = :user_id"), {"user_id": row[2]}).fetchone()
+        reviews[scan_id] = {
+            'scan_id': row[1],
+            'username': username_result[0] if username_result else None,
+            'url': row[3],
+            'flag': row[4],
+            'status': row[5]
+        }
+    return reviews
+
+def get_review_history():
+    if session.get('role') == "admin":
+        result = db.session.execute(text("SELECT * FROM approved_scans"))
+    elif session.get('role') == "reviewer":
+        result = db.session.execute(text("SELECT * FROM approved_scans WHERE reviewer_id = :user_id"), {"user_id": session.get('user_id')})
+    else:
+        return []
+    rows = result.fetchall()
+
+    reviews = []
+
+    for row in rows:
+        scan_id = row[1]
+        username_result = db.session.execute(text("SELECT username FROM users WHERE id = :user_id"), {"user_id": row[2]}).fetchone()
+        reviews.append({
+            'scan_id': row[1],
+            'url': row[3],
+            'status': row[4],
+            'reviewer': username_result[0] if username_result else None
+        })
+    return reviews

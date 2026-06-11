@@ -3,8 +3,9 @@
 # library imports
 from flask import Blueprint, flash, redirect, render_template, request, session, url_for
 
-from db_models import Users
-from extensions import db, scan_history
+# local imports
+from db_models import Users, FlaggedScans, ApprovedScans
+from extensions import db, get_reviews, scan_history, create_scan_id, flag_scan, get_scan_history, get_review_history
 import models.Baelin as Baelin
 import url_extractor as ex
 
@@ -45,12 +46,48 @@ def scan():
 
         return redirect(url_for('admin_routes.scan'))
 
+@admin_routes.route('/flag_scan_route', methods=['POST'])
+def flag_scan_route():
+    if session.get('role') != 'admin':
+        return "Unauthorized", 403
+
+    # hopefully second time is the charm. 
+    # I already did this but it didn't commit (˃̣̣̥ᯅ˂̣̣̥)
+    url = session.get('last_scanned_url')
+    status = request.form.get('flag')
+
+
+    if session.get('last_scan_result') <= 100/3:
+        flag = 'safe'
+    elif session.get('last_scan_result') <= 200/3:
+        flag = 'unsure'
+    else:
+        flag = 'unsafe'
+
+    to_send = flag_scan(url, flag, status)
+
+    flagged_scan = FlaggedScans(
+        scan_id=to_send['scan_id'],
+        user_id=to_send['user_id'],
+        url=to_send['url'],
+        flag=to_send['flag'],
+        status=to_send['status']
+    )
+    db.session.add(flagged_scan)
+    db.session.commit()
+
+    return redirect(url_for('admin_routes.scan'))
+
+
 # Scan History
 @admin_routes.route('/history')
 def history():
     if session.get('role') != 'admin':
         return "Unauthorized", 403
-    return render_template('scan_history.html')
+    
+    history = get_scan_history()
+
+    return render_template('scan_history.html', history=history)
 
 # Account
 @admin_routes.route('/account') # possibly change to username?
@@ -78,14 +115,48 @@ def support():
 def queue():
     if session.get('role') != 'admin':
         return "Unauthorized", 403
-    return render_template('review-queue.html')
+    reviews = get_reviews()
+    return render_template('review-queue.html', reviews=reviews)
+
+@admin_routes.route('/review_scan', methods=['POST'])
+def review_scan():
+    if session.get('role') != 'admin':
+        return "Unauthorized", 403
+    
+    scan_id = request.form.get('scan_id')
+    action = request.form.get('action')
+    if action not in ['approve', 'reject']:
+        flash("Invalid action", "error")
+        return redirect(url_for('admin_routes.queue'))
+    else:
+        if action == 'approve':
+            status = True if request.form.get('flag') == 'Safe' else False
+
+    to_db = ApprovedScans(
+        scan_id=scan_id,
+        reviewer_id=session.get('user_id'),
+        url=request.form.get('url'),
+        status=status
+    )
+    db.session.add(to_db)
+    db.session.commit()
+
+    to_remove = FlaggedScans.query.filter_by(scan_id=scan_id).first()
+    db.session.delete(to_remove)
+    db.session.commit()
+
+    return redirect(url_for('admin_routes.queue'))
+
 
 # Review History
 @admin_routes.route('/reviews')
 def reviews():
     if session.get('role') != 'admin':
         return "Unauthorized", 403
-    return render_template('review-history.html')
+    
+    scans = get_review_history()
+
+    return render_template('review-history.html', scans=scans)
 
 # User Management
 @admin_routes.route('/users')

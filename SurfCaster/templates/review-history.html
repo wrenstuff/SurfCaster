@@ -14,10 +14,38 @@
 
     {% include 'header.html' %}
 
-    <div class="content">
-        <!-- temp content for the review history page -->
-        <h2>Review History</h2>
-        <p>This is the review history page.</p>
+    <!-- this isn't the scan history page but I couldn't be bothered copy and pasting the styling-->
+    <div class="scan-history-wrapper">
+        <div class="scan-history">
+            <div class="scan-history-table">
+                <table class="scan-history-table">
+                    <thead class="table-header">
+                        <tr>
+                            <th>SCANID</th>
+                            <th>URL</th>
+                            <th>FLAG</th>
+                            <th>REVIEWER</th>
+                        </tr>
+                    </thead>
+                    <tbody class="table-body">
+                        {% for review in scans %}
+                        <tr>
+                            <td>{{ review.scan_id }}</td>
+                            <td>{{ review.url }}</td>
+                            {% if review.status == 1 %}
+                                <td>Safe</td>
+                            {% elif review.status == 0 %}
+                                <td>Unsafe</td>
+                            {% endif %}
+                            <td>{{ review.reviewer }}</td>
+                        </tr>
+                        {% endfor %}
+
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
     </div>
 
 </body>
