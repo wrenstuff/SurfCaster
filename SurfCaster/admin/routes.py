@@ -134,6 +134,7 @@ def review_scan():
 
     to_db = ApprovedScans(
         scan_id=scan_id,
+        reviewer_id=session.get('user_id'),
         url=request.form.get('url'),
         status=status
     )
