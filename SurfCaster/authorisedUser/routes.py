@@ -2,6 +2,7 @@
 
 # library imports
 from flask import Blueprint, render_template, session
+import time
 
 # blueprint creation
 user_routes = Blueprint('user_routes', __name__)
@@ -33,6 +34,7 @@ def history():
 def account():
     if session.get('role') != 'user':
         return "Unauthorized", 403
+    
     return render_template('account.html')
 
 # Settings
@@ -47,6 +49,7 @@ def settings():
 def support():
     if session.get('role') != 'user':
         return "Unauthorized", 403
+    
     return render_template('support.html')
 
 

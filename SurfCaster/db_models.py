@@ -17,6 +17,13 @@ class FlaggedScans(db.Model):
     flag = db.Column(db.String(6), nullable=False)
     status = db.Column(db.String(6), nullable=False)
 
+class RecoveryCodes(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    code =db.Column(db.String(6), nullable=False)
+    time_created =db.Column(db.Integer, nullable=False)
+    expiration_time =db.Column(db.Integer, nullable=False)
+    
 class ApprovedScans(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     scan_id = db.Column(db.String(22), db.ForeignKey('flagged_scans.scan_id'), unique=True, nullable=False)

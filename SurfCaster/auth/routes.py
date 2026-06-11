@@ -1,10 +1,11 @@
 import sqlite3
-import email
 from flask import Blueprint, flash, redirect, render_template, request, session, url_for
 from argon2 import PasswordHasher
 from argon2.exceptions import VerifyMismatchError
 from db_models import Users
-from datetime import datetime
+from datetime import datetime ,timedelta, timezone
+from recover_acc import accountrecover,recovery_code
+import time
 
 hasher = PasswordHasher()
 DB_NAME = "instance/SurfCaster.db"
@@ -26,6 +27,7 @@ def login():
         username = request.form.get("username")
         password = request.form.get("password")
 
+        session['logout'] = False
         #hashedpw = hasher.hash(password)
         user = Users.query.filter_by(username=username).first()
         if user:
@@ -39,6 +41,7 @@ def login():
                     session['role'] = user.role            
                     flash("Login successful", "success")
                     # redirect to users' dashboard based on role
+                    time.sleep(1.5)
                     return redirect(url_for(session['role'] + '_routes.home'))
                 
             except VerifyMismatchError:
@@ -51,16 +54,16 @@ def login():
     
 
 # Registration Page
-@auth_routes.route('/recover')
+@auth_routes.route('/recover' , methods=["GET","POST"])
 def recover():
-    return render_template('recover.html')
-    #print("Registration attempt") # Debug statement
-    #if True: # Placeholder for actual registration logic
-        #print("Registration successful") # Debug statement
-        #return "Login Page"
-    #else:   
-        #print("Registration failed") # Debug statement
-        #return "Registration Page"   
+    if request.method == "GET":
+        return render_template("recover.html")
+    if request.method == "POST":
+        useremail = request.form.get("user-email")
+        code = recovery_code(6)
+        accountrecover(useremail,code)
+        return render_template('recover.html')
+    
 
 @auth_routes.route('/signup', methods=["GET","POST"])
 def signup():
@@ -84,5 +87,7 @@ def signup():
 
 @auth_routes.route('/logout')
 def logout():
+    session['logout'] = True
+    time.sleep(1.5)
     session.clear()
     return redirect(url_for('auth_routes.login'))

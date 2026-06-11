@@ -11,44 +11,52 @@
 
 <body>
     {% include 'login-header.html' %}
-<div class="auth-header">
-</div>
-<div class="login-wrapper">
-    <div class="auth-logo-wrapper">
-        
-        
+    <div class="auth-header">
     </div>
-    <div class="login-container">
-        <h3 class="login-title">Login</h3>
-        <form action="{{ url_for('auth_routes.login') }}" method="POST">
-            <div class="input-fields">
-                <input type="text" id="username" name="username" placeholder="Username" required>
-                <input type="password" id="password" name="password" placeholder="Password" required>
+    <div class="login-wrapper">
+        <div class="auth-logo-wrapper">
 
-            </div>
-            <div class="login-btn">
-                <button>Log In</button>
+
+        </div>
+        <div class="login-container">
+            <h3 class="login-title">Login</h3>
+            <form action="{{ url_for('auth_routes.login') }}" method="POST">
+                <div class="input-fields">
+                    <input type="text" id="username" name="username" placeholder="Username" required>
+                    <input type="password" id="password" name="password" placeholder="Password" required>
+
+                </div>
+                <div class="login-btn">
+                    <button>Log In</button>
+                </div>
+
+            </form>
+
+            {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+            {%for category, message in messages %}
+            <div id ="flash" class="login-flash">
+                {{ message}}
             </div>
 
-        </form>
-       
-        {% with messages = get_flashed_messages(with_categories=true) %}
-        {% if messages %}
-        {%for category, message in messages %}
-        <div class="login-flash {{ category }}">
-            {{ message}}
+            {% endfor %}
+            {% endif %}
+            {% endwith %}
+            <div class="links">
+                <a class="resetpw" href="{{ url_for('auth_routes.recover') }}">Reset password</a>
+                <a class="signup" href="{{ url_for('auth_routes.signup') }}">Signup</a>
+            </div>
+            <script>
+                setTimeout(function() {
+                    const flash =document.getElementsById("flash");
+                    if (flash){
+                        flash.style.display="none";
+                    }
+
+                }, 5000)
+            </script>
         </div>
-        
-        {% endfor %}
-        {% endif %}
-        {% endwith %}
-        <div class="links">
-            <a class="resetpw" href="{{ url_for('auth_routes.recover') }}">Reset password</a>
-            <a class="signup" href="{{ url_for('auth_routes.signup') }}">Signup</a>
-        </div>
-       
     </div>
-</div>
 </body>
 
 </html>
