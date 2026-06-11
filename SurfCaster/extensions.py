@@ -91,3 +91,25 @@ def get_reviews():
             'status': row[5]
         }
     return reviews
+
+def get_review_history():
+    if session.get('role') == "admin":
+        result = db.session.execute(text("SELECT * FROM approved_scans"))
+    elif session.get('role') == "reviewer":
+        result = db.session.execute(text("SELECT * FROM approved_scans WHERE reviewer_id = :user_id"), {"user_id": session.get('user_id')})
+    else:
+        return []
+    rows = result.fetchall()
+
+    reviews = []
+
+    for row in rows:
+        scan_id = row[1]
+        username_result = db.session.execute(text("SELECT username FROM users WHERE id = :user_id"), {"user_id": row[2]}).fetchone()
+        reviews.append({
+            'scan_id': row[1],
+            'url': row[3],
+            'status': row[4],
+            'reviewer': username_result[0] if username_result else None
+        })
+    return reviews
