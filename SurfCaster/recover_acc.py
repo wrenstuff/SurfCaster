@@ -1,12 +1,13 @@
 import smtplib,ssl,random,string
 from flask_sqlalchemy import SQLAlchemy
 from email.mime.text import MIMEText
-from db_models import RecoveryCodes
+from db_models import RecoveryCodes, Users
 from datetime import datetime, timedelta
 from flask import session
 from extensions import db
-from sqlalchemy import text
+from sqlalchemy import text, select
 from flask import flash
+
 
 def recovery_code(len):
     if len < 4:
@@ -18,8 +19,8 @@ def recovery_code(len):
 
 def accountrecover(useremail,code):
    
-    user_id= db.session.execute(text("SELECT id FROM users WHERE email=:useremail"),{"useremail": useremail}).fetchone()
-    
+    user_id=db.session.execute(select(Users.id).where(Users.email==useremail)).scalar_one()
+    print (type(user_id))
     if user_id == None:
         flash("Error: Account does not exist")
         return

@@ -8,6 +8,16 @@
     <title>Document</title>
 </head>
 
+<script>
+    setTimeout(function () {
+        const flash = document.getElementsById("flash-message");
+        if (flash) {
+            flash.style.display = "none";
+        }
+
+    }, 5000)
+</script>
+
 <body>
 
     {% set page_name = "Account" %}
@@ -19,18 +29,19 @@
             <!-- temp content for the account page -->
             <img src="{{ url_for('static', filename='images/SurfCaster_Logo_32.png') }}" alt="SurfCaster Logo">
             <h1>Username</h1>
-
-
         </div>
         <div class="content-background">
             <h2>You have been a member since:date</h2>
             <h2> you have scanned X URL's</h2>
-
-
-
         </div>
+       
+        <div id="flash-message" class="flash-messages {% if not session.get(logout) %} hidden {% endif %}">
+            <p>Logging you out of our systems.</p>
+        </div>
+       
         <button class="logout-button"><a href="{{ url_for('auth_routes.logout') }}">Logout</a></button>
     </div>
+
 </body>
 
 </html>
