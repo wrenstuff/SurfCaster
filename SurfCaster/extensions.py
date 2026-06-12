@@ -4,8 +4,12 @@ from flask import json, session
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import text
 from datetime import datetime
+import time
 
 db = SQLAlchemy()
+
+def wait_time():
+    time.sleep(.5)
 
 def load_json_file(path, default):
     if not os.path.exists(path) or os.path.getsize(path) == 0:

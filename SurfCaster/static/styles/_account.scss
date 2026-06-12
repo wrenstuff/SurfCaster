@@ -1,2 +1,55 @@
 @use 'color';
 
+.account-container {
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    .top-container {
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+
+        .account-img-container {
+
+
+
+        }
+
+        .username-container {
+
+            display: block;
+            background-color: color.$backgroundbox;
+
+            
+
+        }
+
+    }
+
+    .bottom-container {
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+
+        p {
+
+
+
+        }
+
+        .logout-button {
+
+
+
+        }
+
+    }
+
+}

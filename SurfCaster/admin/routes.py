@@ -5,7 +5,7 @@ from flask import Blueprint, flash, redirect, render_template, request, session,
 
 # local imports
 from db_models import Users, FlaggedScans, ApprovedScans
-from extensions import db, get_reviews, scan_history, create_scan_id, flag_scan, get_scan_history, get_review_history
+from extensions import db, get_reviews, scan_history, create_scan_id, flag_scan, get_scan_history, get_review_history, wait_time
 import models.Baelin as Baelin
 import url_extractor as ex
 
@@ -43,6 +43,8 @@ def scan():
         session['last_scan_result'] = last_scan_result
 
         scan_history(url, last_scan_result)
+
+        wait_time()
 
         return redirect(url_for('admin_routes.scan'))
 

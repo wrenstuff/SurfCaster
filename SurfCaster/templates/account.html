@@ -14,7 +14,30 @@
 
     {% include 'header.html' %}
 
-    
+
+    <div class="account-container">
+        <div class="top-container">
+            <div class="account-img-container">
+                <img src="{{ url_for('static', filename='images/SurfCaster_Logo_256.png') }}" alt="Profile Picture">
+            </div>
+            <div class="username-container">
+                <h2>{{ session['username'] }}</h2>
+            </div>
+        </div>
+
+        <div class="bottom-container">
+            <p class="join-date">
+                Join Date: {{ session['join_date']}}
+            </p>
+            <p class="user-role">
+                Role: {{ session['role'] }}
+            </p>
+            <div class="logout-button">
+                <a href="{{ url_for('auth_routes.logout') }}">Logout</a>
+            </div>
+        </div>
+    </div>
+
 
 </body>
 
