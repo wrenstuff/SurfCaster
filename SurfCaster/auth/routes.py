@@ -12,9 +12,11 @@ DB_NAME = "instance/SurfCaster.db"
 
 auth_routes = Blueprint('auth_routes', __name__)
 
+#splash 
 @auth_routes.route('/')
 def splash ():
     return render_template("splash.html")
+    
 
 # Login Page
 @auth_routes.route('/login', methods=["GET","POST"])
@@ -51,19 +53,37 @@ def login():
         else:   
             flash("Invalid username or password", "error")
             return render_template("login.html")
-    
+#function to send recover code email
+def recover_logic():
+    useremail = request.form.get("user-email")
+    code = recovery_code(6)
+    accountrecover(useremail,code)
 
-# Registration Page
+# Recover page
 @auth_routes.route('/recover' , methods=["GET","POST"])
 def recover():
     if request.method == "GET":
         return render_template("recover.html")
     if request.method == "POST":
-        useremail = request.form.get("user-email")
-        code = recovery_code(6)
-        accountrecover(useremail,code)
-        return render_template('recover.html')
+        recover_logic()
+        return redirect(url_for("auth_routes.recover_code"))
+
+#code input
+@auth_routes.route('/recover_code' , methods=["GET","POST"])
+def recover_code():
+    if request.method == "GET":
+        return render_template("recover_code.html")
+    if request.method == "POST":
+        
+        return render_template('recover_code.html')
+
+@auth_routes.route('/resend_recovery_code', methods =["POST"] )
+def resend():
+    recover_logic()
+
     
+
+
 
 @auth_routes.route('/signup', methods=["GET","POST"])
 def signup():

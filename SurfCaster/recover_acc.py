@@ -63,5 +63,6 @@ def accountrecover(useremail,code):
     
     db.session.add(dbinfo)
     db.session.commit()
+    return 
 
         
