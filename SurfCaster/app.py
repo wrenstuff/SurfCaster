@@ -42,7 +42,7 @@ with app.app_context():
             WHERE username = :username
             LIMIT 1
         """), {"username": "admin"}).fetchone()
-        joindate = datetime.now().strftime("%Y%m%d%H%M%S")
+        joindate = datetime.now().strftime("%Y%m%d")
 
         #DELETE THIS BEFORE LAUNCHING
         if not result:
