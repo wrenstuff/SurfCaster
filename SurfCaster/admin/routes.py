@@ -5,7 +5,7 @@ from flask import Blueprint, flash, redirect, render_template, request, session,
 
 # local imports
 from db_models import Users, FlaggedScans, ApprovedScans
-from extensions import db, get_reviews, scan_history, create_scan_id, flag_scan, get_scan_history, get_review_history, wait_time
+from extensions import db, get_reviews, scan_history, create_scan_id, flag_scan, get_scan_history, get_review_history, wait_time, getDate
 import models.Baelin as Baelin
 import url_extractor as ex
 
@@ -96,7 +96,10 @@ def history():
 def account():
     if session.get('role') != 'admin':
         return "Unauthorized", 403
-    return render_template('account.html')
+    
+    date = getDate()
+
+    return render_template('account.html', date=date)
 
 # Settings
 @admin_routes.route('/settings')

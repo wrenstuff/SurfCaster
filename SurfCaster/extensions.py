@@ -5,6 +5,7 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import text
 from datetime import datetime
 import time
+import calendar
 
 db = SQLAlchemy()
 
@@ -117,3 +118,27 @@ def get_review_history():
             'reviewer': username_result[0] if username_result else None
         })
     return reviews
+
+def getDate():
+    full = str(session.get('join_date'))
+
+    y = 0
+    year = ''
+    month = ''
+    day = ''
+    for x in full:
+        if y < 4:
+            year += x
+        elif y < 6:
+            month += x
+        else:
+            day += x
+        
+        y += 1
+
+    month = int(month)
+    month = calendar.month_name[month]
+
+    date = day + " " + month + " " + year
+
+    return date
