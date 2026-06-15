@@ -2,7 +2,7 @@ import smtplib,ssl,random,string
 from flask_sqlalchemy import SQLAlchemy
 from email.mime.text import MIMEText
 from db_models import RecoveryCodes, Users
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from flask import session
 from extensions import db
 from sqlalchemy import text, select
@@ -19,12 +19,14 @@ def recovery_code(len):
 
 def accountrecover(useremail,code):
    
-    user_id=db.session.execute(select(Users.id).where(Users.email==useremail)).scalar_one()
+    user_id=db.session.execute(select(Users.id).where(Users.email==useremail)).scalar_one_or_none()
     print (type(user_id))
-    if user_id == None:
+
+    if user_id is None:
         flash("Error: Account does not exist")
         return
-    creationtime = datetime.now()
+    
+    creationtime = datetime.now(timezone.utc)
     expirationtime = creationtime+timedelta(minutes=15)
 
     with open("surfcaster/emailpass.txt", "r") as file:
@@ -54,15 +56,35 @@ def accountrecover(useremail,code):
         server.send_message(email_msg)
         print("recovery email sent, please check your inbox / spam folder")
 
+
     dbinfo = RecoveryCodes(
         user_id = user_id,
         code = code,
         time_created = creationtime,
-        expiration_time = expirationtime
+        expiration_time = expirationtime,
+        status = True
     )
     
+
+    
+
     db.session.add(dbinfo)
     db.session.commit()
     return 
 
+def expire_code():
+    expire = RecoveryCodes.query.filter(
+        RecoveryCodes.status == True,
+        RecoveryCodes.expiration_time <datetime.now(timezone.utc)
+    ).all()
+
+    for code in expire:
+        code.status= False
+
+        db.session.commit
+
+
+
+
+    
         

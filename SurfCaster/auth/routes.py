@@ -5,6 +5,7 @@ from argon2.exceptions import VerifyMismatchError
 from db_models import Users
 from datetime import datetime ,timedelta, timezone
 from recover_acc import accountrecover,recovery_code
+from extensions import db
 import time
 
 hasher = PasswordHasher()
@@ -53,11 +54,13 @@ def login():
         else:   
             flash("Invalid username or password", "error")
             return render_template("login.html")
+        
 #function to send recover code email
 def recover_logic():
     useremail = request.form.get("user-email")
     code = recovery_code(6)
     accountrecover(useremail,code)
+
 
 # Recover page
 @auth_routes.route('/recover' , methods=["GET","POST"])
@@ -74,12 +77,7 @@ def recover_code():
     if request.method == "GET":
         return render_template("recover_code.html")
     if request.method == "POST":
-        
         return render_template('recover_code.html')
-
-@auth_routes.route('/resend_recovery_code', methods =["POST"] )
-def resend():
-    recover_logic()
 
     
 
