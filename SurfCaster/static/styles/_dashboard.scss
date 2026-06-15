@@ -1,2 +1,96 @@
 @use "color";
 
+.dashboard-wrapper {
+
+    display: flex;
+    width: 100vw;
+    height: calc(100vh - 150px);
+    align-items: center;
+
+    .dash-left-wrapper {
+
+        position: relative;
+        left: 0;
+        width: 50vw;
+
+        .dash-left {
+
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+
+            .btn-dash {
+
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                text-align: center;
+
+                a {
+
+                    color: color.$primary-color;
+
+                    .btn {
+
+                        width: 175px;
+                        height: 175px;
+                        background-color: color.$btn-color;
+                        margin: 15px;
+                        transition: 
+                            transform 0.1s ease-in-out, 
+                            box-shadow 0.1s ease-in-out;
+                        border-radius: 5px;
+
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        box-shadow: 4px 4px 5px color.$drop-shadow;
+
+                    }
+
+                    .btn:hover {
+
+                        transform: scale(1.1);
+                        box-shadow: 2px 2px 5px color.$drop-shadow;
+                        
+
+                    }
+
+                }
+
+            }
+
+        }
+
+    }
+
+    .dash-right-wrapper {
+
+        position: relative;
+        right: 0;
+
+        .dashh-right {
+
+            .news {
+
+
+
+            }
+
+            .scan {
+
+
+
+            }
+
+            .hist {
+
+
+
+            }
+
+        }
+
+    }
+
+}
