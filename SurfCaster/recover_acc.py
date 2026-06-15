@@ -8,7 +8,7 @@ from extensions import db
 from sqlalchemy import text, select
 from flask import flash
 
-
+#generates random recovery code tied to user id (email)
 def recovery_code(len):
     if len < 4:
         raise ValueError("This code must be at least 4 characters long")
@@ -19,6 +19,7 @@ def recovery_code(len):
 
 def accountrecover(useremail,code):
    
+    #checks if user exists
     user_id=db.session.execute(select(Users.id).where(Users.email==useremail)).scalar_one_or_none()
     print (type(user_id))
 
@@ -26,19 +27,21 @@ def accountrecover(useremail,code):
         flash("Error: Account does not exist")
         return
     
+    #creates time of code creation and expiration time
     creationtime = datetime.now(timezone.utc)
     expirationtime = creationtime+timedelta(minutes=15)
 
+    #opens secret file with email app
     with open("surfcaster/emailpass.txt", "r") as file:
         surfcaster_pass = file.read()
 
 
     surfcaster = "surfcaster.app@gmail.com"
 
-
+    #email formatting
     email_message = f"""
     Please enter the following code into the relevent text field on the application. 
-    When entered suuccessfully this will begind the account recovery process.
+    When entered suuccessfully this will begin the account recovery process.
 
     {code}
 
@@ -50,13 +53,14 @@ def accountrecover(useremail,code):
     email_msg["From"] = surfcaster
     email_msg["To"] =useremail
 
+    #gmail email logic
     with smtplib.SMTP("smtp.gmail.com", 587) as server:
         server.starttls()
         server.login(surfcaster, surfcaster_pass)
         server.send_message(email_msg)
         print("recovery email sent, please check your inbox / spam folder")
 
-
+    #storing code information into db
     dbinfo = RecoveryCodes(
         user_id = user_id,
         code = code,
@@ -64,24 +68,26 @@ def accountrecover(useremail,code):
         expiration_time = expirationtime,
         status = True
     )
-    
-
-    
-
     db.session.add(dbinfo)
     db.session.commit()
     return 
 
-def expire_code():
-    expire = RecoveryCodes.query.filter(
-        RecoveryCodes.status == True,
-        RecoveryCodes.expiration_time <datetime.now(timezone.utc)
-    ).all()
+def code_verifcation(user_id, inputcode):
+    code_status = RecoveryCodes.query.filter_by(
+        user_id = user_id,
+        code = inputcode,
+        status = True
+    ).first()
 
-    for code in expire:
-        code.status= False
+    if not code_status:
+        return "Code not  valid"
+    
+    if code_status.expiration_time < datetime.now(timezone.utc):
+        code_status.status = False 
+        db.session.commit()
 
-        db.session.commit
+    code_status.status = False
+    db.session.commit()
 
 
 
