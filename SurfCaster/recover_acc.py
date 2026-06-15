@@ -53,12 +53,7 @@ def accountrecover(useremail,code):
     email_msg["From"] = surfcaster
     email_msg["To"] =useremail
 
-    #gmail email logic
-    with smtplib.SMTP("smtp.gmail.com", 587) as server:
-        server.starttls()
-        server.login(surfcaster, surfcaster_pass)
-        server.send_message(email_msg)
-        print("recovery email sent, please check your inbox / spam folder")
+  
 
     #storing code information into db
     dbinfo = RecoveryCodes(
@@ -70,6 +65,13 @@ def accountrecover(useremail,code):
     )
     db.session.add(dbinfo)
     db.session.commit()
+
+      #gmail email logic
+    with smtplib.SMTP("smtp.gmail.com", 587) as server:
+        server.starttls()
+        server.login(surfcaster, surfcaster_pass)
+        server.send_message(email_msg)
+        print("recovery email sent, please check your inbox / spam folder")
     return 
 
 def code_verifcation(user_id, inputcode):
@@ -80,14 +82,18 @@ def code_verifcation(user_id, inputcode):
     ).first()
 
     if not code_status:
-        return "Code not  valid"
+        return False, "Code not  valid"
     
     if code_status.expiration_time < datetime.now(timezone.utc):
         code_status.status = False 
         db.session.commit()
+        message = "done"
+        return False, "code expired" 
 
     code_status.status = False
     db.session.commit()
+
+    return True,"Code valid"
 
 
 

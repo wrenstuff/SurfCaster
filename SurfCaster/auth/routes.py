@@ -4,7 +4,7 @@ from argon2 import PasswordHasher
 from argon2.exceptions import VerifyMismatchError
 from db_models import Users
 from datetime import datetime ,timedelta, timezone
-from recover_acc import accountrecover,recovery_code
+from recover_acc import accountrecover,recovery_code, code_verifcation
 from extensions import db
 import time
 
@@ -59,6 +59,13 @@ def login():
 def recover_logic():
     useremail = request.form.get("user-email")
     code = recovery_code(6)
+
+    user = Users.query.filter_by(email=useremail).first()
+
+    if not user:
+        return "user was not found"
+    #temp session logic
+    session["recovery_user_id"] = user.id
     accountrecover(useremail,code)
 
 
@@ -77,7 +84,21 @@ def recover_code():
     if request.method == "GET":
         return render_template("recover_code.html")
     if request.method == "POST":
-        return render_template('recover_code.html')
+      user_id= session.get("recovery_user_id")
+      input_code = request.form.get("code")
+
+      if not user_id:
+          return redirect(url_for(auth_routes.recover))
+      
+      correct,message  =code_verifcation(user_id,input_code)
+      #correct = result[0]
+      #message = result[1]
+
+      if not correct:
+          flash(message)
+          return redirect(url_for("auth_routes.recover_code", error= message))
+      
+      return redirect(url_for("auth_routes.reset_pw"))
 
     
 
@@ -109,3 +130,10 @@ def logout():
     time.sleep(1.5)
     session.clear()
     return redirect(url_for('auth_routes.login'))
+
+@auth_routes.route('/reset_pw')
+def reset_pw():
+    if request.method == "GET":
+        return render_template("reset_pw.html")
+    if request.method == "POST":
+        return redirect(url_for('auth_routes.login'))
