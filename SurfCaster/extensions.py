@@ -6,6 +6,7 @@ from sqlalchemy import text
 from datetime import datetime
 import time
 import calendar
+from colour_helper import get_gradient
 
 db = SQLAlchemy()
 
@@ -77,6 +78,11 @@ def get_scan_history():
         return []
     history_path = 'scan_history.json'
     history = load_json_file(history_path, [])
+
+    for scan in history:
+        score = scan.get('last_scan_result', 0)
+        scan['color'] = get_gradient(score)
+
     return history
 
 def get_reviews():
