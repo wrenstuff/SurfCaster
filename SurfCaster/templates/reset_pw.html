@@ -15,12 +15,14 @@
 
             <h3 class="recover-title">Account recovery</h3>
             <p class="reset-password">Please enter a new password</p>
-            <div  class=" input-fields">
+            <div class=" input-fields">
                 <form method="POST" action="{{ url_for('auth_routes.reset_pw') }}">
                     <input class="recover-input" type="password" id="reset-password" name="password"
                         placeholder="reset password" required>
                     <input class="recover-input" type="password" id="password-conf" name="confirm_password"
                         placeholder="confirm password" required>
+                    <button type="button" onclick="togglePasswordVisibility('reset-password')">Show</button>
+                    <button type="button" onclick="togglePasswordVisibility('password-conf')">Show</button>
                     <div class="submit-btn">
                         <label>
                             <input type="checkbox">
@@ -30,8 +32,18 @@
                 </form>
             </div>
 
-            <!--/form-->
-        
+            <script>
+                function togglePasswordVisibility(fieldId) {
+                    const field = document.getElementById(fieldId);
+
+                    if (field.type === "password") {
+                        field.type = "text";
+                    } else {
+                        field.type = "password";
+                    }
+                }
+            </script>
+
         </div>
     </div>
 
