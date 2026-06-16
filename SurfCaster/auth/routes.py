@@ -15,7 +15,7 @@ auth_routes = Blueprint('auth_routes', __name__)
 #splash 
 @auth_routes.route('/')
 def splash ():
-    return render_template("splash.html")
+    return render_template("splash.html",login_url =url_for("auth_routes.login"))
     
 
 # Login Page

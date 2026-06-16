@@ -32,34 +32,42 @@
         justify-content: center;
         flex-direction: column;
         align-items: center;
-       
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+
         .login-btn {
             display: flex;
             justify-content: center;
             align-items: center;
 
             button {
-                width: 60px;
-                height: 25px;
-                margin-top: 10px;
-                margin-bottom: 15px;
+                width: 80px;
+                height: 30px;
+                margin-top: 15px;
+                cursor: pointer;
+                transition: transform 0.2s ease, box-shadow 0.2s ease;
+                border-radius: 5px;
+            }
+
+            button:hover {
+                transform: translateY(-1px);
+                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
             }
         }
 
         .input-fields {
+            display: grid;
             input {
                 margin: 10px;
                 height: 20pt;
                 width: 300px;
+                border-radius: 5px;
             }
-
-            display: grid;
         }
     }
 }
 
 .links {
-    font-weight: 50px;
+    font-weight: 500;
     text-align: center;
     margin-top: 25px;
 
@@ -67,14 +75,10 @@
         color: color.$primary-text;
         padding-right: 20px;
         margin-right: 40px;
-
-
     }
 
     .signup {
         color: color.$primary-text;
-        padding-top: 20px;
-        margin-left: 20px;
     }
 }
 
@@ -186,9 +190,18 @@
             display: flex;
             flex-direction: row;
 
-            button {
-                width: 60px;
-                margin-top: 20px;
+           button {
+                width: 80px;
+                height: 30px;
+                margin-top: 15px;
+                cursor: pointer;
+                transition: transform 0.2s ease, box-shadow 0.2s ease;
+                border-radius: 5px;
+            }
+
+            button:hover {
+                transform: translateY(-1px);
+                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
             }
         }
     }
@@ -218,67 +231,84 @@
         width: auto;
         border-radius: 10px;
         min-width: 400px;
-        min-height: 200px;
+        min-height: 326px;
 
-        .email-p{
+        .email-p {
             font-size: 10pt;
             align-self: center;
             text-align: center;
             justify-self: top;
         }
+
         .recover-title {
             text-align: center;
+            justify-content: center;
             margin: 10px;
         }
+
         .input-fields {
+            margin-top: 75px;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            width: 100%;
             grid-row: 3;
-        .recover-input {
-            margin: 10px;
-            height: 20pt;
-            max-width: 300px;
-            width: 100%;            
-        }
-    }
-    .submit-btn {
-        display: flex;
-        justify-content: center;
-        align-self: center;
-        align-items: center;
-        grid-row: 4;
-        button {
-            width: 60px;
-            justify-content: center;
-            align-items: center;
-            margin-left: 10px;
-            height: 25px;
-        }
-    }
-    .code-input {
-            margin: 10px;
-            height: 20pt;
-            max-width: 300px;
-            width: 100%;            
-        }
-    .links {
-        font-weight: 50;
-        text-align: center;
-        align-self: center; 
-        justify-self: center;
-        margin-top: 25px;
-        display: flex;
-        gap: 90px;
-        margin-bottom: 20px;
 
-        a {
-            color: color.$primary-text;
-            padding: 0 10px;
+            .recover-input {
+                margin: 10px;
+                height: 20pt;
+                width: 300px;
+                max-width: 300px;
+                border-radius: 5px;
+            }
         }
-}
-}
+
+        .submit-btn {
+            display: flex;
+            justify-content: center;
+            align-self: center;
+            align-items: center;
+            grid-row: 4;
+            margin-top: 10px;
+
+           button {
+                width: 80px;
+                height: 30px;
+                margin-top: 15px;
+                cursor: pointer;
+                transition: transform 0.2s ease, box-shadow 0.2s ease;
+                border-radius: 5px;
+            }
+
+            button:hover {
+                transform: translateY(-1px);
+                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            }
+        }
+
+        .code-input {
+            margin: 10px;
+            height: 20pt;
+            max-width: 300px;
+            width: 100%;
+        }
+
+        .links {
+            font-weight: 50;
+            text-align: center;
+            align-self: center;
+            justify-self: center;
+            margin-top: 25px;
+            display: flex;
+            gap: 90px;
+            margin-bottom: 20px;
+            grid-row: 6;
+
+            a {
+                color: color.$primary-text;
+                padding: 0 10px;
+            }
+        }
+    }
 
 }

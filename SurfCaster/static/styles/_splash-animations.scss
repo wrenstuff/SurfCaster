@@ -1,0 +1,29 @@
+@use 'color';
+
+.auth-logo-wrapper{
+animation: SplashAnim 3s ease-in-out forwards;
+display: inline-block;
+transform-origin: center;
+}
+
+@keyframes SplashAnim {
+    0% {
+        transform: scale(1.2);
+        opacity: 0;
+    }
+
+    30% {
+        transform: scale(1.5);
+        opacity: 1;
+    }
+
+    70% {
+        transform: scale(1);
+        opacity: 1;
+    }
+
+    100% {
+        transform: scale(0.5);
+        opacity: 0;
+    }
+}
