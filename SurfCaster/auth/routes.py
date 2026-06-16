@@ -3,10 +3,9 @@ from flask import Blueprint, flash, redirect, render_template, request, session,
 from argon2 import PasswordHasher
 from argon2.exceptions import VerifyMismatchError
 from db_models import Users
-from datetime import datetime ,timedelta, timezone
-from recover_acc import accountrecover,recovery_code, code_verifcation
-from extensions import db
-import time
+from datetime import datetime
+from recover_acc import accountrecover,recovery_code
+from extensions import wait_time
 
 hasher = PasswordHasher()
 DB_NAME = "instance/SurfCaster.db"
@@ -39,10 +38,11 @@ def login():
                     session['user_id'] = user.id
                     session['username'] = user.username 
                     session['email'] = user.email
-                    session['role'] = user.role            
+                    session['role'] = user.role
+                    session['join_date'] = user.joindate
                     flash("Login successful", "success")
                     # redirect to users' dashboard based on role
-                    time.sleep(1.5)
+                    wait_time()
                     return redirect(url_for(session['role'] + '_routes.home'))
                 
             except VerifyMismatchError:
@@ -109,7 +109,7 @@ def signup():
 @auth_routes.route('/logout')
 def logout():
     session['logout'] = True
-    time.sleep(1.5)
+    wait_time()
     session.clear()
     return redirect(url_for('auth_routes.login'))
 
