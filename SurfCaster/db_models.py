@@ -1,5 +1,6 @@
 # database configuration
 from extensions import db
+from datetime import datetime
 
 class Users(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -21,8 +22,9 @@ class RecoveryCodes(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     code =db.Column(db.String(6), nullable=False)
-    time_created =db.Column(db.Integer, nullable=False)
-    expiration_time =db.Column(db.Integer, nullable=False)
+    time_created =db.Column(db.DateTime, nullable=False)
+    expiration_time =db.Column(db.DateTime, nullable=False)
+    status =db.Column(db.Boolean, default =True)
     
 class ApprovedScans(db.Model):
     id = db.Column(db.Integer, primary_key=True)

@@ -12,9 +12,11 @@ DB_NAME = "instance/SurfCaster.db"
 
 auth_routes = Blueprint('auth_routes', __name__)
 
+#splash 
 @auth_routes.route('/')
 def splash ():
     return render_template("splash.html")
+    
 
 # Login Page
 @auth_routes.route('/login', methods=["GET","POST"])
@@ -22,11 +24,9 @@ def login():
     if request.method == "GET":
         return render_template('login.html')
     if request.method =="POST":
-        conn = sqlite3.connect(DB_NAME)
         # get username and password from form
         username = request.form.get("username")
         password = request.form.get("password")
-
         session['logout'] = False
         #hashedpw = hasher.hash(password)
         user = Users.query.filter_by(username=username).first()
@@ -52,19 +52,30 @@ def login():
         else:   
             flash("Invalid username or password", "error")
             return render_template("login.html")
-    
+        
+#function to send recover code email
+def recover_logic():
+    useremail = request.form.get("user-email")
+    code = recovery_code(6)
 
-# Registration Page
+    user = Users.query.filter_by(email=useremail).first()
+
+    if not user:
+        return "user was not found"
+    #temp session logic
+    session["recovery_user_id"] = user.id
+    accountrecover(useremail,code)
+
+
+# Recover page
 @auth_routes.route('/recover' , methods=["GET","POST"])
 def recover():
     if request.method == "GET":
         return render_template("recover.html")
     if request.method == "POST":
-        useremail = request.form.get("user-email")
-        code = recovery_code(6)
-        accountrecover(useremail,code)
-        return render_template('recover.html')
-    
+        recover_logic()
+        return redirect(url_for("auth_routes.recover_code"))
+
 
 @auth_routes.route('/signup', methods=["GET","POST"])
 def signup():
@@ -75,13 +86,22 @@ def signup():
         username = request.form.get("username")
         email = request.form.get("email")
         password = request.form.get("password")
-        connection = sqlite3.connect(DB_NAME)
         joindate = datetime.now().strftime("%Y%m%d")
-        cursor = connection.cursor()
+
+        if Users.query.filter_by(username=username).first():
+            flash("Username already exists")
+            return redirect(url_for('auth_routes.signup'))
+        
+        if Users.query.filter_by(email=email).first():
+            flash("Email already exists")
+            return redirect(url_for('auth_routes.signup'))
+        
         hashedpw = hasher.hash(password)
-        cursor.execute("INSERT INTO users (username, email, password, role, joindate) VALUES (?, ?, ?, ?, ?)", (username, email, hashedpw, "user", joindate))
-        connection.commit() 
-        connection.close()
+
+        new_user = Users(username=username, email=email, password=hashedpw, role="user", joindate=joindate)
+        db.session.add(new_user)
+        db.session.commit()
+        flash("Signup successful, please log in", "success")
     return redirect(url_for('auth_routes.login'))
 
     
@@ -92,3 +112,70 @@ def logout():
     wait_time()
     session.clear()
     return redirect(url_for('auth_routes.login'))
+
+#code input
+@auth_routes.route('/recover_code' , methods=["GET","POST"])
+def recover_code():
+    if request.method == "GET":
+        return render_template("recover_code.html")
+    if request.method == "POST":
+      user_id= session.get("recovery_user_id")
+      input_code = request.form.get("recover-code").strip()
+
+      if not user_id:
+          return redirect(url_for(auth_routes.recover))
+      
+      correct,message  =code_verifcation(user_id,input_code)
+      #correct = result[0]
+      #message = result[1]
+
+      if not correct:
+          flash(message)
+          return redirect(url_for("auth_routes.recover_code", error= message))
+      
+      return redirect(url_for("auth_routes.reset_pw"))
+
+@auth_routes.route('/reset_pw', methods=["GET","POST"])
+def reset_pw():
+
+    if request.method == "GET":
+        return render_template("reset_pw.html")
+    
+    user_id = session.get("recovery_user_id")
+
+    if not user_id:
+        flash("Session expired")
+        return redirect(url_for("auth_routes.recover"))
+
+    #get new password from form and cleanse spaces
+    reset_pass = request.form.get('password', '').strip()
+    password_conf = request.form.get('confirm_password', '').strip()
+
+    #error handling
+    if not reset_pass or not password_conf:
+        flash("Please fill out all fields")
+        return redirect(url_for("auth_routes.reset_pw"))
+
+    if reset_pass != password_conf:
+        flash("Passwords do not match")
+        return redirect(url_for("auth_routes.reset_pw"))
+
+    if len(reset_pass) < 8:
+        flash("Password must be at least 8 characters long")
+        return redirect(url_for("auth_routes.reset_pw"))
+
+    # fetch user from db
+    user = Users.query.filter_by(id=user_id).first()
+     
+    #additional check to ensure user exists before updating password
+    if not user:
+        flash("User not found")
+        return redirect(url_for("auth_routes.recover"))
+
+    # hash new password and update db
+    user.password = hasher.hash(reset_pass)
+    db.session.commit()
+    # clear recovery session data
+    session.pop("recovery_user_id", None)
+    flash("Password reset successfully")
+    return redirect(url_for("auth_routes.login"))

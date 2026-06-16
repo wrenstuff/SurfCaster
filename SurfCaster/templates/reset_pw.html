@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/main.css') }}">
+    <title>Document</title>
+</head>
+
+<body>
+    {% include 'login-header.html' %}
+    <div class="recover-wrapper">
+        <div class="recover-container">
+
+            <h3 class="recover-title">Account recovery</h3>
+            <p class="reset-password">Please enter a new password</p>
+            <div class=" input-fields">
+                <form method="POST" action="{{ url_for('auth_routes.reset_pw') }}">
+                    <input class="recover-input" type="password" id="reset-password" name="password"
+                        placeholder="reset password" required>
+                    <input class="recover-input" type="password" id="password-conf" name="confirm_password"
+                        placeholder="confirm password" required>
+                    <button type="button" onclick="togglePasswordVisibility('reset-password')">Show</button>
+                    <button type="button" onclick="togglePasswordVisibility('password-conf')">Show</button>
+                    <div class="submit-btn">
+                        <label>
+                            <input type="checkbox">
+                        </label>
+                        <button type="submit">submit</button>
+                    </div>
+                </form>
+            </div>
+
+            <script>
+                function togglePasswordVisibility(fieldId) {
+                    const field = document.getElementById(fieldId);
+
+                    if (field.type === "password") {
+                        field.type = "text";
+                    } else {
+                        field.type = "password";
+                    }
+                }
+            </script>
+
+        </div>
+    </div>
+
+</body>
+
+</html>

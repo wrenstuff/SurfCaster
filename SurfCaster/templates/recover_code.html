@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/main.css') }}">
+    <title>Document</title>
+</head>
+
+<body>
+    {% include 'login-header.html' %}
+    <div class="recover-wrapper">
+        <div class="recover-container">
+
+            <h3 class="recover-title">Account recovery</h3>
+            <p class="email-p">Enter the code sent to your Email address</p>
+            <div action="{{ url_for('auth_routes.recover') }}" class=" input-fields">
+                <form method="POST">
+                    <input class="code-input" type="text" id="recover-code" name="recover-code" placeholder="Recovery code" required  oninput="this.setCustomValidity('')" oninvalid="this.setCustomValidity('Invalid code: Please enter the code in your emails')" minlength="6" maxlength="6">
+                    <div class="submit-btn">
+                    <label>
+                        <input type="checkbox">
+                    </label>
+                    <button>submit</button>
+            </div>
+            </form>
+        </div>
+
+        <!--/form-->
+        <div class="links">
+            <a class="resend-code" action ="/resend-recovery-code>Login"</a>
+            
+        </div>
+    </div>
+    </div>
+
+</body>
+
+</html>
