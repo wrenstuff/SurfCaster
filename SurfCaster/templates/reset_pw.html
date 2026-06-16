@@ -15,11 +15,11 @@
 
             <h3 class="recover-title">Account recovery</h3>
             <p class="reset-password">Please enter a new password</p>
-            <div action="{{ url_for('auth_routes.reset_pw') }}" class=" input-fields">
-                <form method="POST">
-                    <input class="recover-input" type="password" id="reset-password" name="reset-password"
+            <div  class=" input-fields">
+                <form method="POST" action="{{ url_for('auth_routes.reset_pw') }}">
+                    <input class="recover-input" type="password" id="reset-password" name="password"
                         placeholder="reset password" required>
-                    <input class="recover-input" type="password" id="password-conf" name="password-conf"
+                    <input class="recover-input" type="password" id="password-conf" name="confirm_password"
                         placeholder="confirm password" required>
                     <div class="submit-btn">
                         <label>

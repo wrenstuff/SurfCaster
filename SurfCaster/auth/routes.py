@@ -76,31 +76,6 @@ def recover():
         recover_logic()
         return redirect(url_for("auth_routes.recover_code"))
 
-#code input
-@auth_routes.route('/recover_code' , methods=["GET","POST"])
-def recover_code():
-    if request.method == "GET":
-        return render_template("recover_code.html")
-    if request.method == "POST":
-      user_id= session.get("recovery_user_id")
-      input_code = request.form.get("recover-code").strip()
-
-      if not user_id:
-          return redirect(url_for(auth_routes.recover))
-      
-      correct,message  =code_verifcation(user_id,input_code)
-      #correct = result[0]
-      #message = result[1]
-
-      if not correct:
-          flash(message)
-          return redirect(url_for("auth_routes.recover_code", error= message))
-      
-      return redirect(url_for("auth_routes.reset_pw"))
-
-    
-
-
 
 @auth_routes.route('/signup', methods=["GET","POST"])
 def signup():
@@ -138,47 +113,69 @@ def logout():
     session.clear()
     return redirect(url_for('auth_routes.login'))
 
+#code input
+@auth_routes.route('/recover_code' , methods=["GET","POST"])
+def recover_code():
+    if request.method == "GET":
+        return render_template("recover_code.html")
+    if request.method == "POST":
+      user_id= session.get("recovery_user_id")
+      input_code = request.form.get("recover-code").strip()
+
+      if not user_id:
+          return redirect(url_for(auth_routes.recover))
+      
+      correct,message  =code_verifcation(user_id,input_code)
+      #correct = result[0]
+      #message = result[1]
+
+      if not correct:
+          flash(message)
+          return redirect(url_for("auth_routes.recover_code", error= message))
+      
+      return redirect(url_for("auth_routes.reset_pw"))
+
 @auth_routes.route('/reset_pw', methods=["GET","POST"])
 def reset_pw():
+
     if request.method == "GET":
         return render_template("reset_pw.html")
     
     user_id = session.get("recovery_user_id")
+
     if not user_id:
+        flash("Session expired")
         return redirect(url_for("auth_routes.recover"))
-    
-    if request.method == "POST":
-        
-        user_id = session.get("recovery_user_id")
-        if not user_id:
-            return redirect(url_for("auth_routes.recover"))
 
-        reset_pass = request.form.get('password', '').strip()
-        password_conf = request.form.get('password_conf', '').strip()
+    #get new password from form and cleanse spaces
+    reset_pass = request.form.get('password', '').strip()
+    password_conf = request.form.get('confirm_password', '').strip()
 
-        if not reset_pass or not password_conf:
-            flash("Please fill out all fields")
-            return redirect(url_for("auth_routes.reset_pw"))
-        
-        if reset_pass != password_conf:
-            flash("Passwords do not match")
-            return redirect(url_for("auth_routes.reset_pw"))
-        
-        if len(reset_pass) < 8:
-            flash("Password must be at least 8 characters long")
-            return redirect(url_for("auth_routes.reset_pw"))
-        
-        user = Users.query.get(user_id)
+    #error handling
+    if not reset_pass or not password_conf:
+        flash("Please fill out all fields")
+        return redirect(url_for("auth_routes.reset_pw"))
 
-        if not user:
-            flash("User not found")
-            return redirect(url_for("auth_routes.recover"))
-        
-        user.password = hasher.hash(reset_pass)
-        print("User:", user.id)
-        print("Old hash:", user.password)
-        db.session.commit()
-        print("New hash:", user.password)
-        session.pop("recovery_user_id", None)
-        flash("Password reset successfully")
-        return redirect(url_for("auth_routes.login"))
+    if reset_pass != password_conf:
+        flash("Passwords do not match")
+        return redirect(url_for("auth_routes.reset_pw"))
+
+    if len(reset_pass) < 8:
+        flash("Password must be at least 8 characters long")
+        return redirect(url_for("auth_routes.reset_pw"))
+
+    # fetch user from db
+    user = Users.query.filter_by(id=user_id).first()
+     
+    #additional check to ensure user exists before updating password
+    if not user:
+        flash("User not found")
+        return redirect(url_for("auth_routes.recover"))
+
+    # hash new password and update db
+    user.password = hasher.hash(reset_pass)
+    db.session.commit()
+    # clear recovery session data
+    session.pop("recovery_user_id", None)
+    flash("Password reset successfully")
+    return redirect(url_for("auth_routes.login"))
