@@ -1,4 +1,3 @@
-import sqlite3
 from flask import Blueprint, flash, redirect, render_template, request, session, url_for
 from argon2 import PasswordHasher
 from argon2.exceptions import VerifyMismatchError

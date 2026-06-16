@@ -28,7 +28,7 @@ def save_json_file(path, data):
     with open(path, 'w') as f:
         json.dump(data, f)
 
-def scan_history(url, last_scan_result):
+def scan_history(url, last_scan_result, last_scan_status=None, phishing_probability=None):
     history_path = 'scan_history.json'
     settings_path = 'user_settings.json'
 
@@ -37,7 +37,13 @@ def scan_history(url, last_scan_result):
 
     full_scan_history = settings.get('full_scan_history', False)
 
-    history.insert(0, {"date": datetime.now().isoformat(), "url": url, "last_scan_result": last_scan_result})
+    history.insert(0, {
+        "date": datetime.now().isoformat(), 
+        "url": url, 
+        "last_scan_result": last_scan_result,
+        "status": last_scan_status,
+        "phishing_probability": phishing_probability
+    })
 
     if not full_scan_history:
         history = history[:10]
