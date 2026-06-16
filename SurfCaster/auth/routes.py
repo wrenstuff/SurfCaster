@@ -25,11 +25,9 @@ def login():
     if request.method == "GET":
         return render_template('login.html')
     if request.method =="POST":
-        conn = sqlite3.connect(DB_NAME)
         # get username and password from form
         username = request.form.get("username")
         password = request.form.get("password")
-
         session['logout'] = False
         #hashedpw = hasher.hash(password)
         user = Users.query.filter_by(username=username).first()
@@ -85,7 +83,7 @@ def recover_code():
         return render_template("recover_code.html")
     if request.method == "POST":
       user_id= session.get("recovery_user_id")
-      input_code = request.form.get("code")
+      input_code = request.form.get("recover-code").strip()
 
       if not user_id:
           return redirect(url_for(auth_routes.recover))
@@ -113,13 +111,22 @@ def signup():
         username = request.form.get("username")
         email = request.form.get("email")
         password = request.form.get("password")
-        connection = sqlite3.connect(DB_NAME)
         joindate = datetime.now().strftime("%Y%m%d")
-        cursor = connection.cursor()
+
+        if Users.query.filter_by(username=username).first():
+            flash("Username already exists")
+            return redirect(url_for('auth_routes.signup'))
+        
+        if Users.query.filter_by(email=email).first():
+            flash("Email already exists")
+            return redirect(url_for('auth_routes.signup'))
+        
         hashedpw = hasher.hash(password)
-        cursor.execute("INSERT INTO users (username, email, password, role, joindate) VALUES (?, ?, ?, ?, ?)", (username, email, hashedpw, "user", joindate))
-        connection.commit() 
-        connection.close()
+
+        new_user = Users(username=username, email=email, password=hashedpw, role="user", joindate=joindate)
+        db.session.add(new_user)
+        db.session.commit()
+        flash("Signup successful, please log in", "success")
     return redirect(url_for('auth_routes.login'))
 
     
@@ -131,9 +138,47 @@ def logout():
     session.clear()
     return redirect(url_for('auth_routes.login'))
 
-@auth_routes.route('/reset_pw')
+@auth_routes.route('/reset_pw', methods=["GET","POST"])
 def reset_pw():
     if request.method == "GET":
         return render_template("reset_pw.html")
+    
+    user_id = session.get("recovery_user_id")
+    if not user_id:
+        return redirect(url_for("auth_routes.recover"))
+    
     if request.method == "POST":
-        return redirect(url_for('auth_routes.login'))
+        
+        user_id = session.get("recovery_user_id")
+        if not user_id:
+            return redirect(url_for("auth_routes.recover"))
+
+        reset_pass = request.form.get('password', '').strip()
+        password_conf = request.form.get('password_conf', '').strip()
+
+        if not reset_pass or not password_conf:
+            flash("Please fill out all fields")
+            return redirect(url_for("auth_routes.reset_pw"))
+        
+        if reset_pass != password_conf:
+            flash("Passwords do not match")
+            return redirect(url_for("auth_routes.reset_pw"))
+        
+        if len(reset_pass) < 8:
+            flash("Password must be at least 8 characters long")
+            return redirect(url_for("auth_routes.reset_pw"))
+        
+        user = Users.query.get(user_id)
+
+        if not user:
+            flash("User not found")
+            return redirect(url_for("auth_routes.recover"))
+        
+        user.password = hasher.hash(reset_pass)
+        print("User:", user.id)
+        print("Old hash:", user.password)
+        db.session.commit()
+        print("New hash:", user.password)
+        session.pop("recovery_user_id", None)
+        flash("Password reset successfully")
+        return redirect(url_for("auth_routes.login"))

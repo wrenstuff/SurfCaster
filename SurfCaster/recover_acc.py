@@ -1,5 +1,4 @@
 import smtplib,ssl,random,string
-from flask_sqlalchemy import SQLAlchemy
 from email.mime.text import MIMEText
 from db_models import RecoveryCodes, Users
 from datetime import datetime, timedelta, timezone
@@ -28,7 +27,7 @@ def accountrecover(useremail,code):
         return
     
     #creates time of code creation and expiration time
-    creationtime = datetime.now(timezone.utc)
+    creationtime = datetime.now()
     expirationtime = creationtime+timedelta(minutes=15)
 
     #opens secret file with email app
@@ -84,15 +83,14 @@ def code_verifcation(user_id, inputcode):
     if not code_status:
         return False, "Code not  valid"
     
-    if code_status.expiration_time < datetime.now(timezone.utc):
+    if code_status.expiration_time < datetime.now():
         code_status.status = False 
         db.session.commit()
-        message = "done"
         return False, "code expired" 
 
+    #when code is used it will be set to false so it cannot be reused
     code_status.status = False
     db.session.commit()
-
     return True,"Code valid"
 
 
