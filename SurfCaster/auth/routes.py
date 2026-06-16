@@ -4,8 +4,8 @@ from argon2 import PasswordHasher
 from argon2.exceptions import VerifyMismatchError
 from db_models import Users
 from datetime import datetime
-from recover_acc import accountrecover,recovery_code
-from extensions import wait_time
+from recover_acc import accountrecover,recovery_code, code_verifcation
+from extensions import wait_time, db
 
 hasher = PasswordHasher()
 DB_NAME = "instance/SurfCaster.db"
@@ -176,6 +176,6 @@ def reset_pw():
     user.password = hasher.hash(reset_pass)
     db.session.commit()
     # clear recovery session data
-    session.pop("recovery_user_id", None)
+    session.clear()
     flash("Password reset successfully")
     return redirect(url_for("auth_routes.login"))
