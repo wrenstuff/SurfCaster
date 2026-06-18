@@ -5,9 +5,11 @@ from flask import Blueprint, flash, redirect, render_template, request, session,
 
 # local imports
 from db_models import Users, FlaggedScans, ApprovedScans
-from extensions import db, get_reviews, scan_history, create_scan_id, flag_scan, get_scan_history, get_review_history, wait_time, getDate
+from extensions import db, get_reviews, scan_history, flag_scan, get_scan_history, get_review_history, wait_time, getDate
 import models.Baelin as Baelin
 import url_extractor as ex
+from torch import torch
+import joblib
 
 # blueprint creation
 admin_routes = Blueprint('admin_routes', __name__)
@@ -32,17 +34,39 @@ def scan():
         url = request.form.get('url')
 
         # turn url into features then convert to tensor
-        features = ex.extract_url_features(url)
+        url_features = ex.extract_url_features(url)
 
-        model = Baelin.Baelin()
+        checkpoint = torch.load(
+            'SurfCaster/models/Baelin_checkpoint.pth', map_location="cpu"
+        )
+
+        scaler = joblib.load('SurfCaster/models/Baelin_scaler.pkl')
+
+        input_size = checkpoint["input_size"]
+        feature_columns = checkpoint["feature_columns"]
+        threshold = checkpoint["threshold"]
+
+        model = Baelin.Baelin(input_size)
+        model.load_state_dict(checkpoint["model_state_dict"])
+        model.eval()
+
+        prediction = model.predict(
+            url_features,
+            scaler=scaler,
+            feature_columns=feature_columns
+        )
+
+        phishing_probability = prediction["phishing_probability"] * 100
 
         session['last_scanned_url'] = url
+        session["phishing_probability"] = phishing_probability
 
-        last_scan_result = model.predict(features) * 100
+        session["last_scan_result"] = phishing_probability
 
-        session['last_scan_result'] = last_scan_result
-
-        scan_history(url, last_scan_result)
+        scan_history(
+            url,
+            phishing_probability
+        )
 
         wait_time()
 

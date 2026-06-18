@@ -1,3 +1,6 @@
+import os
+import joblib
+
 import pandas as pd
 import torch
 import torch.nn as nn
@@ -47,6 +50,8 @@ y = df_train[target_column]
 # thanks for coming to my ted talk
 x = pd.get_dummies(x, drop_first=True)
 
+feature_columns = list(x.columns)
+
 input_size = x.shape[1]
 print(f"Input size: {input_size}")
 
@@ -54,8 +59,9 @@ print(f"Input size: {input_size}")
 X_train, X_test, y_train, y_test = train_test_split(
     x, 
     y, 
-    test_size=0.5, 
-    random_state=42
+    test_size=0.2, 
+    random_state=42,
+    stratify=y
 )
 
 # standardise the data for easier training
@@ -73,31 +79,52 @@ y_test_tensor = torch.tensor(y_test.values, dtype=torch.float32).view(-1, 1).to(
 class Baelin(nn.Module):
     def __init__(self, input_size):
         super(Baelin, self).__init__()
-        self.linear = nn.Linear(input_size, 1)
+        
+        self.network = nn.Sequential(
+            nn.Linear(input_size, 64),
+            nn.ReLU(),
+            nn.Linear(64, 32),
+            nn.ReLU(),
+            nn.Linear(32, 1)
+        )
 
     def forward(self, x):
-        return self.linear(x)
+        return self.network(x)
 
-input_size = X_train_tensor.shape[1]
 model = Baelin(input_size).to(device)
+
+checkpoint_path = 'SurfCaster/models/Baelin_checkpoint.pth'
+start_epoch = 0
+
+if os.path.exists(checkpoint_path):
+    checkpoint = torch.load(checkpoint_path, map_location=device)
+    old_input_size = checkpoint.get("input_size")
+    if old_input_size != input_size:
+        raise ValueError("Input size mismatch")
+    
+    model.load_state_dict(checkpoint["model_state_dict"])
+    start_epoch = checkpoint.get("epochs", 0)
+
+    print("checkpoint loaded")
 
 #loss and optimizer
 loss_function = nn.BCEWithLogitsLoss()
-optimizer = torch.optim.Adam(model.parameters(), lr=0.01)
+optimizer = torch.optim.Adam(model.parameters(), lr=0.001)
 
 # training loop
 # more epochs = better training but possible overfitting
 # less epochs = faster training but possible underfitting
 # gotta figure out the sweet spot
-epochs = 1000
+epochs = 500
 
 for epoch in range(epochs):
     model.train()
 
-    logits = model(X_train_tensor.to(device))
+    optimizer.zero_grad()
+    
+    logits = model(X_train_tensor)
     loss = loss_function(logits, y_train_tensor)
 
-    optimizer.zero_grad()
     loss.backward()
     optimizer.step()
 
@@ -107,11 +134,13 @@ for epoch in range(epochs):
 # model evaluation
 model.eval()
 
+threshold = .50
+
 with torch.no_grad():
-    test_logits = model(X_test_tensor.to(device))
+    test_logits = model(X_test_tensor)
     test_probabilities = torch.sigmoid(test_logits)
     # probability that it accepts the url as legitemate or phishing
-    test_predictions = (test_probabilities >= 0.50).float()
+    test_predictions = (test_probabilities >= threshold).float()
 
 y_pred = test_predictions.cpu().numpy()
 y_true = y_test_tensor.cpu().numpy()
@@ -132,15 +161,23 @@ print(f"F1-Score: {f1:.4f}")
 print()
 print(f"Confusion Matrix:\n{matrix}")
 
-#save model
-save_path = 'SurfCaster/models/Baelin.pth'
-torch.save(model.state_dict(), save_path)
-print("Model saved as 'Baelin.pth'")
+#checkpoint
+os.makedirs('SurfCaster/models', exist_ok=True)
+save_path = 'SurfCaster/models/Baelin_checkpoint.pth'
+scaler_path = 'SurfCaster/models/Baelin_scaler.pkl'
 
+checkpoint = {
+    "model_state_dict": model.state_dict(),
+    "input_size": input_size,
+    "feature_columns": feature_columns,
+    "threshold": threshold,
+    "epochs": start_epoch + epochs,
+    "accuracy": accuracy,
+    "precision": precision,
+    "recall": recall,
+    "f1": f1
+}
 
-print("Saving model to:", save_path)
+torch.save(checkpoint, save_path)
+joblib.dump(scaler, scaler_path)
 
-for key, value in model.state_dict().items():
-    print(key, value.shape)
-
-torch.save(model.state_dict(), save_path)

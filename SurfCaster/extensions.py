@@ -37,7 +37,11 @@ def scan_history(url, last_scan_result):
 
     full_scan_history = settings.get('full_scan_history', False)
 
-    history.insert(0, {"date": datetime.now().isoformat(), "url": url, "last_scan_result": last_scan_result})
+    history.insert(0, {
+        "date": datetime.now().isoformat(), 
+        "url": url, 
+        "last_scan_result": last_scan_result
+    })
 
     if not full_scan_history:
         history = history[:10]
