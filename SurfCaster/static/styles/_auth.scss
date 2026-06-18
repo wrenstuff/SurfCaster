@@ -1,17 +1,16 @@
 @use 'color';
 
 .login-wrapper {
-    width: 100vw;
-    height: calc(100vh - 150px);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: color.$tertiary-text;
-    text-decoration: none;
+        display: flex;
+        align-items: center;
+        width: auto;
+        height: calc(100vh - 100px);
+        justify-content: center;
 
     .login-title {
         text-align: center;
         margin-bottom: 20px;
+        color: color.$tertiary-text;
     }
 
     .auth-logo-wrapper {
@@ -56,12 +55,8 @@
 
         .input-fields {
             display: grid;
-            input {
-                margin: 10px;
-                height: 20pt;
-                width: 300px;
-                border-radius: 5px;
-            }
+
+            
         }
     }
 }
@@ -88,13 +83,11 @@
 }
 
 .signup-wrapper {
-    width: 100vw;
-    height: calc(100vh - 150px);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: color.$tertiary-text;
-    text-decoration: none;
+        display: flex;
+        align-items: center;
+        width: auto;
+        height: calc(100vh - 100px);
+        justify-content: center;
 
     .PWstrength {
         display: flex;
@@ -150,6 +143,7 @@
             height: 20pt;
             width: 100%;
             max-width: 300px;
+            padding-left: 5px;
         }
     }
 
@@ -190,7 +184,7 @@
             display: flex;
             flex-direction: row;
 
-           button {
+            button {
                 width: 80px;
                 height: 30px;
                 margin-top: 15px;
@@ -208,13 +202,11 @@
 }
 
 .recover-wrapper {
-    width: 100vw;
-    height: calc(100vh - 150px);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: color.$tertiary-text;
-    text-decoration: none;
+        display: flex;
+        align-items: center;
+        width: auto;
+        height: calc(100vh - 100px);
+        justify-content: center;
 
     .auth-logo-wrapper {
         display: flex;
@@ -254,12 +246,24 @@
             justify-content: center;
             grid-row: 3;
 
+            .checkbox {
+                margin-right: 30px;
+                margin-top: 20px;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                width: 17px;
+                height: 17px;
+
+            }
+
             .recover-input {
                 margin: 10px;
                 height: 20pt;
                 width: 300px;
                 max-width: 300px;
                 border-radius: 5px;
+                
             }
         }
 
@@ -271,7 +275,7 @@
             grid-row: 4;
             margin-top: 10px;
 
-           button {
+            button {
                 width: 80px;
                 height: 30px;
                 margin-top: 15px;
@@ -286,12 +290,7 @@
             }
         }
 
-        .code-input {
-            margin: 10px;
-            height: 20pt;
-            max-width: 300px;
-            width: 100%;
-        }
+
 
         .links {
             font-weight: 50;
@@ -312,3 +311,40 @@
     }
 
 }
+
+
+.recover-code-wrapper {
+        display: flex;
+        align-items: center;
+        width: auto;
+        height: calc(100vh - 100px);
+        justify-content: center;
+    
+
+        .recover-code-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background-color: color.$backgroundbox2;
+            width: auto;
+            border-radius: 10px;
+            min-width: 400px;
+
+            min-height: 326px;
+        }
+
+        .code-input {
+            margin: 10px;
+            height: 20pt;
+            max-width: 300px;
+            width: 100%;
+        }
+}
+.auth-input {
+                margin: 10px;
+                height: 20pt;
+                width: 300px;
+                border-radius: 5px;
+                padding-left: 5px;
+            }

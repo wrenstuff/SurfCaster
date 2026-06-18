@@ -21,6 +21,7 @@ def splash ():
 # Login Page
 @auth_routes.route('/login', methods=["GET","POST"])
 def login():
+    session.pop("recovery_user_id", None)
     if request.method == "GET":
         return render_template('login.html')
     if request.method =="POST":
@@ -53,28 +54,6 @@ def login():
             flash("Invalid username or password", "error")
             return render_template("login.html")
         
-#function to send recover code email
-def recover_logic():
-    useremail = request.form.get("user-email")
-    code = recovery_code(6)
-
-    user = Users.query.filter_by(email=useremail).first()
-
-    if not user:
-        return "user was not found"
-    #temp session logic
-    session["recovery_user_id"] = user.id
-    accountrecover(useremail,code)
-
-
-# Recover page
-@auth_routes.route('/recover' , methods=["GET","POST"])
-def recover():
-    if request.method == "GET":
-        return render_template("recover.html")
-    if request.method == "POST":
-        recover_logic()
-        return redirect(url_for("auth_routes.recover_code"))
 
 
 @auth_routes.route('/signup', methods=["GET","POST"])
@@ -113,18 +92,43 @@ def logout():
     session.clear()
     return redirect(url_for('auth_routes.login'))
 
+
+#function to send recover code email
+def recover_logic():
+    useremail = request.form.get("user-email")
+    code = recovery_code(6)
+
+    user = Users.query.filter_by(email=useremail).first()
+
+    if not user:
+        return "user was not found"
+    #temp session logic
+    session["recovery_user_id"] = user.id
+    session["recovery_verifcation"] = False
+    accountrecover(useremail,code)
+
+
+# Recover page
+@auth_routes.route('/recover' , methods=["GET","POST"])
+def recover():
+
+    if request.method == "GET":
+        return render_template("recover.html")
+    if request.method == "POST":
+        recover_logic()
+        return redirect(url_for("auth_routes.recover_code"))
+
+
 #code input
 @auth_routes.route('/recover_code' , methods=["GET","POST"])
 def recover_code():
+    user_id= session.get("recovery_user_id")
+    if not user_id:
+        return redirect(url_for('auth_routes.login'))
     if request.method == "GET":
         return render_template("recover_code.html")
     if request.method == "POST":
-      user_id= session.get("recovery_user_id")
       input_code = request.form.get("recover-code").strip()
-
-      if not user_id:
-          return redirect(url_for(auth_routes.recover))
-      
       correct,message  =code_verifcation(user_id,input_code)
       #correct = result[0]
       #message = result[1]
@@ -133,19 +137,23 @@ def recover_code():
           flash(message)
           return redirect(url_for("auth_routes.recover_code", error= message))
       
-      return redirect(url_for("auth_routes.reset_pw"))
+      if correct:
+        session ["recovery_verification"] =True
+        return redirect(url_for("auth_routes.reset_pw"))
 
 @auth_routes.route('/reset_pw', methods=["GET","POST"])
 def reset_pw():
+    user_id= session.get("recovery_user_id")
+    verifcation = session.get("recovery_verifcation")
 
+    if not user_id or not verifcation:
+        flash("Session expired")
+        return redirect(url_for("auth_routes.login"))
+    
     if request.method == "GET":
         return render_template("reset_pw.html")
-    
-    user_id = session.get("recovery_user_id")
 
-    if not user_id:
-        flash("Session expired")
-        return redirect(url_for("auth_routes.recover"))
+  
 
     #get new password from form and cleanse spaces
     reset_pass = request.form.get('password', '').strip()

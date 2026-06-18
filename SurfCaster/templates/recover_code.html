@@ -10,14 +10,14 @@
 
 <body>
     {% include 'login-header.html' %}
-    <div class="recover-wrapper">
-        <div class="recover-container">
+    <div class="recover-code-wrapper">
+        <div class="recover-code-container">
 
             <h3 class="recover-title">Account recovery</h3>
             <p class="email-p">Enter the code sent to your Email address</p>
             <div action="{{ url_for('auth_routes.recover') }}" class=" input-fields">
                 <form method="POST">
-                    <input class="code-input" type="text" id="recover-code" name="recover-code" placeholder="Recovery code" required  oninput="this.setCustomValidity('')" oninvalid="this.setCustomValidity('Invalid code: Please enter the code in your emails')" minlength="6" maxlength="6">
+                    <input class="auth-input" type="text" id="recover-code" name="recover-code" placeholder="Recovery code" required  oninput="this.setCustomValidity('')" oninvalid="this.setCustomValidity('Invalid code: Please enter the code in your emails')" minlength="6" maxlength="6">
                     <div class="submit-btn">
                     <label>
                         <input type="checkbox">
