@@ -21,7 +21,7 @@ class Baelin(nn.Module):
     def forward(self, x):
         return self.network(x)
     
-    def predict(self, features, scaler=None, feature_columns=None, threshold=0.5):
+    def predict(self, features, scaler=None, feature_columns=None):
 
         if isinstance(features, dict):
             features = pd.DataFrame([features])
@@ -47,17 +47,8 @@ class Baelin(nn.Module):
             logits = self(features)
             phishing_probability = torch.sigmoid(logits).item()
 
-        if phishing_probability >= threshold:
-            result = "phishing"
-            confidence = phishing_probability
-        else:
-            result = "legitimate"
-            confidence = 1 - phishing_probability
-
         return {
-            "result": result,
-            "phishing_probability": phishing_probability,
-            "confidence": confidence
+            "phishing_probability": phishing_probability
         }
     
 checkpoint = torch.load(state_dict_path, map_location="cpu")

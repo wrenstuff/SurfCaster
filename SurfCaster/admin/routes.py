@@ -5,7 +5,7 @@ from flask import Blueprint, flash, redirect, render_template, request, session,
 
 # local imports
 from db_models import Users, FlaggedScans, ApprovedScans
-from extensions import db, get_reviews, scan_history, create_scan_id, flag_scan, get_scan_history, get_review_history, wait_time, getDate
+from extensions import db, get_reviews, scan_history, flag_scan, get_scan_history, get_review_history, wait_time, getDate
 import models.Baelin as Baelin
 import url_extractor as ex
 from torch import torch
@@ -53,23 +53,18 @@ def scan():
         prediction = model.predict(
             url_features,
             scaler=scaler,
-            feature_columns=feature_columns,
-            threshold=threshold
+            feature_columns=feature_columns
         )
 
-        last_scan_result = round(prediction["confidence"] * 100, 2)
-        last_scan_status = prediction["result"]
-        phishing_probability = round(prediction["phishing_probability"])
+        phishing_probability = prediction["phishing_probability"] * 100
 
         session['last_scanned_url'] = url
-        session['last_scan_result'] = last_scan_result
-        session['last_scan_status'] = last_scan_status
         session["phishing_probability"] = phishing_probability
+
+        session["last_scan_result"] = phishing_probability
 
         scan_history(
             url,
-            last_scan_result,
-            last_scan_status,
             phishing_probability
         )
 

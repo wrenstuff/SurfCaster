@@ -93,6 +93,20 @@ class Baelin(nn.Module):
 
 model = Baelin(input_size).to(device)
 
+checkpoint_path = 'SurfCaster/models/Baelin_checkpoint.pth'
+start_epoch = 0
+
+if os.path.exists(checkpoint_path):
+    checkpoint = torch.load(checkpoint_path, map_location=device)
+    old_input_size = checkpoint.get("input_size")
+    if old_input_size != input_size:
+        raise ValueError("Input size mismatch")
+    
+    model.load_state_dict(checkpoint["model_state_dict"])
+    start_epoch = checkpoint.get("epochs", 0)
+
+    print("checkpoint loaded")
+
 #loss and optimizer
 loss_function = nn.BCEWithLogitsLoss()
 optimizer = torch.optim.Adam(model.parameters(), lr=0.001)
@@ -157,7 +171,7 @@ checkpoint = {
     "input_size": input_size,
     "feature_columns": feature_columns,
     "threshold": threshold,
-    "epochs": epochs,
+    "epochs": start_epoch + epochs,
     "accuracy": accuracy,
     "precision": precision,
     "recall": recall,
