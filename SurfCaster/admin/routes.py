@@ -20,7 +20,10 @@ admin_routes = Blueprint('admin_routes', __name__)
 def home():
     if session.get('role') != 'admin':
         return "Unauthorized", 403
-    return render_template('dashboard.html')
+    
+    history = get_scan_history()
+
+    return render_template('dashboard.html', history=history)
 
 # URL Scanner
 @admin_routes.route('/scan', methods=['GET', 'POST'])
