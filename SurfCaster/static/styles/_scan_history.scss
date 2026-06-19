@@ -52,12 +52,12 @@
                 }
 
                 button:hover.yay {
-                    color: green;
+                    color: color.$yay;
                     cursor: pointer;
                 }
 
                 button:hover.nay {
-                    color: red;
+                    color: color.$nay;
                     cursor: pointer;
                 }
             }

@@ -146,10 +146,8 @@
                 </div>
 
                 <div class="hist">
-                    {% set count = 0 %}
                     {% for scan in history %}
-                        {% set count = count + 1 %}
-                        <div class="inst-{{ count }} inst">
+                        <div class="inst-{{ loop.index }} inst">
                             <div class="text">{{ scan.url }}</div>
                             <div class="percent" style="--dynamic-color: {{ scan.color }}">{{ scan.last_scan_result|round(1) }}%</div>
                         </div>

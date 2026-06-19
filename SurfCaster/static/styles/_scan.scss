@@ -1,54 +1,207 @@
 @use 'color';
-.scan-content{
+
+.disc-wrap {
+
     display: flex;
-    flex-direction: column;
-    align-items: center;
     justify-content: center;
-    
-    .scan-wrapper
-    {
-    display: flex;
-    flex-direction: column;
     align-items: center;
-    justify-content: center;
-    margin-bottom: 70px;
-    margin-top: 150px;
-    width: 500px;
-    border-radius: 10px;
-    }
-    .scan{
-        border: 0px;
-        margin-top: 15px;
-        width: 400px;
-        height: 50px;
-        text-indent: 15px;
-        border-radius: 5px 0px 0px 5px;
-        background-color: color.$backgroundbox2;
-    }
-    .scan::placeholder{
-        color: color.$primary-color;
-    }
-    
-   
-    #scanner-title{
+    flex-direction: column;
+    height: 50px;
+
+    color: color.$tertiary-text;
+
+    .disc-h3 {
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        font-size: 14pt;
         margin-top: 10px;
+        position: relative;
+        top: 10px;
+
+        img {
+
+            height: 40px;
+
+        }
+
     }
-    #scan-button{
-        width: 60px;
-        height: 50px;
-        margin-left: -6px;
-        border: 0px;
-        border-radius: 0px 5px 5px 0px;
-        background-color: color.$backgroundbox2;
-        color: color.$primary-color;
+
+    .disc-p {
+
+        font-size: 10pt;
+        position: relative;
+        top: 10px;
+
     }
-.scan-res-wrapper{
-        margin-top: 30px;
-        background-color: color.$backgroundbox2;
-        width: 430px;
-        height: 300px;
-        text-align: center;
+
+}
+
+.scan-content {
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: calc(100vh - 150px);
+    
+    .scan-wrapper {
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+        .scan-form {
+
+            .scan {
+
+                border: 0px;
+                width: 400px;
+                height: 50px;
+                text-indent: 15px;
+                border-radius: 5px 0px 0px 5px;
+                background-color: color.$backgroundbox2;
+                color: color.$tertiary-text;
+
+            }
+            .scan::placeholder {
+
+                color: color.$primary-color;
+
+            }
+
+            .scan-button {
+
+                width: 60px;
+                height: 50px;
+                margin-left: -6px;
+                border: 0px;
+                border-radius: 0px 5px 5px 0px;
+                background-color: color.$backgroundbox2;
+                color: color.$primary-color;
+
+            }
+
+        }
+
+    }
+    
+    .scan-res-wrapper {
+
+        background-color: color.$btn-color;
+        margin-top: 40px;
         border-radius: 5px;
+        padding: 10px;
+
+        color: color.$tertiary-text;
+
+        .scan-res-wrapper-flex {
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+        }
+
+
+        .scan-results {
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+
+            h2, .scanned-url {
+
+                color: color.$primary-text;
+
+            }
+
+            h2 {
+
+                font-size: 16pt;
+
+            }
+
+            .scanned-url {
+
+                padding-bottom: 10px;
+
+            }
+
+            .model-flag {
+
+                padding-bottom: 10px;
+
+            }
+
+            .flags {
+
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+                .flag-form {
+
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    flex-direction: column;
+
+                    .flag-btns {
+
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+
+                        .flag-button {
+
+                            margin: 10px 5px 10px 5px;
+                            width: 60px;
+                            height: 30px;
+                            cursor: pointer;
+                            transition: transform 0.1s ease-in-out, box-shadow 0.1s ease-in-out, background-color 0.1s ease-in-out;
+                            border-radius: 5px;
+
+                        }
+
+                        .flag-button:hover {
+
+                            transform: translateY(-1px);
+                            box-shadow: 0 4px 10px color.$drop-shadow;
+
+                        }
+
+                        .flag-button-safe:hover {
+
+                            background-color: color.$yay;
+
+                        }
+
+                        .flag-button-unsafe:hover {
+
+                            background-color: color.$nay;
+
+                        }
+
+                    }
+
+                    .flag-text {
+
+                        font-size: 10pt;
+
+                    }
+
+
+                }
+
+            }
+
+        }
+
     }
 
 }
