@@ -9,7 +9,7 @@
 </head>
 
 <body>
- 
+
 
     {% include 'header.html' %}
 
@@ -127,18 +127,34 @@
         <div class="dash-right-wrapper">
             <div class="dash-right">
 
-                <div class="news">
-                    <h1>Latest News</h1>
+                <div class="news-container">
+                    <div class="news-header">
+                        <h1>Latest News</h1>
+                    </div>
                     <!-- We'll want this attached to some kind of db I'd assume -->
-                    <p>Hi. Here's some news :p</p>
+                    <div class="news-content">
+                        <p>Welcome to the first lot of news that we have on our application. over time this section is
+                            going to change, however at the moment it's just static text that won't be modified</p>
+                    </div>
                 </div>
 
-                <div class="scan">
-                    <h1>URL Scanner</h1>
+                <div class="scan-wrapper">
+                    <form method="POST" action="{{ url_for('admin_routes.scan') }}">
+                        <input class="scan" type="text" name="url" placeholder="Enter URL to scan" {% if session.get('last_scanned_url') %} value="{{ session.get('last_scanned_url') }}" {% endif %}>
+                        <button type="submit" id="scan-button">Scan</button>
+                    </form>
                 </div>
 
                 <div class="hist">
-                    <h1>Scan History</h1>
+                    {% set count = 0 %}
+                    {% for scan in history %}
+                        {% set count = count + 1 %}
+                        <div class="inst-{{ count }} inst">
+                            <div class="text">{{ scan.url }}</div>
+                            <div class="percent" style="--dynamic-color: {{ scan.color }}">{{ scan.last_scan_result|round(1) }}%</div>
+                        </div>
+                    {% endfor %}
+
                 </div>
 
             </div>
