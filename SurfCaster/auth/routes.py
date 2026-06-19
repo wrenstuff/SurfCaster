@@ -145,7 +145,7 @@ def recover_code():
 def reset_pw():
     user_id= session.get("recovery_user_id")
     verifcation = session.get("recovery_verifcation")
-
+    #user_type checks
     if not user_id or not verifcation:
         flash("Session expired")
         return redirect(url_for("auth_routes.login"))
