@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static', filename='styles/main.css') }}">
     <title>Document</title>
-    {% set access = "unauth" %}
+
 </head>
 
 <div class="auth-header">
@@ -17,10 +17,12 @@
         <h1>SurfCaster</h1>
         <h2>Phishing Detector</h2>
     </div>
-     <a  href="/login">
-        <button class ="temp-button">GO TO LOGIN!</button>
-    </a>
-  
+    
+   <script>
+    setTimeout(() => {
+        window.location.href ="{{login_url}}";
+    },3500);
+   </script>
 </body>
 
 </html>
