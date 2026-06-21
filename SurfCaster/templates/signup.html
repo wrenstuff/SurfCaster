@@ -47,19 +47,33 @@
 
         </div>
     </div>
-    <div class="tcpopup">
-        <h2> Terms and conditions</h2>
+    <div class="terms-popup" onclick="closeTerms()">
+        <div class="terms-popup-content" onclick="event.stopPropagation()">
+            <div class="terms-header">
+                <h2>SurfCaster Terms and Conditions</h2>
+            </div>
+            <h4 class = "terms-title"> By using this application you agree to the following terms and conditions</h4>
 
-        <h4> By using this application you agree to the following terms and conditions</h3>
+
+            <ul class="terms-list">
+                <li>You will use this application ethically and not misuse the application for any intended misspurpose
+                </li>
+                <li>All information will be processed on your system to a database</li>
+                <li>We are not liable for any malicious links you click into despite our applications results.</li>
+            </ul>
+
+            <p class="terms-notice"> These Terms and conditions are subject to change at any point in time.</p>
+            <button onclick="closeTerms()">Close</button>
+        </div>
     </div>
+    
+    <script>
+        function openTerms() {
+            document.querySelector('.terms-popup').style.display = 'flex';
+        }
 
-    <ul>
-        <li>You will use this application ethically and not misuse the application for any intended misspurpose</li>
-        <li>All information will be processed on your system to a database</li>
-        <li>We are not liable for any malicious links you click into despite our applications results.</li>
-    </ul>
-
-    <p> These Terms annd conditions are subject to change at any point in time.</p>
-    </div>
-    <button onclick="closeTerms()">Close</button>
+        function closeTerms() {
+            document.querySelector('.terms-popup').style.display = 'none';
+        }
+    </script>
 </body>

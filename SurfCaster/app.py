@@ -19,18 +19,23 @@ from auth.routes import auth_routes
 from extensions import db
 from datetime import datetime
 
+
 ph = PasswordHasher()
 
 # app creation and blueprint registration
 
-# delete this later :'(
-file_path = Path(__file__).parent / "static" / "images" / "cat.png"
-if file_path.is_file():
-    app = Flask(__name__)
-    app.secret_key = "supersecretkey"
+
+app = Flask(__name__)
+app.secret_key = "supersecretkey"
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///SurfCaster.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+app.register_blueprint(admin_routes, url_prefix='/admin')
+app.register_blueprint(reviewer_routes, url_prefix='/reviewer')
+app.register_blueprint(user_routes, url_prefix='/user')
+app.register_blueprint(unauthorised_user_routes, url_prefix='/unauth')
+app.register_blueprint(auth_routes, url_prefix='/')
 
 db.init_app(app)
 with app.app_context():
@@ -58,11 +63,7 @@ with app.app_context():
                 "joindate": joindate
             })
 
-app.register_blueprint(admin_routes, url_prefix='/admin')
-app.register_blueprint(reviewer_routes, url_prefix='/reviewer')
-app.register_blueprint(user_routes, url_prefix='/user')
-app.register_blueprint(unauthorised_user_routes, url_prefix='/unauth')
-app.register_blueprint(auth_routes, url_prefix='/')
+
 # run the app
 if __name__ == "__main__":
     app.run(debug=True)

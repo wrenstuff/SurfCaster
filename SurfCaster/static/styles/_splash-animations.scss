@@ -4,6 +4,7 @@
 animation: SplashAnim 3s ease-in-out forwards;
 display: inline-block;
 transform-origin: center;
+color: color.$tertiary-text;
 }
 
 @keyframes SplashAnim {
