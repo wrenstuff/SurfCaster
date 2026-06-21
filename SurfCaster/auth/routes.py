@@ -25,11 +25,11 @@ def login():
         return render_template('login.html')
     if request.method =="POST":
         # get username and password from form
-        username = request.form.get("username")
+        credential = request.form.get("credential").strip()
         password = request.form.get("password")
         session['logout'] = False
         #hashedpw = hasher.hash(password)
-        user = Users.query.filter_by(username=username).first()
+        user = Users.query.filter_by(username=credential).first() or Users.query.filter_by(email=credential).first()
         if user:
             try:
                 stored_pass = user.password
@@ -60,20 +60,31 @@ def signup():
 
     if request.method == "GET":
         return render_template("signup.html")
+    
     if request.method == "POST":
-        username = request.form.get("username")
-        email = request.form.get("email")
-        password = request.form.get("password")
+        #get form data and cleanse spaces
+        username = request.form.get("username").strip()
+        email = request.form.get("email").strip()
+        password = request.form.get("password").strip()
         joindate = datetime.now().strftime("%Y%m%d")
-
+        #error handling for empty fields and password length
+        if not username or not email or not password:
+            flash("All fields are required")
+            return redirect(url_for('auth_routes.signup'))
+        #error handling for password length and existing username/email
+        if len(password) < 6:
+            flash("Password must be at least 6 characters long")
+            return redirect(url_for('auth_routes.signup'))
+        #check if username or email already exists in db
         if Users.query.filter_by(username=username).first():
             flash("Username already exists")
             return redirect(url_for('auth_routes.signup'))
-        
+        #check if email already exists in db
         if Users.query.filter_by(email=email).first():
             flash("Email already exists")
             return redirect(url_for('auth_routes.signup'))
         
+        #hash password and create new user
         hashedpw = hasher.hash(password)
 
         new_user = Users(username=username, email=email, password=hashedpw, role="user", joindate=joindate)
@@ -143,9 +154,9 @@ def recover_code():
 @auth_routes.route('/reset_pw', methods=["GET","POST"])
 def reset_pw():
     user_id= session.get("recovery_user_id")
-    verifcation = session.get("recovery_verifcation")
+    verification = session.get("recovery_verification")
     #user_type checks
-    if not user_id or not verifcation:
+    if not user_id or not verification:
         flash("Session expired")
         return redirect(url_for("auth_routes.login"))
     
@@ -185,4 +196,69 @@ def reset_pw():
     # clear recovery session data
     session.clear()
     flash("Password reset successfully")
+    return redirect(url_for("auth_routes.login"))
+
+@auth_routes.route('/change_password', methods=["POST"])
+def change_password():
+    user_id = session.get("user_id")
+    if not user_id:
+        flash("Session expired")
+        return redirect(url_for("auth_routes.login"))
+    
+    #get data from inputs
+    current_password = request.form.get("current_password").strip()
+    new_password = request.form.get("new_password").strip()
+    confirm_password = request.form.get("confirm_password").strip()
+
+    #error handling methods
+    if not current_password or not new_password or not confirm_password:
+        flash("All fields are required")
+        return redirect(url_for("user_routes.settings"))
+    
+    if len(new_password) < 6:
+        flash("New password must be at least 6 characters long")
+        return redirect(url_for("user_routes.settings"))
+    
+    if new_password != confirm_password:
+        flash("New password and confirmation do not match")
+        return redirect(url_for("user_routes.settings"))
+
+    #get user info from db
+    user = Users.query.filter_by(id=user_id).first()
+    if not user:
+        flash("User not found")
+        return redirect(url_for("auth_routes.login"))
+    
+    #check current password and update to new password if correct
+    try:
+        if hasher.verify(user.password, current_password):
+            #update to new password
+            user.password = hasher.hash(new_password)
+            db.session.commit()
+            flash("Password changed successfully", "success")
+            return redirect(url_for("user_routes.settings"))
+        else:
+            flash("Current password is incorrect")
+            return redirect(url_for("user_routes.settings"))
+    except VerifyMismatchError:
+        flash("Current password is incorrect")
+        return redirect(url_for("user_routes.settings"))
+    
+@auth_routes.route('/delete_account', methods=["POST"])
+def delete_account():
+    print("DELETE ROUTE HIT")
+    #gets user id from session
+    user_id = session.get("user_id")
+    #fetch user from db
+    user = Users.query.filter_by(id=user_id).first()
+    if not user:
+        flash("session has expired")
+        return redirect(url_for("auth_routes.login"))
+    if user:
+        #delete user from db
+        db.session.delete(user)
+        db.session.commit()
+    #clear session
+    session.clear()
+    flash("Account deleted successfully")
     return redirect(url_for("auth_routes.login"))
