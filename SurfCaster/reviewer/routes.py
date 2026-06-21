@@ -1,7 +1,15 @@
 # reviewer/routes.py
 
 # library imports
-from flask import Blueprint, render_template, session
+from flask import Blueprint, flash, redirect, render_template, request, session, url_for
+
+# local imports
+from db_models import Users, FlaggedScans, ApprovedScans
+from extensions import db, get_reviews, scan_history, flag_scan, get_scan_history, get_review_history, wait_time, getDate
+import models.Baelin as Baelin
+import url_extractor as ex
+from torch import torch
+import joblib
 
 # blueprint creation
 reviewer_routes = Blueprint('reviewer_routes', __name__)
@@ -12,28 +20,109 @@ reviewer_routes = Blueprint('reviewer_routes', __name__)
 def home():
     if session.get('role') != 'reviewer':
         return "Unauthorized", 403
-    return render_template('dashboard.html')
+    
+    history = get_scan_history()
+
+    return render_template('dashboard.html', history=history)
 
 # URL Scanner
-@reviewer_routes.route('/scan')
+@reviewer_routes.route('/scan', methods=['GET', 'POST'])
 def scan():
+    if request.method == 'GET':
+        if session.get('role') != 'reviewer':
+            return "Unauthorized", 403
+        return render_template('scan.html')
+    if request.method == 'POST':
+        url = request.form.get('url')
+
+        # turn url into features then convert to tensor
+        url_features = ex.extract_url_features(url)
+
+        checkpoint = torch.load(
+            'SurfCaster/models/Baelin_checkpoint.pth', map_location="cpu"
+        )
+
+        scaler = joblib.load('SurfCaster/models/Baelin_scaler.pkl')
+
+        input_size = checkpoint["input_size"]
+        feature_columns = checkpoint["feature_columns"]
+        threshold = checkpoint["threshold"]
+
+        model = Baelin.Baelin(input_size)
+        model.load_state_dict(checkpoint["model_state_dict"])
+        model.eval()
+
+        prediction = model.predict(
+            url_features,
+            scaler=scaler,
+            feature_columns=feature_columns
+        )
+
+        phishing_probability = prediction["phishing_probability"] * 100
+
+        session['last_scanned_url'] = url
+        session["phishing_probability"] = phishing_probability
+
+        session["last_scan_result"] = phishing_probability
+
+        scan_history(
+            url,
+            phishing_probability
+        )
+
+        wait_time()
+
+        return redirect(url_for('reviewer_routes.scan'))
+    
+@reviewer_routes.route('/flag_scan_route', methods=['POST'])
+def flag_scan_route():
     if session.get('role') != 'reviewer':
         return "Unauthorized", 403
-    return render_template('scan.html')
+
+    # hopefully second time is the charm. 
+    # I already did this but it didn't commit (˃̣̣̥ᯅ˂̣̣̥)
+    url = session.get('last_scanned_url')
+    status = request.form.get('flag')
+
+
+    if session.get('last_scan_result') <= 100/3:
+        flag = 'safe'
+    elif session.get('last_scan_result') <= 200/3:
+        flag = 'unsure'
+    else:
+        flag = 'unsafe'
+
+    to_send = flag_scan(url, flag, status)
+
+    flagged_scan = FlaggedScans(
+        scan_id=to_send['scan_id'],
+        user_id=to_send['user_id'],
+        url=to_send['url'],
+        flag=to_send['flag'],
+        status=to_send['status']
+    )
+    db.session.add(flagged_scan)
+    db.session.commit()
+
+    return redirect(url_for('reviewer_routes.scan'))
 
 # Scan History
 @reviewer_routes.route('/history')
 def history():
     if session.get('role') != 'reviewer':
         return "Unauthorized", 403
-    return render_template('scan_history.html')
+    history = get_scan_history()
+
+    return render_template('scan_history.html', history=history)
 
 # Account
 @reviewer_routes.route('/account') # possibly change to username?
 def account():
     if session.get('role') != 'reviewer':
         return "Unauthorized", 403
-    return render_template('account.html')
+    date = getDate()
+
+    return render_template('account.html', date=date)
 
 # Settings
 @reviewer_routes.route('/settings')
@@ -54,12 +143,44 @@ def support():
 def queue():
     if session.get('role') != 'reviewer':
         return "Unauthorized", 403
-    return render_template('review-queue.html')
+    reviews = get_reviews()
+    return render_template('review-queue.html', reviews=reviews)
+
+@reviewer_routes.route('/review_scan', methods=['POST'])
+def review_scan():
+    if session.get('role') != 'reviewer':
+        return "Unauthorized", 403
+    
+    scan_id = request.form.get('scan_id')
+    action = request.form.get('action')
+    if action not in ['approve', 'reject']:
+        flash("Invalid action", "error")
+        return redirect(url_for('reviewer_routes.queue'))
+    else:
+        if action == 'approve':
+            status = True if request.form.get('flag') == 'Safe' else False
+
+    to_db = ApprovedScans(
+        scan_id=scan_id,
+        reviewer_id=session.get('user_id'),
+        url=request.form.get('url'),
+        status=status
+    )
+    db.session.add(to_db)
+    db.session.commit()
+
+    to_remove = FlaggedScans.query.filter_by(scan_id=scan_id).first()
+    db.session.delete(to_remove)
+    db.session.commit()
+
+    return redirect(url_for('reviewer_routes.queue'))
 
 # Review History
 @reviewer_routes.route('/reviews')
 def reviews():
     if session.get('role') != 'reviewer':
         return "Unauthorized", 403
-    return render_template('review-history.html')
+    scans = get_review_history()
+
+    return render_template('review-history.html', scans=scans)
 
