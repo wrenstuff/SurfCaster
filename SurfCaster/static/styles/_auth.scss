@@ -1,11 +1,11 @@
 @use 'color';
 
 .login-wrapper {
-        display: flex;
-        align-items: center;
-        width: auto;
-        height: calc(100vh - 100px);
-        justify-content: center;
+    display: flex;
+    align-items: center;
+    width: auto;
+    height: calc(100vh - 100px);
+    justify-content: center;
 
     .login-title {
         text-align: center;
@@ -43,7 +43,7 @@
         .input-fields {
             display: grid;
 
-            
+
         }
     }
 }
@@ -70,28 +70,30 @@
 }
 
 .signup-wrapper {
-        display: flex;
-        align-items: center;
-        width: auto;
-        height: calc(100vh - 100px);
-        justify-content: center;
-     a{
+    display: flex;
+    align-items: center;
+    width: auto;
+    height: calc(100vh - 100px);
+    justify-content: center;
+
+    a {
         color: inherit;
         text-decoration: none;
-     }
+    }
 
-     a:visited {
+    a:visited {
         color: inherit;
-     }
+    }
 
-     a:active {
+    a:active {
         color: inherit;
-     }
+    }
 
-     a:focus{
+    a:focus {
         color: inherit;
         outline: none;
-     }
+    }
+
     .PWstrength {
         display: flex;
         flex-direction: row;
@@ -156,6 +158,7 @@
         font-size: 10pt;
         padding-top: 10px;
         color: color.$tertiary-text;
+
         .checkbox {
             margin: 0 10px 0 0;
         }
@@ -185,17 +188,17 @@
             display: flex;
             flex-direction: row;
 
-         
+
         }
     }
 }
 
 .recover-wrapper {
-        display: flex;
-        align-items: center;
-        width: auto;
-        height: calc(100vh - 100px);
-        justify-content: center;
+    display: flex;
+    align-items: center;
+    width: auto;
+    height: calc(100vh - 100px);
+    justify-content: center;
 
     .auth-logo-wrapper {
         display: flex;
@@ -257,7 +260,7 @@
                 width: 300px;
                 max-width: 300px;
                 border-radius: 5px;
-                
+
             }
         }
 
@@ -269,7 +272,7 @@
             grid-row: 4;
             margin-top: 10px;
 
-        
+
         }
 
 
@@ -296,51 +299,52 @@
 
 
 .recover-code-wrapper {
+    display: flex;
+    align-items: center;
+    width: auto;
+    height: calc(100vh - 100px);
+    justify-content: center;
+
+
+    .recover-code-container {
         display: flex;
+        flex-direction: column;
         align-items: center;
-        width: auto;
-        height: calc(100vh - 100px);
         justify-content: center;
-    
+        background-color: color.$backgroundbox2;
+        width: auto;
+        border-radius: 10px;
+        min-width: 400px;
 
-        .recover-code-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            background-color: color.$backgroundbox2;
-            width: auto;
-            border-radius: 10px;
-            min-width: 400px;
+        min-height: 326px;
+    }
 
-            min-height: 326px;
-        }
-
-        .code-input {
-            margin: 10px;
-            height: 20pt;
-            max-width: 300px;
-            width: 100%;
-        }
+    .code-input {
+        margin: 10px;
+        height: 20pt;
+        max-width: 300px;
+        width: 100%;
+    }
 }
+
 .auth-input {
-                margin: 10px;
-                height: 20pt;
-                width: 300px;
-                border-radius: 5px;
-                padding-left: 5px;
-            }
+    margin: 10px;
+    height: 20pt;
+    width: 300px;
+    border-radius: 5px;
+    padding-left: 5px;
+}
 
-   button {
-                width: 80px;
-                height: 30px;
-                margin-top: 15px;
-                cursor: pointer;
-                transition: transform 0.1s ease, box-shadow 0.1s ease;
-                border-radius: 5px;
-            }
+button {
+    width: 80px;
+    height: 30px;
+    margin-top: 15px;
+    cursor: pointer;
+    transition: transform 0.1s ease, box-shadow 0.1s ease;
+    border-radius: 5px;
+}
 
-            button:hover {
-                transform: translateY(-1px);
-                box-shadow: color.$drop-shadow
-            }
+button:hover {
+    transform: translateY(-1px);
+    box-shadow: color.$drop-shadow
+}

@@ -213,15 +213,15 @@ def change_password():
     #error handling methods
     if not current_password or not new_password or not confirm_password:
         flash("All fields are required")
-        return redirect(url_for("user_routes.settings"))
+        return redirect(url_for( session.get('role') + "_routes.settings"))
     
     if len(new_password) < 6:
         flash("New password must be at least 6 characters long")
-        return redirect(url_for("user_routes.settings"))
+        return redirect(url_for( session.get('role') + "_routes.settings"))
     
     if new_password != confirm_password:
         flash("New password and confirmation do not match")
-        return redirect(url_for("user_routes.settings"))
+        return redirect(url_for( session.get('role') + "_routes.settings"))
 
     #get user info from db
     user = Users.query.filter_by(id=user_id).first()
@@ -236,13 +236,13 @@ def change_password():
             user.password = hasher.hash(new_password)
             db.session.commit()
             flash("Password changed successfully", "success")
-            return redirect(url_for("user_routes.settings"))
+            return redirect(url_for(session.get('role') + "_routes.settings"))
         else:
             flash("Current password is incorrect")
-            return redirect(url_for("user_routes.settings"))
+            return redirect(url_for(session.get('role') + "_routes.settings"))
     except VerifyMismatchError:
         flash("Current password is incorrect")
-        return redirect(url_for("user_routes.settings"))
+        return redirect(url_for(session.get('role') + "_routes.settings"))
     
 @auth_routes.route('/delete_account', methods=["POST"])
 def delete_account():

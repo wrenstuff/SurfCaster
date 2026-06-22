@@ -32,7 +32,7 @@
 
                 <form method="POST" action="{{ url_for( session['role'] + '_routes.scan') }}">
                     <input class="scan" type="text" name="url" placeholder="Enter URL to scan" {% if session.get('last_scanned_url') %} value="{{ session.get('last_scanned_url') }}" {% endif %}>
-                    <button type="submit" id="scan-button">Scan</button>
+                    <button type="submit" class="scan-button">Scan</button>
                 </form>
 
             </div>
@@ -56,7 +56,7 @@
                             {% endif %}
 
                             <div class="flags">
-                                <form class="flag-form" method="POST" action="{{ url_for( session['role] + '_routes.flag_scan_route') }}">
+                                <form class="flag-form" method="POST" action="{{ url_for( session['role'] + '_routes.flag_scan_route') }}">
                                     <p class="flag-text">
                                         Please select a flag below
                                     </p>                                
