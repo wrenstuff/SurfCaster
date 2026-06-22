@@ -17,10 +17,10 @@
             <p class="email-p">Enter your email address to recover your account</p>
             <div action="{{ url_for('auth_routes.recover') }}" class=" input-fields">
                 <form method="POST">
-                    <input class="recover-input" type="text" id="email" name="user-email" placeholder="email" required>
+                    <input class="auth-input" type="text" id="email" name="user-email" placeholder="email" required>
                     <div class="submit-btn">
                     <label>
-                        <input type="checkbox">
+                        <input type="checkbox" id ="checkbox" class ="checkbox" required >
                     </label>
                     <button>submit</button>
             </div>

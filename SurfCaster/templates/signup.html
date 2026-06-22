@@ -10,37 +10,70 @@
 </head>
 <div class="auth-header">
 </div>
+
 <body>
     {% include 'login-header.html' %}
-<div class="signup-wrapper">
-    <div class="signup-container">
-        <h3 class="signup-text">Sign up</h3>
-        <form method="POST" action="/signup">
-            <div class="input-fields">
-                <input type="text" id="username" name="username" placeholder="Username" required>
-                <input type="text" id="email" name="email" placeholder="Email" required>
-                <input type="password" id="password" name="password" minlength="8" placeholder="Password" required>
-            </div>
-            <div class=PWstrength>
-                <h4>Password strength</h4>
-                <h4 class="strength-icon">&#128994;</h4>
-            </div>
-            <div class="toc">
-                <input class="checkbox" type="checkbox" id="terms" name="terms" required>
-                <label for="terms">I agree to the Terms and Conditions</label>
-            </div>
-
-            <div class="bottom-container">
-                <div class="links">
-                    <a  class ="login-link" href="{{ url_for('auth_routes.login') }}">&#8592; Go back</a>
+    <div class="signup-wrapper">
+        <div class="signup-container">
+            <h3 class="signup-text">Sign up</h3>
+            <form method="POST" action="/signup">
+                <div class="input-fields">
+                    <input class="auth-input" type="text" id="username" name="username" placeholder="Username" required>
+                    <input class="auth-input" type="text" id="email" name="email" placeholder="Email" required>
+                    <input class="auth-input" type="password" id="password" name="password" minlength="8"
+                        placeholder="Password" required>
                 </div>
-                <div class="sub-btn">
-                    <button type="submit">Sign Up</button>
+                <div class=PWstrength>
+                    <h4>Password strength</h4>
+                    <h4 class="strength-icon">&#128994;</h4>
                 </div>
-        </form>
-        <!--/form-->
+                <div class="toc">
+                    <input class="checkbox" type="checkbox" id="terms" name="terms" required>
+                    <a href='#' onclick="openTerms(); return false;">
+                        Terms and conditions
+                    </a>
+                </div>
 
+                <div class="bottom-container">
+                    <div class="links">
+                        <a class="login-link" href="{{ url_for('auth_routes.login') }}">&#8592; Go back</a>
+                    </div>
+                    <div class="sub-btn">
+                        <button type="submit">Sign Up</button>
+                    </div>
+            </form>
+            <!--/form-->
+
+
+        </div>
     </div>
-</div>
-</div>
+    <div class="terms-popup" onclick="closeTerms()">
+        <div class="terms-popup-content" onclick="event.stopPropagation()">
+            <div class="terms-header">
+                <h2>SurfCaster Terms and Conditions</h2>
+            </div>
+            <h4 class = "terms-title"> By using this application you agree to the following terms and conditions</h4>
+
+
+            <ul class="terms-list">
+                <li>You will use this application ethically and not misuse the application for any intended misspurpose
+                </li>
+                <li>All information will be processed on your system to a database</li>
+                <li>We are not liable for any malicious links you click into despite our applications results.</li>
+            </ul>
+
+            <p class="terms-notice"> These Terms and conditions are subject to change at any point in time.</p>
+            <button onclick="closeTerms()">Close</button>
+        </div>
+    </div>
+    
+    <script>
+        function openTerms() {
+            document.querySelector('.terms-popup').style.display = 'flex';
+        }
+
+        function closeTerms() {
+            document.querySelector('.terms-popup').style.display = 'none';
+        }
+    </script>
 </body>

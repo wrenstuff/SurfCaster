@@ -30,13 +30,12 @@
         <div class="scan-wrapper">
             <div class="scan-form {% if session.get('last_scan_result') is none %} push-down {% endif %}">
 
-                <form method="POST" action="{{ url_for('admin_routes.scan') }}">
-                    <input class="scan" type="text" name="url" placeholder="Enter URL to scan" {% if session.get('last_scanned_url') %} value="{{ session.get('last_scanned_url') }}" {% endif %} minlength="4" maxlength="2083">
-                    <button type="submit" class="scan-button">Scan</button>
+                <form method="POST" action="{{ url_for( session['role'] + '_routes.scan') }}">
+                    <input class="scan" type="text" name="url" placeholder="Enter URL to scan" {% if session.get('last_scanned_url') %} value="{{ session.get('last_scanned_url') }}" {% endif %}>
+                    <button type="submit" id="scan-button">Scan</button>
                 </form>
 
             </div>
-            
             <div class="scan-res-wrapper {% if session.get('last_scan_result') is not none %} {% else %} hidden {% endif %}">
                 <div class="scan-res-wrapper-flex">
                     <div class="scan-results">
@@ -57,7 +56,7 @@
                             {% endif %}
 
                             <div class="flags">
-                                <form class="flag-form" method="POST" action="{{ url_for('admin_routes.flag_scan_route') }}">
+                                <form class="flag-form" method="POST" action="{{ url_for( session['role] + '_routes.flag_scan_route') }}">
                                     <p class="flag-text">
                                         Please select a flag below
                                     </p>                                
