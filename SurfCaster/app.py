@@ -11,6 +11,7 @@ from argon2 import PasswordHasher
 
 # internal imports
 # Uncomment when routes have been added
+from db_models import Users
 from admin.routes import admin_routes
 from reviewer.routes import reviewer_routes
 from authorisedUser.routes import user_routes
@@ -41,28 +42,19 @@ db.init_app(app)
 with app.app_context():
     db.create_all()
     
-    with db.engine.begin() as conn:
-        result = conn.execute(text("""
-            SELECT 1 FROM users
-            WHERE username = :username
-            LIMIT 1
-        """), {"username": "admin"}).fetchone()
-        joindate = datetime.now().strftime("%Y%m%d")
+    admin = Users.query.filter_by(username='admin').first()
 
-        #DELETE THIS BEFORE LAUNCHING
-        if not result:
-            hashed_pw = ph.hash("admin123")
-            conn.execute(text("""
-                INSERT INTO users (username, email, password, role, joindate)
-                VALUES (:username, :email, :password, :role, :joindate)
-            """), {
-                "username": "admin",
-                "email": "admin@admin",
-                "password": hashed_pw,
-                "role": "admin",
-                "joindate": joindate
-            })
+    if not admin:
+        hashed_password = ph.hash('admin123')
 
+        admin = Users(username='admin',
+        email='admin@admin',
+        password=hashed_password,
+        role='admin',
+        joindate=datetime.now().strftime("%Y%m%d"))
+
+    db.session.add(admin)
+    db.session.commit()
 
 # run the app
 if __name__ == "__main__":
