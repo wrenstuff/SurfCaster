@@ -4,9 +4,14 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    width: auto;
     h3{
         text-align: center;
         margin: 10px
+       
+    }
+    .form-title{
+        color: color.$tertiary-text;
     }
     .content-wrapper{
         border-radius: 15px;
@@ -14,8 +19,8 @@
         flex-direction: column;
         align-content: center;
         justify-content: center;
-        background-color: #FFFFFF;
-        width: auto;
+        background-color: color.$backgroundbox2;
+        width: 850px;
         border: 2px solid rgb(71, 69, 69);
         box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1); ;
        
@@ -25,34 +30,46 @@
         align-items: center;
         justify-content: center;
     }
-    .user-table{
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        margin: 20px;
-        
-    table{
+
+    .user-table table{
         table-layout: fixed;
-        width: 500px;
-        background-color: black;
-    }
-    thead 
-    {
-        background-color: #FFFFFF;
+        width: 800px;
+        margin: 20px auto;
+        border-collapse: collapse;
         
-        color: black;
-        box-shadow: 0 0 15px rgba(0,0,0,0.1);
     }
-    tbody
-    {
-        background-color: #FFFFFF;
-        color: black;
-        box-shadow: 0 0 15px rgba(0,0,0,0.1);
+        
+    
+
+    th, td {
+        padding: 10px;
         text-align: center;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        color: color.$primary-text;
+        border: 1px solid color.$secondary-color;
+        
+    }
+  
+    thead , tbody
+    {
+        background-color: color.$secondary-color;
+        color: color.$secondary-text;
+        box-shadow: 0 0 15px rgba(0,0,0,0.1);
+        
+    }
+    .user-table th:nth-child(1),.user-table td:nth-child(1){
+        width: 5%;
+    }
+    .user-table th:nth-child(2),.user-table td:nth-child(2){
+        width: 20%;
+    }
+     .user-table th:nth-child(4),.user-table td:nth-child(4){
+        width: 12%;
     }
 }
-}
+
  
    
 

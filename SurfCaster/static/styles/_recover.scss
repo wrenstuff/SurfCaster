@@ -1,0 +1,50 @@
+@use "color";
+
+.auth-wrapper {
+    display: flex;
+
+
+    .auth-container {
+        
+        
+        
+        
+        
+        .links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 10px;
+
+            .login-link, .signup-link {
+                color: color.$primary-text;
+                text-decoration: none;
+            }
+        }
+        
+        .email-p {
+            font-size: 10pt;
+            align-self: center;
+            text-align: center;
+            justify-self: top;
+            color: color.$tertiary-text;
+        }
+       
+        .recover-title {
+            text-align: center;
+            justify-content: center;
+            margin: 10px;
+            color: color.$tertiary-text;
+        }    
+        
+    }
+
+}
+
+.checkbox{
+           width: 15px;
+           height: 15px;
+           margin-right: 5px;
+           display: flex;
+           flex-direction: column;
+        }

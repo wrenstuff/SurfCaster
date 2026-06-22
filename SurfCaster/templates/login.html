@@ -6,19 +6,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static', filename='styles/main.css') }}">
     <title>Document</title>
-    {% set access = "unauth" %}
 </head>
 
 <body>
     {% include 'login-header.html' %}
     <div class="auth-header">
     </div>
-    <div class="login-wrapper">
+      <div class="login-wrapper">
         <div class="auth-logo-wrapper">
 
 
         </div>
-        <div class="login-container">
+    <div class="auth-wrapper">
+        <div class="auth-container">
             <h3 class="login-title">Login</h3>
             <form action="{{ url_for('auth_routes.login') }}" method="POST">
                 <div class="input-fields">
@@ -26,8 +26,8 @@
                     <input class="auth-input" type="password" id="password" name="password" placeholder="Password" required>
 
                 </div>
-                <div class="login-btn">
-                    <button>Log In</button>
+                <div class="submit-btn">
+                    <button class="auth-button">Log In</button>
                 </div>
 
             </form>

@@ -8,18 +8,22 @@
     <title>Document</title>
 </head>
 
-<div class="delete-popup" onclick="closeDeleteAccountPopup()">
-    <div class="delete-popup-content" onclick="event.stopPropagation()">
-        <h2 class="delete-popup-title">Are you sure you want to delete your account?</h2>
-        <p class="warning-text">This action cannot be undone.</p>
-        <div class="delete-buttons">
-            
-            <button type ="button" onclick="closeDeleteAccountPopup();"">Decline</button>
-            <button type="submit" form="delete-account-form">Accept</button>
+<body>
+    <div class="delete-popup" onclick="closeDeleteAccountPopup()">
+        <div class="delete-popup-content" onclick="event.stopPropagation()">
+            <h2 class="delete-popup-title">Are you sure you want to delete your account?</h2>
+            <p class="warning-text">This action cannot be undone.</p>
+            <div class="delete-buttons">
+
+            <button class="delete-cancel-button" type="button" onclick="closeDeleteAccountPopup();"">Decline</button>
+            <button class="delete-confirm-button" type="submit" form="delete-account-form">Accept</button>
 
 
+            </div>
+            <form id="delete-account-form" method="POST" action="{{ url_for('auth_routes.delete_account') }}">
+            </form>
         </div>
-        <form id="delete-account-form" method="POST" action="{{ url_for('auth_routes.delete_account') }}">
-        </form>
     </div>
-</div>
+</body>
+
+</html>

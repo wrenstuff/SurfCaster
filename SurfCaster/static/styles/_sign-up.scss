@@ -1,0 +1,45 @@
+@use "color";
+
+.auth-wrapper {
+    display: flex;
+
+    .auth-container {
+        display: flex;
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        a:visited {
+            color: inherit;
+        }
+
+        a:active {
+            color: inherit;
+        }
+
+        a:focus {
+            color: inherit;
+            outline: none;
+        }
+
+
+
+        .signup-text {
+            text-align: center;
+            color: color.$tertiary-text;
+            margin-top: 5px;
+        }
+        
+        .signup-link {
+            color: color.$primary-text;
+            gap: 20px;
+            display: flex;
+            align-items: left;
+            justify-content: left;
+            width: 100%;
+        }
+    
+    }
+}

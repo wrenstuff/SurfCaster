@@ -13,8 +13,8 @@
 
 <body>
     {% include 'login-header.html' %}
-    <div class="signup-wrapper">
-        <div class="signup-container">
+    <div class="auth-wrapper">
+        <div class="auth-container">
             <h3 class="signup-text">Sign up</h3>
             <form method="POST" action="/signup">
                 <div class="input-fields">
@@ -23,23 +23,20 @@
                     <input class="auth-input" type="password" id="password" name="password" minlength="8"
                         placeholder="Password" required>
                 </div>
-                <div class=PWstrength>
-                    <h4>Password strength</h4>
-                    <h4 class="strength-icon">&#128994;</h4>
-                </div>
-                <div class="toc">
+            
+                <div class="tandc">
                     <input class="checkbox" type="checkbox" id="terms" name="terms" required>
                     <a href='#' onclick="openTerms(); return false;">
                         Terms and conditions
                     </a>
                 </div>
 
-                <div class="bottom-container">
-                    <div class="links">
-                        <a class="login-link" href="{{ url_for('auth_routes.login') }}">&#8592; Go back</a>
+                    
+                    <div class="submit-btn">
+                        <button type="submit" class="auth-button">Sign Up</button>
                     </div>
-                    <div class="sub-btn">
-                        <button type="submit">Sign Up</button>
+                    <div class="signup-link">
+                        <a class="login-link" href="{{ url_for('auth_routes.login') }}">&#8592; Login</a>
                     </div>
             </form>
             <!--/form-->

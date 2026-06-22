@@ -56,6 +56,14 @@ with app.app_context():
     db.session.add(admin)
     db.session.commit()
 
+#flash hook for security headers (clears session data on logout and prevents caching of sensitive pages)
+@app.after_request
+def add_security_headers(response):
+    response.headers['Cache-Control'] = 'no-cache, no-store, must-revalidate'
+    response.headers['Pragma'] = 'no-cache'
+    response.headers['Expires'] = '0'
+    return response
+
 # run the app
 if __name__ == "__main__":
     app.run(debug=True)
