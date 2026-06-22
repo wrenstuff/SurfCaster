@@ -1,22 +1,30 @@
-<!-- temp user type logic for testing -->
-<!-- delete when actual logic implemented-->
-{% set access = "admin" %}
-
 <div class="header-grid">
     <div class="header-center">
-        <div class="header">
+        <div class="header {% if page_name == 'dashboard' %} header-dash {% endif %}">
             <img src="{{ url_for('static', filename='images/SurfCaster_Logo_256.png') }}" alt="SurfCaster Logo"
                 class="logo">
             <h1>SurfCaster</h1>
         </div>
         <div class="page-name">
-            <h2>{{ page_name }}</h2>
+            
+
+
+            {% if page_name != 'dashboard' %}
+                <h2>{{ page_name }}</h2>
+            {% else %}
+                <h2 class="dash">‎ </h2>
+                <!-- The IDE is yelling at me cause this is invisible. I know it is. That's the point... -->
+            {% endif %}
+
+
             <!-- figure out how to display the current page title -->
         </div>
     </div>
     <div class="header-left">
         <div class="home">
-            <a href="{{ url_for(session.get('role') + '_routes.home') }}">Home</a>
+            <a href="{{ url_for(session.get('role') + '_routes.home') }}">
+                Home
+            </a>
         </div>
     </div>
     <div class="header-right">

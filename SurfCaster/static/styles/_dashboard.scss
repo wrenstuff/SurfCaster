@@ -154,6 +154,8 @@
                     .text {
 
                         width: 460px;
+                        overflow: hidden;
+                        text-wrap: nowrap;
 
                     }
 

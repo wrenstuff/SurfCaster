@@ -14,37 +14,63 @@
 
     {% include 'header.html' %}
 
+    <div class="disc-wrap">
+        <div class="disc-h3">
+            <img src="{{ url_for('static', filename="images/triangle-filled-svgrepo-com.svg") }}" alt="">
+            <h3>Disclaimer</h3>
+        </div>
+        
+        <p class="disc-p">
+            Results in this application are only a prediction. Please only use the given result as a guideline for how to proceed.
+        </p>
+    </div>
+
     <div class="scan-content">
         <!-- temp content for the URL Scanner page -->
         <div class="scan-wrapper">
-            <form method="POST" action="{{ url_for( session['role'] + '_routes.scan') }}">
-                <input class="scan" type="text" name="url" placeholder="Enter URL to scan" {% if session.get('last_scanned_url') %} value="{{ session.get('last_scanned_url') }}" {% endif %}>
-                <button type="submit" id="scan-button">Scan</button>
-            </form>
-            <div class="scan-res-wrapper {% if session.get('last_scan_result') is not none %} {% else %} hidden {% endif %}">
-                <div class="scan-results">
-                    <h2>Scan results for {{ session.get('last_scanned_url') }}</h2>
-                    
-                    {% if session.get('last_scan_result') is not none %}
-                        <p>Scan Result: {{ session.get('last_scan_result')|round(2) }}%</p>
-                    {% endif %}
+            <div class="scan-form {% if session.get('last_scan_result') is none %} push-down {% endif %}">
 
-                    {% if session.get('last_scan_result') is not none %}
-                        {% if session.get('last_scan_result') <= 100/3 %}
-                            <p class="safe">URL is likely safe</p>
-                        {% elif session.get('last_scan_result') <= 100/3 * 2 %}
-                            <p class="warning">URL is potentially unsafe</p>
-                        {% else %}
-                            <p class="danger">URL is likely unsafe</p>
+                <form method="POST" action="{{ url_for( session['role'] + '_routes.scan') }}">
+                    <input class="scan" type="text" name="url" placeholder="Enter URL to scan" {% if session.get('last_scanned_url') %} value="{{ session.get('last_scanned_url') }}" {% endif %}>
+                    <button type="submit" id="scan-button">Scan</button>
+                </form>
+
+            </div>
+            <div class="scan-res-wrapper {% if session.get('last_scan_result') is not none %} {% else %} hidden {% endif %}">
+                <div class="scan-res-wrapper-flex">
+                    <div class="scan-results">
+                        <h2>Scan results for</h2>
+                        <p class="scanned-url">{{ session.get('last_scanned_url') }}</p>
+                        
+                        {% if session.get('last_scan_result') is not none %}
+                            <p>Scan Result: {{ session.get('last_scan_result')|round(2) }}%</p>
                         {% endif %}
 
-                        <div class="flags">
-                            <form class="flag-form" method="POST" action="{{ url_for( session['role'] + '_routes.flag_scan_route') }}">
-                                <button type="submit" name="flag" class="flag-button" value="Safe">Safe</button>
-                                <button type="submit" name="flag" class="flag-button" value="Unsafe">Unsafe</button>
-                            </form>
-                        </div>
-                    {% endif %}
+                        {% if session.get('last_scan_result') is not none %}
+                            {% if session.get('last_scan_result') <= 100/3 %}
+                                <p class="safe model-flag">URL is likely safe</p>
+                            {% elif session.get('last_scan_result') <= 100/3 * 2 %}
+                                <p class="warning model-flag">URL is potentially unsafe</p>
+                            {% else %}
+                                <p class="danger model-flag">URL is likely unsafe</p>
+                            {% endif %}
+
+                            <div class="flags">
+                                <form class="flag-form" method="POST" action="{{ url_for( session['role] + '_routes.flag_scan_route') }}">
+                                    <p class="flag-text">
+                                        Please select a flag below
+                                    </p>                                
+                                    <p class="flag-text">
+                                        Your feedback will help us to train and further improve our model.
+                                    </p>
+                                    <div class="flag-btns">
+                                        <button type="submit" name="flag" class="flag-button flag-button-safe" value="Safe">Safe</button>
+                                        <button type="submit" name="flag" class="flag-button flag-button-unsafe" value="Unsafe">Unsafe</button>
+                                    </div>
+                                </form>
+                            </div>
+                        {% endif %}
+                    </div>
                 </div>
             </div>
         </div>  
