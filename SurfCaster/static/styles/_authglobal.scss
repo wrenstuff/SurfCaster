@@ -1,0 +1,120 @@
+@use 'color';
+
+.auth-wrapper {
+    display: flex;
+    align-items: center;
+    width: auto;
+    height: calc(100vh - 100px);
+    justify-content: center;
+
+
+    .auth-container {
+        display: flex;
+        width: auto;
+        border-radius: 10px;
+        min-width: 400px;
+        min-height: 326px;
+        height: auto;
+        background-color: color.$backgroundbox2;
+        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        color: color.$tertiary-text;
+    }
+        .resetpw {
+            color: color.$primary-text;
+            padding-right: 20px;
+            margin-right: 40px;
+            display: flex;
+          
+        }
+
+        .signup {
+            color: color.$primary-text;
+            
+            
+            display: flex;
+            
+            
+        }
+    
+}
+
+.input-fields {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.auth-input {
+    height: 23pt;
+    width: 270px;
+    margin: 5px 0 5px 0;
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid color.$backgroundbox2;
+    border-radius: 5px;
+    padding-left: 10px;
+    
+}
+
+.auth-button {
+    width: 80px;
+    height: 30px;
+    margin-top: 15px;
+    cursor: pointer;
+    transition: transform 0.1s ease, box-shadow 0.1s ease;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+button:hover {
+    transform: translateY(-1px);
+    box-shadow: color.$drop-shadow
+}
+
+.tandc {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding-top: 10px;
+    color: color.$tertiary-text;
+
+    .checkbox {
+        margin-right: 10px;
+        width: 15px;
+        height: 15px;
+        justify-content: center;
+        align-items: center;
+    }
+}
+
+.links {
+    color: color.$primary-text;
+    display: flex;
+    align-items: bottom;
+    justify-content: bottom;
+    width: auto;
+    margin-top: 30px;
+    gap: 20px;
+
+    .login-link {
+        color: color.$primary-text;
+        padding-right: 20px;
+        margin-right: 40px;
+    }
+
+    .signup-link {
+        color: color.$primary-text;
+    }
+}

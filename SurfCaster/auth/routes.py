@@ -20,8 +20,9 @@ def splash ():
 # Login Page
 @auth_routes.route('/login', methods=["GET","POST"])
 def login():
-    session.pop("recovery_user_id", None)
+    
     if request.method == "GET":
+        session.clear()
         return render_template('login.html')
     if request.method =="POST":
         # get username and password from form

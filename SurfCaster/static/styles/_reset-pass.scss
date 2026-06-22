@@ -1,0 +1,75 @@
+   @use "color";
+
+   // reset password
+   .auth-wrapper {
+
+
+
+
+       .auth-container {
+
+
+           .reset-password-title {
+               text-align: center;
+               margin-bottom: 20px;
+               color: color.$tertiary-text;
+           }
+
+           .auth-logo-wrapper {
+               display: flex;
+               align-items: center;
+               justify-content: center;
+               flex-direction: column;
+           }
+
+
+           .show {
+               margin-left: 10px;
+               display: flex;
+               justify-content: center;
+               align-items: center;
+               cursor: pointer;
+               width: 20px;
+               height:20px;
+               border-radius: 50%;
+           }
+
+           .submit-btn {
+               display: flex;
+               flex-direction: column;
+               justify-content: center;
+               align-items: center;
+               margin-top: 20px;
+               margin-bottom: 20px;
+               gap: 10px;
+           }
+
+           .reset-checkbox-label {
+               display: flex;
+               align-items: center;
+               margin-top: 10px;
+               height: 15px;
+               width: 30px;
+               margin-right: 10px;
+
+           }
+
+           .input-field,
+           .password-field {
+               display: flex;
+               flex-direction: row;
+               align-items: center;
+               justify-content: center;
+               margin-top: 10px;
+           }
+
+           .p {
+               font-size: 10pt;
+               align-self: center;
+               text-align: center;
+               justify-self: top;
+               color: color.$tertiary-text;
+           }
+       }
+
+   }

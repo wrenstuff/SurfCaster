@@ -1,7 +1,7 @@
 @use "global";
 @use "header";
 @use "dashboard";
-@use "auth";
+@use "authglobal";
 @use "settings";
 @use "user_man";
 @use "scan";
@@ -10,3 +10,8 @@
 @use "support";
 @use "splash-animations";
 @use "popup";
+@use "reset-pass";
+@use "login";
+@use "recover";
+@use "recover-code";
+@use "sign-up";

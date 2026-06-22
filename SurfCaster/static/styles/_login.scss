@@ -1,0 +1,33 @@
+@use "color";
+.login-wrapper {
+    display: flex;
+    align-items: center;
+    width: auto;
+    height: calc(100vh - 100px);
+
+    justify-content: center;
+     .login-title {
+        text-align: center;
+        margin-bottom: 20px;
+        color: color.$tertiary-text;
+    }
+     .auth-logo-wrapper {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+    }
+}
+
+
+.auth-wrapper {
+    .submit-btn {
+        display: flex;
+        justify-content: center;
+    }
+
+    .auth-container {
+       display: flex;
+    }
+   
+}

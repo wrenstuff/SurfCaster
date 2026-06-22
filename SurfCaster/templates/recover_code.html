@@ -10,29 +10,37 @@
 
 <body>
     {% include 'login-header.html' %}
-    <div class="recover-code-wrapper">
-        <div class="recover-code-container">
+    <div class="auth-wrapper">
+        <div class="auth-container">
 
-            <h3 class="recover-title">Account recovery</h3>
+            <h3 class="recover-code-title">Account recovery</h3>
             <p class="email-p">Enter the code sent to your Email address</p>
             <div action="{{ url_for('auth_routes.recover') }}" class=" input-fields">
                 <form method="POST">
-                    <input class="auth-input" type="text" id="recover-code" name="recover-code" placeholder="Recovery code" required  oninput="this.setCustomValidity('')" oninvalid="this.setCustomValidity('Invalid code: Please enter the code in your emails')" minlength="6" maxlength="6">
-                    <div class="submit-btn">
-                    <label>
-                        <input type="checkbox">
-                    </label>
-                    <button>submit</button>
-            </div>
-            </form>
-        </div>
+                    <div class="input-fields">
 
-        <!--/form-->
-        <div class="links">
-            <a class="resend-code" action ="/resend-recovery-code>Login"</a>
-            
+                        <input class="auth-input" type="text" id="recover-code" name="recover-code"
+                            placeholder="Recovery code" required oninput="this.setCustomValidity('')"
+                            oninvalid="this.setCustomValidity('Invalid code: Please enter the code in your emails')"
+                            minlength="6" maxlength="6">
+                    </div>
+                    <div class="submit-btn">
+                        <label class="tandc">
+                            <input class="checkbox" type="checkbox">
+                        </label>
+                        <div class="submit-btn">
+                            <button class="auth-button">submit</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <!--/form-->
+            <div class="links">
+                <a class="resend-code" action="/resend-recovery-code>Login" </a>
+
+            </div>
         </div>
-    </div>
     </div>
 
 </body>

@@ -1,0 +1,67 @@
+@use "color";
+
+// recover-code
+.recover-code-wrapper {
+    display: flex;
+    align-items: center;
+    width: auto;
+    height: calc(100vh - 100px);
+    justify-content: center;
+    color: color.$tertiary-text;
+
+
+    .recover-code-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background-color: color.$backgroundbox2;
+        width: auto;
+        border-radius: 10px;
+        min-width: 400px;
+
+        min-height: 326px;
+
+
+        .email-p {
+            font-size: 10pt;
+            align-self: center;
+            text-align: center;
+            justify-self: top;
+            margin-top: 20px;
+        }
+
+        .recover-code-title {
+            text-align: center;
+            margin: 10px;
+            color: color.$tertiary-text;
+        }
+
+        .recover-code-auth-input {
+            margin: 10px;
+            height: 20pt;
+            max-width: 300px;
+            width: 100%;
+
+        }
+
+        .submit-btn {
+            display: flex;
+            justify-content: center;
+            align-self: center;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        .checkbox {
+            margin-right: 30px;
+            margin-top: 20px;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 17px;
+            height: 17px;
+
+        }
+    }
+}
