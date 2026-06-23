@@ -59,8 +59,12 @@
         box-shadow: 0 0 15px rgba(0,0,0,0.1);
         
     }
+    td{
+        color: color.$tertiary-text;
+    }
     .user-table th:nth-child(1),.user-table td:nth-child(1){
         width: 5%;
+        
     }
     .user-table th:nth-child(2),.user-table td:nth-child(2){
         width: 20%;
