@@ -115,6 +115,7 @@
                     text-indent: 15px;
                     border-radius: 5px 0px 0px 5px;
                     background-color: color.$backgroundbox2;
+                    color: color.$tertiary-text;
                 }
                 .scan::placeholder{
                     color: color.$primary-color;
@@ -156,6 +157,7 @@
                         width: 460px;
                         overflow: hidden;
                         text-wrap: nowrap;
+                        color: color.$tertiary-text;
 
                     }
 
