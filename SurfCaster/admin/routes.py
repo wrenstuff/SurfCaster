@@ -205,11 +205,14 @@ def update_role():
         return "Unauthorized", 403
     
     username = request.form.get('username')
-    new_role = request.form.get('role')
-    user = Users.query.filter_by(username=username).first()
-    if user:
-        user.role = new_role
-        db.session.commit()
+
+    if username != session['username']:
+
+        new_role = request.form.get('role')
+        user = Users.query.filter_by(username=username).first()
+        if user:
+            user.role = new_role
+            db.session.commit()
 
     return redirect(url_for('admin_routes.users'))
 

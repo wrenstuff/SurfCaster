@@ -44,12 +44,18 @@
                 
                     <tbody>
                         {% for user in users %}
-                        <tr>
-                            <td>{{ user.id }}</td>
-                            <td>{{ user.username }}</td>
-                            <td>{{ user.email }}</td>
-                            <td>{{ user.role }}</td>
-                        </tr>
+
+                            {% if session.get('username') in user.username  %}
+                            {% else %}
+
+                                <tr>
+                                    <td>{{ user.id }}</td>
+                                    <td>{{ user.username }}</td>
+                                    <td>{{ user.email }}</td>
+                                    <td>{{ user.role }}</td>
+                                </tr>
+
+                            {% endif %}
                         {% endfor %}
                     </tbody>
                 </table>
