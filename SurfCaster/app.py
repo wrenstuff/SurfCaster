@@ -2,6 +2,7 @@
 
 # library imports
 from os import link
+import os
 
 from flask import Flask, session
 from flask_sqlalchemy import SQLAlchemy
@@ -19,15 +20,16 @@ from unauthorisedUser.routes import unauthorised_user_routes
 from auth.routes import auth_routes
 from extensions import db
 from datetime import datetime
+from dotenv import load_dotenv
 
-
+load_dotenv()
 ph = PasswordHasher()
 
 # app creation and blueprint registration
 
 
 app = Flask(__name__)
-app.secret_key = "supersecretkey"
+app.secret_key = os.getenv("SECRET_KEY")
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///SurfCaster.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False

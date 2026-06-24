@@ -6,6 +6,11 @@ from flask import session
 from extensions import db
 from sqlalchemy import text, select
 from flask import flash
+from  dotenv import load_dotenv
+import os
+
+load_dotenv()
+
 
 #generates random recovery code tied to user id (email)
 def recovery_code(len):
@@ -29,13 +34,10 @@ def accountrecover(useremail,code):
     #creates time of code creation and expiration time
     creationtime = datetime.now()
     expirationtime = creationtime+timedelta(minutes=15)
-
-    #opens secret file with email app
-    with open("surfcaster/emailpass.txt", "r") as file:
-        surfcaster_pass = file.read()
+    surfcaster_pass = os.getenv("EMAIL_PASS")
 
 
-    surfcaster = "surfcaster.app@gmail.com"
+    surfcaster = os.getenv("EMAIL")
 
     #email formatting
     email_message = f"""
