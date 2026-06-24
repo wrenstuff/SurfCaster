@@ -2,6 +2,7 @@
 
 # library imports
 from os import link
+import os
 
 from flask import Flask, session
 from flask_sqlalchemy import SQLAlchemy
@@ -27,7 +28,8 @@ ph = PasswordHasher()
 
 
 app = Flask(__name__)
-app.secret_key = "supersecretkey"
+app.secret_key = os.getenv("app_secret_key")
+email_password = os.getenv("email_pass")
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///SurfCaster.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
