@@ -1,6 +1,6 @@
 # SurfCaster
 
-How to install requiremnts.
+How to install requirements.
 In the power shell (terminal) type or paste the following. 
 
 This will create a folder to install the programs dependencies inside of.

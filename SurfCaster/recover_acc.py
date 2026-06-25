@@ -46,6 +46,7 @@ def accountrecover(useremail,code):
 
     {code}
 
+    This Code will expire in 15 minutes from the request time. If the code expires you will have to request a new code.
 
     """
 
