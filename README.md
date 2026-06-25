@@ -6,7 +6,7 @@ In the power shell (terminal) type or paste the following.
 This will create a folder to install the programs dependencies inside of.
 python -m venv venv
 
-Then use the code below  to get inside of the venv file
+Then use the code below  to get inside of the venv file (your system will need to have script permissions enabled)
 .\venv\Scripts\Activate.ps1
 
 Use the below code to then install the project dependencies inside the secure environment. (note this will take a while as some libraries are large)
