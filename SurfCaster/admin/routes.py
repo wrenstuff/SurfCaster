@@ -164,14 +164,14 @@ def review_scan():
         if action == 'approve':
             status = True if request.form.get('flag') == 'Safe' else False
 
-    to_db = ApprovedScans(
-        scan_id=scan_id,
-        reviewer_id=session.get('user_id'),
-        url=request.form.get('url'),
-        status=status
-    )
-    db.session.add(to_db)
-    db.session.commit()
+            to_db = ApprovedScans(
+                scan_id=scan_id,
+                reviewer_id=session.get('user_id'),
+                url=request.form.get('url'),
+                status=status
+            )
+            db.session.add(to_db)
+            db.session.commit()
 
     to_remove = FlaggedScans.query.filter_by(scan_id=scan_id).first()
     db.session.delete(to_remove)
